@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>用于常规线性非线性拟合的R函数包（basicTrendline）介绍 | Weiping Mei | 梅卫平</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="R,basicTrendline,nls,lm">
+    
+    <meta name="description" content="CRAN官网链接： https://cran.r-project.org/web/packages/basicTrendline/index.html">
+<meta name="keywords" content="R,basicTrendline,nls,lm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用于常规线性非线性拟合的R函数包（basicTrendline）介绍">
+<meta property="og:url" content="http://meiweiping.cn/用于常规线性非线性拟合的R函数包（basicTrendline）介绍/index.html">
+<meta property="og:site_name" content="Weiping Mei | 梅卫平">
+<meta property="og:description" content="CRAN官网链接： https://cran.r-project.org/web/packages/basicTrendline/index.html">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://meiweiping.cn/用于常规线性非线性拟合的R函数包（basicTrendline）介绍/CRAN-basicTrendline.JPG">
+<meta property="og:updated_time" content="2018-08-25T02:10:57.699Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用于常规线性非线性拟合的R函数包（basicTrendline）介绍">
+<meta name="twitter:description" content="CRAN官网链接： https://cran.r-project.org/web/packages/basicTrendline/index.html">
+<meta name="twitter:image" content="http://meiweiping.cn/用于常规线性非线性拟合的R函数包（basicTrendline）介绍/CRAN-basicTrendline.JPG">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Weiping Mei | 梅卫平" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/images/mei.ico">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">梅卫平的博客</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/关于/index.html">关于</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/国际/">国际</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/">学外</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/他山之石/">他山之石</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/学外/">学外</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/推荐书单/">推荐书单</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/">技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/R-语言/">R 语言</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/数据处理/">数据处理</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/汽车/">汽车</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/电脑技术/">电脑技术</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/科研小工具/">科研小工具</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/">生活</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/名言警句/">名言警句</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/家庭医生/">家庭医生</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/文化/">文化</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/趣味百科/">趣味百科</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/">科研</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/个人微关注/">个人微关注</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/同位素/">同位素</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/基金/">基金</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/学术规范/">学术规范</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研时间表/">科研时间表</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/论文/">论文</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/留言/index.html">微言堂</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/en">ENGLISH</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/技术/R-语言/">R 语言</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-用于常规线性非线性拟合的R函数包（basicTrendline）介绍" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        用于常规线性非线性拟合的R函数包（basicTrendline）介绍
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/用于常规线性非线性拟合的R函数包（basicTrendline）介绍/" class="article-date">
+            <time datetime="2018-01-10T07:20:38.000Z" itemprop="datePublished">2018-01-10</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/R/">R</a>, <a class="tag-link" href="/tags/basicTrendline/">basicTrendline</a>, <a class="tag-link" href="/tags/lm/">lm</a>, <a class="tag-link" href="/tags/nls/">nls</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <hr>
+<p>CRAN官网链接： <a href="https://cran.r-project.org/web/packages/basicTrendline/index.html" target="_blank" rel="noopener">https://cran.r-project.org/web/packages/basicTrendline/index.html</a></p>
+<img src="/用于常规线性非线性拟合的R函数包（basicTrendline）介绍/CRAN-basicTrendline.JPG" title="CRAN-basicTrendline.JPG">
+<p><img src="https://i.loli.net/2017/12/20/5a39cf4962808.png" alt="log.png"></p>
+<a id="more"></a>
+<p><img src="https://i.loli.net/2018/01/10/5a55c3a42a16e.png" alt="Multilines.png"></p>
+<blockquote>
+<p>使用过nls()来作非线性回归的朋友，感觉都要吐槽一下nls(formula, start = list(a = <strong><em>, b = </em></strong>)里面的起始值（a，b）的设定，n次都设不对是怎样一个感受？抓狂到想要放弃用R有木有？</p>
+</blockquote>
+<p>其实我们只想要像excel里面添加趋势线那样简单，就能得到非线性回归方程的各个结果而已。</p>
+<p>最新CRAN正式上线的R函数包——“basicTrendline” package 终于解决了这个问题。</p>
+<p>先来看两张效果图（第一张为log线性回归，第二张为包含线性和非线性回归方程的组合图）：</p>
+<blockquote>
+<p>如果对线性回归和非线性回归的区分还模棱两可的朋友，请看此R包第三作者的<a href="http://blog.sciencenet.cn/blog-267448-686836.html" target="_blank" rel="noopener">这篇博文</a>。</p>
+</blockquote>
+<hr>
+<p>闲言太多，步入正题！</p>
+<p>“basicTrendline”源代码直接点击 <a href="https://github.com/PhDMeiwp/basicTrendline" target="_blank" rel="noopener">这里</a>。</p>
+<blockquote>
+<p><strong>R函数包”basicTrendline”到底用来干什么？</strong></p>
+</blockquote>
+<p>用于一步完成绘图，添加线性或非线性拟合线，在图上显示回归方程及R<sup>2</sup>和回归模型的p值（不是参数的p值）。 并且，它默认会同时输出模型summary()的结果，即各参数的具体数值及SD值，t值，p值等等。</p>
+<blockquote>
+<p><strong>一个严肃的问题：它结果可信吗？</strong></p>
+</blockquote>
+<ul>
+<li>我们已经检测了我们的R函数包“basicTrendline”, 它工作性能稳定；</li>
+<li>更重要的是它的拟合<strong>结果和商业软件OriginPro完全相等</strong>；</li>
+<li>甚至<strong>对幂函数power函数（y=a*x^b +c）比OriginPro软件更好</strong><br>（更高的R<sup>2</sup>，更低的p值，因为我们采取了优于Origin软件的selfStart计算方法）！</li>
+</ul>
+<h2 id="在R中安装-“basicTrendline”-函数包"><a href="#在R中安装-“basicTrendline”-函数包" class="headerlink" title="在R中安装 “basicTrendline” 函数包"></a>在R中安装 “basicTrendline” 函数包</h2><p>1. 直接从CRAN官方获取资源安装：</p>
+<pre><code>install.packages(&quot;basicTrendline&quot;)
+library(basicTrendline)
+</code></pre><p>2. 使用Github资源安装：</p>
+<pre><code>install.packages(&quot;devtools&quot;)
+library(devtools)   
+install_github(&quot;PhDMeiwp/basicTrendline@master&quot;, force = TRUE)
+library(basicTrendline)
+</code></pre><h2 id="使用-“basicTrendline”-函数包"><a href="#使用-“basicTrendline”-函数包" class="headerlink" title="使用 “basicTrendline” 函数包"></a>使用 “basicTrendline” 函数包</h2><p>建立 x，y数据集，比如：</p>
+<pre><code>x&lt;-c(1,30,90,180,360)
+y&lt;-c(4,8,10,11,11)
+</code></pre><p>然后运行：</p>
+<pre><code>library(basicTrendline)
+
+trendline(x,y,model=&quot;exp3P&quot;, summary=TRUE, eDigit=10, ePos=&quot;topleft&quot;,linecolor=&quot;red&quot;)  
+</code></pre><p>你能用通用的函数 “trendline()”，但只需改变参数 model 的值，即可输出不同的回归模型的结果以及图。</p>
+<p>参数“model” 的值为 ‘lin2P’,’line3P’,’log2P’,’exp3P’,’power3P’的其中一个。</p>
+<ul>
+<li><p>“line2P”    # y=a*x+b</p>
+</li>
+<li><p>“line3P”    # y=a*x^2+b*x+c</p>
+</li>
+<li><p>“log2P”     # y=a*ln(x)+b</p>
+</li>
+<li><p>“exp3P”     # y=a*exp(b*x)+c</p>
+</li>
+<li><p>“power3P”   # y=a*x^b+c)</p>
+</li>
+</ul>
+<h2 id="创新点（再强调一下而已）"><a href="#创新点（再强调一下而已）" class="headerlink" title="创新点（再强调一下而已）"></a>创新点（再强调一下而已）</h2><ul>
+<li>“basicTrendline”函数包对幂函数的拟合（’power3P’ model：y = ax^b +c）能得到比OriginPro软件更好的结果（更高的R^2,更低的p值）。为什么呢？因为我们采取了比OriginPro软件更高级的针对幂函数回归的selfStart算法呀，其实核心是OriginPro软件里面的幂函数回归没有考虑数据的 凹凸趋势（增凹趋势，降凸趋势等等，文末 Examples 的代码里有提到）。下面是例子:</li>
+</ul>
+<blockquote>
+<p>formula as y=a*x^b +c</p>
+</blockquote>
+<p>x&lt;- c(1,30,60,90,180,360)</p>
+<p>y&lt;- c(2,14,16,18,19,20)  # increase convex-function</p>
+<blockquote>
+<p>OriginPro软件结果:</p>
+</blockquote>
+<p>c=-7344.578</p>
+<p>a=7347.183</p>
+<p>b=43224.4</p>
+<font color="red">adjR^2= 0.97129       # lower adjR^2 value</font>
+
+<p>p-value of model=2.24891e-4</p>
+<blockquote>
+<p>‘basicTrendline’函数包结果:</p>
+</blockquote>
+<p>c=34.671</p>
+<p>a=-32.703</p>
+<p>b=-0.13999</p>
+<font color="red">adjR^2= 0.99346 &gt;  0.97129   # higher (or better ) adjR^2 value</font>
+
+<p>p-value of model= 2.44924-5 &lt; 2.24891e-4</p>
+<h2 id="输出图"><a href="#输出图" class="headerlink" title="输出图"></a>输出图</h2><p><img src="https://i.loli.net/2017/12/20/5a39cf4954e69.png" alt="line2P.png"><br><img src="https://i.loli.net/2017/12/20/5a39d001c5049.png" alt="line3P.png"><br><img src="https://i.loli.net/2017/12/20/5a39cf4962808.png" alt="log.png"><br><img src="https://i.loli.net/2017/12/20/5a39cf4962781.png" alt="log0.5.png"></p>
+<p><img src="https://i.loli.net/2017/12/20/5a39cf496566f.png" alt="power.png"></p>
+<p><img src="https://i.loli.net/2018/01/10/5a55c3a42a16e.png" alt="Multilines.png"></p>
+<p>查看更多”basicTrendline”函数包的功能或使用方法, 请运行:</p>
+<pre><code>library(basicTrendline)
+?trendline()
+</code></pre><p>上面各种类型的回归以及最后的组合图的例子，代码在 ?trendline()的 Examples 里面都有哦。下面也copy一下方便直接查看。</p>
+<h2 id="Examples-（R-code）"><a href="#Examples-（R-code）" class="headerlink" title="Examples （R code）"></a>Examples （R code）</h2><pre><code>#先设计一些数据
+x1&lt;-1:5
+x2&lt;- -2:2
+x3&lt;- c(101,105,140,200,660)
+x4&lt;- -5:-1
+x5&lt;- c(1,30,90,180,360)
+
+y1&lt;-c(2,14,18,19,20)        # 增凸趋势 increasing convex trend
+y2&lt;- c(-2,-14,-18,-19,-20)  # 降凹趋势 decreasing concave trend
+y3&lt;-c(2,4,16,38,89)         # 增凹趋势 increasing concave trend
+y4&lt;-c(-2,-4,-16,-38,-89)    # 降凸趋势 decreasing convex trend
+y5&lt;- c(600002,600014,600018,600019,600020) # high y values with low range.
+</code></pre><p>上面都是输入数据，下面才是核心，代码运行很简单有木有？    </p>
+<pre><code>library(basicTrendline)
+trendline(x1,y1,model=&quot;line2P&quot;,summary=TRUE,eDigit=10) #第一张图的代码已完成。
+
+trendline(x2,y2,model=&quot;line3P&quot;,summary=FALSE,ePos=&quot;topright&quot;) #第二张图的代码已完成，诸如此类。
+
+trendline(x3,y3,model=&quot;log2P&quot;,linecolor=&quot;blue&quot;)
+trendline(x4,y4,model=&quot;exp3P&quot;,eSize=0.7) #change the font size of equation.
+trendline(x5,y5,model=&quot;power3P&quot;)
+
+## Not run 绘制组合图
+plot(x1,y1,main=&quot;Different regression lines in one plot&quot;) #绘制底图散点图
+
+library(basicTrendline)
+trendline(x1,y1,model=&quot;line2P&quot;,plot=FALSE,ePos=&quot;none&quot;,linecolor=&quot;red&quot;) #添加 y=a*x+b 线性回归
+
+trendline(x1,y1,model=&quot;log2P&quot;,plot=FALSE,ePos=&quot;none&quot;,linecolor=&quot;blue&quot;,lty=2) #添加 y=a*ln(x)+b 线性回归
+
+trendline(x1,y1,model=&quot;exp3P&quot;,plot=FALSE,ePos=&quot;none&quot;,linecolor=&quot;black&quot;,lty=3) #添加 y=a*exp(b*x)+c 非线性回归
+
+legend(&quot;bottomright&quot;,c(&quot;line2P&quot;,&quot;log2P&quot;,&quot;exp3P&quot;), lty=c(1,2,3),col=c(&quot;red&quot;,&quot;blue&quot;,&quot;black&quot;)) #最后添加legend，完成。
+
+## END (Not run)
+</code></pre><h2 id="贡献者"><a href="#贡献者" class="headerlink" title="贡献者"></a>贡献者</h2><p>R codes contributed by</p>
+<ul>
+<li>adding-regression-line-equation-and-r2-on-graph-1: <a href="http://blog.sciencenet.cn/blog-267448-1021594.html" target="_blank" rel="noopener">http://blog.sciencenet.cn/blog-267448-1021594.html</a></li>
+<li>adding-regression-line-equation-and-r2-on-graph-2: <a href="https://stackoverflow.com/questions/7549694/adding-regression-line-equation-and-r2-on-graph" target="_blank" rel="noopener">https://stackoverflow.com/questions/7549694/adding-regression-line-equation-and-r2-on-graph</a></li>
+<li>What is non-linear regression?: <a href="https://datascienceplus.com/first-steps-with-non-linear-regression-in-r/" target="_blank" rel="noopener">https://datascienceplus.com/first-steps-with-non-linear-regression-in-r/</a></li>
+<li>adding regression line for nonlinear regression: <a href="http://blog.sciencenet.cn/blog-651374-1014133.html" target="_blank" rel="noopener">http://blog.sciencenet.cn/blog-651374-1014133.html</a></li>
+<li>R codes for ‘print.summary.nls of exp3P and power3P’ cite from <a href="https://github.com/SurajGupta/r-source/blob/master/src/library/stats/R/nls.R" target="_blank" rel="noopener">https://github.com/SurajGupta/r-source/blob/master/src/library/stats/R/nls.R</a></li>
+<li>and so on…</li>
+</ul>
+<hr>
+<p><span id="busuanzi_container_page_pv"><br>&lt;已有 <span id="busuanzi_value_page_pv"></span> 次阅读&gt;<br></span></p>
+<hr>
+<p>由于本文作者水平有限，文中如有错误之处，欢迎大家批评指正！</p>
+<p>① 本文仅代表作者个人观点，不代表任何其它立场，欢迎交流合作！</p>
+<p>② 转载与分享请注明：本文源于 <a href="http://meiweiping.cn">http://meiweiping.cn</a></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://meiweiping.cn/用于常规线性非线性拟合的R函数包（basicTrendline）介绍/" data-id="cjv3ez5zp0075fcwbwrpr0kgu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Weiping Mei"
+        },
+        "headline": "用于常规线性非线性拟合的R函数包（basicTrendline）介绍",
+        "image": "http://meiweiping.cn/用于常规线性非线性拟合的R函数包（basicTrendline）介绍/CRAN-basicTrendline.JPG",
+        "keywords": "R basicTrendline nls lm",
+        "genre": "技术 R 语言",
+        "datePublished": "2018-01-10",
+        "dateCreated": "2018-01-10",
+        "dateModified": "2018-08-25",
+        "url": "http://meiweiping.cn/用于常规线性非线性拟合的R函数包（basicTrendline）介绍/",
+        "description": "
+CRAN官网链接： https://cran.r-project.org/web/packages/basicTrendline/index.html
+
+"
+        "wordCount": 315
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/weiping_mei" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/meiweipingg" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/PhDMeiwp" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google" href="https://scholar.google.com/citations?user=Tmp_SpUAAAAJ&hl=en" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/读书怪才，85后最贵的说书人/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            读书怪才，85后最贵的说书人
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/好用的R函数包推荐/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">好用的R函数包推荐</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/拿到驾照后，遇路面结冰怎么开车/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/拿到驾照后，遇路面结冰怎么开车/减速慢行.jpg)" alt="拿到驾照后，遇路面结冰怎么开车" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/技术/汽车/">汽车</a></p>
+                            <p class="item-title"><a href="/拿到驾照后，遇路面结冰怎么开车/" class="title">拿到驾照后，遇路面结冰怎么开车</a></p>
+                            <p class="item-date"><time datetime="2019-03-22T09:07:26.000Z" itemprop="datePublished">2019-03-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/考驾照秘笈-科目三/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/考驾照秘笈-科目三/起步.jpg)" alt="考驾照秘笈-科目三" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/技术/汽车/">汽车</a></p>
+                            <p class="item-title"><a href="/考驾照秘笈-科目三/" class="title">考驾照秘笈-科目三</a></p>
+                            <p class="item-date"><time datetime="2019-03-22T05:44:50.000Z" itemprop="datePublished">2019-03-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/考驾照秘笈-科目二/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/考驾照秘笈-科目二/离合.jpg)" alt="考驾照秘笈-科目二" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/技术/汽车/">汽车</a></p>
+                            <p class="item-title"><a href="/考驾照秘笈-科目二/" class="title">考驾照秘笈-科目二</a></p>
+                            <p class="item-date"><time datetime="2019-03-22T03:06:22.000Z" itemprop="datePublished">2019-03-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/回国后的支援for在日本留学过的学生/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/回国后的支援for在日本留学过的学生/jasso.png)" alt="回国后的支援for在日本留学过的学生" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/国际/">国际</a></p>
+                            <p class="item-title"><a href="/回国后的支援for在日本留学过的学生/" class="title">回国后的支援for在日本留学过的学生</a></p>
+                            <p class="item-date"><time datetime="2018-08-27T07:41:40.000Z" itemprop="datePublished">2018-08-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/Hobby让work更有效/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/Hobby让work更有效/hobbies.png)" alt="Hobby让work更有效" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/学外/">学外</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/学外/学外/">学外</a></p>
+                            <p class="item-title"><a href="/Hobby让work更有效/" class="title">Hobby让work更有效</a></p>
+                            <p class="item-date"><time datetime="2018-08-26T04:18:51.000Z" itemprop="datePublished">2018-08-26</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/国际/">国际</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/">学外</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/学外/他山之石/">他山之石</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/学外/">学外</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/推荐书单/">推荐书单</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">51</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/R-语言/">R 语言</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/数据处理/">数据处理</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/汽车/">汽车</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/电脑技术/">电脑技术</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/科研小工具/">科研小工具</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/生活/名言警句/">名言警句</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/家庭医生/">家庭医生</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/文化/">文化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/趣味百科/">趣味百科</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/">科研</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/科研/个人微关注/">个人微关注</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/同位素/">同位素</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基金/">基金</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/学术规范/">学术规范</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研时间表/">科研时间表</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/论文/">论文</a><span class="category-list-count">7</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">本站统计</h3>
+        <div class="widget">
+  <ul>
+    
+    <li><center><a href="http://info.flagcounter.com/UcO3"><img src="http://s01.flagcounter.com/count2/UcO3/bg_F2F2F2/txt_000000/border_F2F2F2/columns_2/maxflags_100/viewers_0/labels_1/pageviews_1/flags_1/percent_0/" width="90%" height="90%" align="center/" border="0"></a></center></li>
+    
+    <li><center><a href="https://www.revolvermaps.com/?target=enlarge&amp;i=5wvp5ufpxwv" title="流量统计" target="_blank"><img src="//rf.revolvermaps.com/h/m/a/0/ff0000/128/0/5wvp5ufpxwv.png" width="90%" height="90%" align="center/" alt="Map" style="border:0;"></a></center></li>
+    
+  </ul>
+</div>
+</div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">左邻右舍</h3>
+        <div class="widget">
+  <ul>
+	<a href="https://github.com/AndrewLJackson">Andrew_L._Jackson&nbsp;&nbsp;</a>  
+	<a href="https://github.com/andrewcparnell">Andrew_C._Parnell&nbsp;&nbsp;</a>  
+	<a href="http://yuumezawa.com/Lab/index.htm">Yu_Umezawa&nbsp;&nbsp;</a> 
+
+	<a href="https://guangchuangyu.github.io/cn/">Y叔&nbsp;&nbsp;</a>
+	<a href="http://apansharing.blogspot.com/">阿磐老师&nbsp;&nbsp;</a>
+	<a href="http://blog.sciencenet.cn/home.php?mod=space&uid=71964">马臻老师&nbsp;&nbsp;</a>
+	<a href="http://www.biotrainee.com/">生信技能树主页&nbsp;&nbsp;</a>
+	<a href="https://space.bilibili.com/338686099/#/">生信技能树视频&nbsp;&nbsp;</a> 
+	<a href="https://yihui.name/cn/">谢益辉大神&nbsp;&nbsp;</a>
+  </ul>
+</div>
+</div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://www.researchgate.net/profile/Weiping_Mei">ResearchGate</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://www.rdocumentation.org/collaborators/name/Weiping%20Mei">r-project</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://bbs.sciencenet.cn/home.php?mod=space&uid=651374&view=meiweipingg">科学网</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://t.zsxq.com/yFEIAUf">知识星球</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Weiping Mei</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'weipingmei';
+    
+    
+    var disqus_url = 'http://meiweiping.cn/用于常规线性非线性拟合的R函数包（basicTrendline）介绍/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

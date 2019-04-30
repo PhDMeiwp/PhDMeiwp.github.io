@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>如何用U盘安装Win7系统 | Weiping Mei | 梅卫平</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="电脑技术,U盘装系统">
+    
+    <meta name="description" content="总体分为两步，第一步：用UltraISO 制作U盘系统盘。第二步：用此U盘系统盘安装Win7系统。  第一步：用UltraISO 制作U盘系统盘http://www.upantool.com/jiaocheng/disk/3692.html">
+<meta name="keywords" content="电脑技术,U盘装系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何用U盘安装Win7系统">
+<meta property="og:url" content="http://meiweiping.cn/如何用U盘安装Win7系统/index.html">
+<meta property="og:site_name" content="Weiping Mei | 梅卫平">
+<meta property="og:description" content="总体分为两步，第一步：用UltraISO 制作U盘系统盘。第二步：用此U盘系统盘安装Win7系统。  第一步：用UltraISO 制作U盘系统盘http://www.upantool.com/jiaocheng/disk/3692.html">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2017/09/06/59afd5394cae0.jpg">
+<meta property="og:updated_time" content="2018-08-25T02:12:53.193Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何用U盘安装Win7系统">
+<meta name="twitter:description" content="总体分为两步，第一步：用UltraISO 制作U盘系统盘。第二步：用此U盘系统盘安装Win7系统。  第一步：用UltraISO 制作U盘系统盘http://www.upantool.com/jiaocheng/disk/3692.html">
+<meta name="twitter:image" content="https://i.loli.net/2017/09/06/59afd5394cae0.jpg">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Weiping Mei | 梅卫平" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/images/mei.ico">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">梅卫平的博客</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/关于/index.html">关于</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/国际/">国际</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/">学外</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/他山之石/">他山之石</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/学外/">学外</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/推荐书单/">推荐书单</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/">技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/R-语言/">R 语言</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/数据处理/">数据处理</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/汽车/">汽车</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/电脑技术/">电脑技术</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/科研小工具/">科研小工具</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/">生活</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/名言警句/">名言警句</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/家庭医生/">家庭医生</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/文化/">文化</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/趣味百科/">趣味百科</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/">科研</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/个人微关注/">个人微关注</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/同位素/">同位素</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/基金/">基金</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/学术规范/">学术规范</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研时间表/">科研时间表</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/论文/">论文</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/留言/index.html">微言堂</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/en">ENGLISH</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/技术/电脑技术/">电脑技术</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-如何用U盘安装Win7系统" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        如何用U盘安装Win7系统
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/如何用U盘安装Win7系统/" class="article-date">
+            <time datetime="2017-09-06T11:52:44.000Z" itemprop="datePublished">2017-09-06</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/U盘装系统/">U盘装系统</a>, <a class="tag-link" href="/tags/电脑技术/">电脑技术</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <hr>
+<blockquote>
+<p>总体分为两步，第一步：用UltraISO 制作U盘系统盘。第二步：用此U盘系统盘安装Win7系统。</p>
+</blockquote>
+<h1 id="第一步：用UltraISO-制作U盘系统盘"><a href="#第一步：用UltraISO-制作U盘系统盘" class="headerlink" title="第一步：用UltraISO 制作U盘系统盘"></a>第一步：用UltraISO 制作U盘系统盘</h1><p><a href="http://www.upantool.com/jiaocheng/disk/3692.html" target="_blank" rel="noopener">http://www.upantool.com/jiaocheng/disk/3692.html</a></p>
+<a id="more"></a>
+<p><strong>要求：</strong>主板支持USB启动。U盘、移动硬盘容量大于ISO文件的大小。</p>
+<p><strong>软件：</strong><font color="blue"><a href="http://www.baidu.com/s?ie=utf-8&amp;f=3&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ultraiso%E4%B8%8B%E8%BD%BD&amp;oq=ultraiso%25E4%25B8%258B%25E8%25BD%25BD&amp;rsv_pq=cc947746000269da&amp;rsv_t=19eaIQ9KHqEa9A4pG2R5LjqY9kiYB6Guo2r0Sw1uYxqm7eEdte6Z%2BCeXa08&amp;rqlang=cn&amp;rsv_enter=0&amp;prefixsug=ultraiso%25E4%25B8%258B%25E8%25BD%25BD&amp;rsp=0" target="_blank" rel="noopener">UltraISO点击可下载</a> </font></p>
+<p><strong>步骤：</strong>1、启动UltraISO。单击菜单栏上的文件－打开。打开所需的系统ISO文件。</p>
+<p><img src="https://i.loli.net/2017/09/06/59afd5394cae0.jpg" alt="1.jpg"></p>
+<p>2、在左上角应该看到“可启动”字样。否则就不能用U盘、移动硬盘引导计算机启动。</p>
+<p><img src="https://i.loli.net/2017/09/06/59afd539839ff.jpg" alt="2.jpg"></p>
+<p>3、将U盘、移动硬盘插入计算机。</p>
+<p>4、单击菜单栏上的启动—写入硬盘映像。 选择需要写入的U盘，移动硬盘。写入模式选择USB－HDD+。<br>   然后单击“写入”。</p>
+<p>   注意：此操作将格式化U盘、移动硬盘。请做好数据备份！</p>
+<p><img src="https://i.loli.net/2017/09/06/59afd539959a5.jpg" alt="3.jpg"></p>
+<p>5、等待写入完成。</p>
+<p><img src="https://i.loli.net/2017/09/06/59afd53996b29.jpg" alt="4.jpg"></p>
+<p>6、重新启动计算机。会有类似于 F12-Boot Menu 的字样。按下选择启动设备的对应键，选择U盘启动。</p>
+<hr>
+<h1 id="第二步：用此U盘系统盘安装Win7系统"><a href="#第二步：用此U盘系统盘安装Win7系统" class="headerlink" title="第二步：用此U盘系统盘安装Win7系统"></a>第二步：用此U盘系统盘安装Win7系统</h1><p><a href="https://www.zhihu.com/question/23042197" target="_blank" rel="noopener">https://www.zhihu.com/question/23042197</a></p>
+<p>1.查询自己电脑进入<font color="blue"><a href="http://www.udashi.com/jc/2.html" target="_blank" rel="noopener">BIOS的快捷键</a>，</font>将U盘设为第一启动设备。</p>
+<p>（注：组装机根据主板找到快捷键，品牌机和笔记本根据品牌找到快捷键，可能有些品牌的台式机与笔记本快捷键不一样。）</p>
+<p>2.把制作好的U盘插入需要安装系统的电脑USB插口。</p>
+<blockquote>
+<p>重启电脑后，按下BIOS的快捷键，进入 BIOS SETUP 界面，将“Hard Disk Boot Priority”的“First Boot Device”设置为U盘优先启动，比如“KingstonDataTraveler 2”，然后保存更改并再次重新启动电脑，即可进入U盘启动安装Win7系统。</p>
+</blockquote>
+<p><a href="http://www.udashi.com/jc/2.html" target="_blank" rel="noopener">http://www.udashi.com/jc/2.html</a></p>
+<p>3. 出现Windows 7安装界面，首先一次选择为中文（简体），选择好了点击下一步；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdaf99872c.png" alt="11.png"></p>
+<p>4. 点击安装</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdaf9b3e1a.png" alt="12.png"></p>
+<p>5. 出现“安装程序正在启动…” </p>
+<p><img src="https://i.loli.net/2017/09/06/59afdaf9e3f61.png" alt="13.png"></p>
+<p>6. 现在出现协议书，把“我接受许可条款”勾上；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdaf94f604.png" alt="14.png"></p>
+<p>7. 这里，我们选择“自定义（高级）”；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdaf8a4e31.jpg" alt="15.jpg"></p>
+<p>8. 这里选择第一个分区（之后想定义为系统盘C盘的分区），类型为系统，再点击下一步（在这之前我们可以<font color="red">格式化第一个分区，在“驱动器选项（高级）（A）”那里</font>）；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdaf8a5acb.jpg" alt="16.jpg"></p>
+<p>硬盘分区的方法，一般C盘设为系统盘，D盘为软件安装盘，E盘为文件资料盘等。</p>
+<p>9. 正在安装的界面；这里需要一定的时间，过了一定的时间后；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdaf8bbf88.jpg" alt="17.jpg"></p>
+<p>10. 会提醒“安装程序正在启动服务”；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdaf86f66f.jpg" alt="18.jpg"></p>
+<p>11. 再提醒“重新启动您的计算机后安装过程将继续”，这里是自动运行；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdaf859b8b.jpg" alt="19.jpg"></p>
+<p>12. 等到电脑屏幕黑了，然后把U盘取出来，系统可能会自动重启多次；</p>
+<p>13. 然后出现“正在启动Windows”画面；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdaf82ac3f.jpg" alt="20.jpg"></p>
+<p>14.  到这个界面基本我们安装好了，这里输入你的PC名字，在点击下一步</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdfed55716.jpg" alt="21.jpg"></p>
+<p>15. 跳过，不要输入密码，直接下一步；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdfed94f73.jpg" alt="22.jpg"></p>
+<p>16. 这里要输入秘钥，暂时不输入，直接点击下一步，到时用激活工具激活就可以了；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdfed7216d.jpg" alt="23.jpg"></p>
+<p>17. 这里我们选择“使用推荐设置”；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdfedd9868.png" alt="24.png"></p>
+<p>18. 调整时间和日期</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdfedcf1c9.png" alt="25.png"></p>
+<p>19. 选择计算机网络，一般选择公共网络；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdfedbe3d6.jpg" alt="26.jpg"></p>
+<p>20. “Windows7旗舰版”正在启动；</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdfed73c0f.jpg" alt="27.jpg"></p>
+<p>21. 然后就进入了Windows系统了，安装完成！</p>
+<p><img src="https://i.loli.net/2017/09/06/59afdfed3a38f.jpg" alt="28.jpg"></p>
+<p>22. 用激活工具激活Window系统，重启</p>
+<p>下载地址：<a href="https://pan.baidu.com/s/1i5p3G49" target="_blank" rel="noopener">https://pan.baidu.com/s/1i5p3G49</a> </p>
+<p>23. 用<font color="blue"><a href="https://www.google.co.jp/search?q=%E9%A9%B1%E5%8A%A8%E4%BA%BA%E7%94%9F+%E6%9C%AC%E5%9C%B0%E7%89%88&amp;oq=%E9%A9%B1%E5%8A%A8%E4%BA%BA%E7%94%9F+%E6%9C%AC%E5%9C%B0%E7%89%88&amp;aqs=chrome..69i57j69i65.4898j0j4&amp;sourceid=chrome&amp;ie=UTF-8" target="_blank" rel="noopener">驱动人生本地版</a>，</font>完成所有重要驱动安装。</p>
+<hr>
+<p><span id="busuanzi_container_page_pv"><br>&lt;已有 <span id="busuanzi_value_page_pv"></span> 次阅读&gt;<br></span></p>
+<hr>
+<p>由于本文作者水平有限，文中如有错误之处，欢迎大家批评指正！</p>
+<p>① 本文仅代表作者个人观点，不代表任何其它立场，欢迎交流合作！</p>
+<p>② 转载与分享请注明：本文源于 <a href="http://meiweiping.cn">http://meiweiping.cn</a></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://meiweiping.cn/如何用U盘安装Win7系统/" data-id="cjv3ez5vy004dfcwb0scpiju8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Weiping Mei"
+        },
+        "headline": "如何用U盘安装Win7系统",
+        "image": "http://meiweiping.cnhttps://i.loli.net/2017/09/06/59afd5394cae0.jpg",
+        "keywords": "电脑技术 U盘装系统",
+        "genre": "技术 电脑技术",
+        "datePublished": "2017-09-06",
+        "dateCreated": "2017-09-06",
+        "dateModified": "2018-08-25",
+        "url": "http://meiweiping.cn/如何用U盘安装Win7系统/",
+        "description": "
+
+总体分为两步，第一步：用UltraISO 制作U盘系统盘。第二步：用此U盘系统盘安装Win7系统。
+
+第一步：用UltraISO 制作U盘系统盘http://www.upantool.com/jiaocheng/disk/3692.html"
+        "wordCount": 135
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/weiping_mei" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/meiweipingg" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/PhDMeiwp" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google" href="https://scholar.google.com/citations?user=Tmp_SpUAAAAJ&hl=en" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/为什么蚊子喜欢咬我/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            为什么蚊子喜欢咬我
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/视力表、眼镜度数对照表/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">视力表、眼镜度数对照表</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/拿到驾照后，遇路面结冰怎么开车/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/拿到驾照后，遇路面结冰怎么开车/减速慢行.jpg)" alt="拿到驾照后，遇路面结冰怎么开车" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/技术/汽车/">汽车</a></p>
+                            <p class="item-title"><a href="/拿到驾照后，遇路面结冰怎么开车/" class="title">拿到驾照后，遇路面结冰怎么开车</a></p>
+                            <p class="item-date"><time datetime="2019-03-22T09:07:26.000Z" itemprop="datePublished">2019-03-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/考驾照秘笈-科目三/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/考驾照秘笈-科目三/起步.jpg)" alt="考驾照秘笈-科目三" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/技术/汽车/">汽车</a></p>
+                            <p class="item-title"><a href="/考驾照秘笈-科目三/" class="title">考驾照秘笈-科目三</a></p>
+                            <p class="item-date"><time datetime="2019-03-22T05:44:50.000Z" itemprop="datePublished">2019-03-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/考驾照秘笈-科目二/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/考驾照秘笈-科目二/离合.jpg)" alt="考驾照秘笈-科目二" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/技术/汽车/">汽车</a></p>
+                            <p class="item-title"><a href="/考驾照秘笈-科目二/" class="title">考驾照秘笈-科目二</a></p>
+                            <p class="item-date"><time datetime="2019-03-22T03:06:22.000Z" itemprop="datePublished">2019-03-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/回国后的支援for在日本留学过的学生/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/回国后的支援for在日本留学过的学生/jasso.png)" alt="回国后的支援for在日本留学过的学生" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/国际/">国际</a></p>
+                            <p class="item-title"><a href="/回国后的支援for在日本留学过的学生/" class="title">回国后的支援for在日本留学过的学生</a></p>
+                            <p class="item-date"><time datetime="2018-08-27T07:41:40.000Z" itemprop="datePublished">2018-08-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/Hobby让work更有效/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/Hobby让work更有效/hobbies.png)" alt="Hobby让work更有效" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/学外/">学外</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/学外/学外/">学外</a></p>
+                            <p class="item-title"><a href="/Hobby让work更有效/" class="title">Hobby让work更有效</a></p>
+                            <p class="item-date"><time datetime="2018-08-26T04:18:51.000Z" itemprop="datePublished">2018-08-26</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/国际/">国际</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/">学外</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/学外/他山之石/">他山之石</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/学外/">学外</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/推荐书单/">推荐书单</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">51</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/R-语言/">R 语言</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/数据处理/">数据处理</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/汽车/">汽车</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/电脑技术/">电脑技术</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/科研小工具/">科研小工具</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/生活/名言警句/">名言警句</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/家庭医生/">家庭医生</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/文化/">文化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/趣味百科/">趣味百科</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/">科研</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/科研/个人微关注/">个人微关注</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/同位素/">同位素</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基金/">基金</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/学术规范/">学术规范</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研时间表/">科研时间表</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/论文/">论文</a><span class="category-list-count">7</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">本站统计</h3>
+        <div class="widget">
+  <ul>
+    
+    <li><center><a href="http://info.flagcounter.com/UcO3"><img src="http://s01.flagcounter.com/count2/UcO3/bg_F2F2F2/txt_000000/border_F2F2F2/columns_2/maxflags_100/viewers_0/labels_1/pageviews_1/flags_1/percent_0/" width="90%" height="90%" align="center/" border="0"></a></center></li>
+    
+    <li><center><a href="https://www.revolvermaps.com/?target=enlarge&amp;i=5wvp5ufpxwv" title="流量统计" target="_blank"><img src="//rf.revolvermaps.com/h/m/a/0/ff0000/128/0/5wvp5ufpxwv.png" width="90%" height="90%" align="center/" alt="Map" style="border:0;"></a></center></li>
+    
+  </ul>
+</div>
+</div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">左邻右舍</h3>
+        <div class="widget">
+  <ul>
+	<a href="https://github.com/AndrewLJackson">Andrew_L._Jackson&nbsp;&nbsp;</a>  
+	<a href="https://github.com/andrewcparnell">Andrew_C._Parnell&nbsp;&nbsp;</a>  
+	<a href="http://yuumezawa.com/Lab/index.htm">Yu_Umezawa&nbsp;&nbsp;</a> 
+
+	<a href="https://guangchuangyu.github.io/cn/">Y叔&nbsp;&nbsp;</a>
+	<a href="http://apansharing.blogspot.com/">阿磐老师&nbsp;&nbsp;</a>
+	<a href="http://blog.sciencenet.cn/home.php?mod=space&uid=71964">马臻老师&nbsp;&nbsp;</a>
+	<a href="http://www.biotrainee.com/">生信技能树主页&nbsp;&nbsp;</a>
+	<a href="https://space.bilibili.com/338686099/#/">生信技能树视频&nbsp;&nbsp;</a> 
+	<a href="https://yihui.name/cn/">谢益辉大神&nbsp;&nbsp;</a>
+  </ul>
+</div>
+</div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://www.researchgate.net/profile/Weiping_Mei">ResearchGate</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://www.rdocumentation.org/collaborators/name/Weiping%20Mei">r-project</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://bbs.sciencenet.cn/home.php?mod=space&uid=651374&view=meiweipingg">科学网</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://t.zsxq.com/yFEIAUf">知识星球</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Weiping Mei</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'weipingmei';
+    
+    
+    var disqus_url = 'http://meiweiping.cn/如何用U盘安装Win7系统/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
