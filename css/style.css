@@ -229,7 +229,7 @@ body,
   background: #09c419;
 }
 body {
-  background: #eaeaea;
+  background: #fff;
   font: 14px "Titillium Web", "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", sans-serif;
   -webkit-text-size-adjust: 100%;
 }
@@ -321,7 +321,6 @@ code {
   color: #666;
   font-size: 16px;
   font-weight: 600;
-  text-transform: uppercase;
   line-height: 24px;
 }
 #main .main-body-header .page-title-link,
@@ -1261,7 +1260,7 @@ a.article-title:hover {
   line-height: 1em;
   padding: 6px 15px;
   border-radius: 15px;
-  background: #eaeaea;
+  background: #fff;
   color: #aaa;
   text-shadow: 0 1px #fff;
   text-decoration: none;
@@ -1335,7 +1334,7 @@ a.article-title:hover {
   line-height: 36px;
 }
 .article-share-links {
-  background: #eaeaea;
+  background: #fff;
 }
 .article-share-links:before,
 .article-share-links:after {
@@ -1641,7 +1640,7 @@ a.article-title:hover {
   padding: 0px 30px 30px 30px;
 }
 #footer #back-to-top {
-  background: #eaeaea;
+  background: #fff;
   color: #777;
   overflow: hidden;
   text-align: center;
