@@ -988,7 +988,7 @@ code {
 }
 .article-title {
   text-decoration: none;
-  font-size: 38px;
+  font-size: 24px;
   letter-spacing: -1px;
   color: #555;
   line-height: 1.3em;
@@ -1045,9 +1045,9 @@ a.article-title:hover {
 }
 .article-entry {
   color: #555;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 300;
-  line-height: 1.6em;
+  line-height: 2.08em;
 }
 .article-entry:before,
 .article-entry:after {
@@ -1133,9 +1133,9 @@ a.article-title:hover {
 .article-entry blockquote:before {
   top: 0;
   left: 0;
-  color: #ccc;
-  font-size: 16px;
-  content: "\f10d";
+  color: #ffbf00;
+  font-size: 24px;
+  content: "\f0f4";
   position: absolute;
   text-align: center;
   font-style: normal;
