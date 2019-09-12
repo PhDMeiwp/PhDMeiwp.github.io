@@ -12,19 +12,19 @@
     
         <meta name="keywords" content="Alpha多样性,Chao 1指数,Simpson指数,Shannon指数,R语言">
     
-    <meta name="description" content="写在前面多样性指数是指物种多样性测定，主要有三个空间尺度：α多样性，β多样性，γ多样性。每个空间尺度的环境不同测定的数据也不相同。  α多样性，主要关注局域均匀生境下的物种数目，因此也被称为生境内的多样性（within-habitat diversity）。  β多样性，指沿环境梯度不同生境群落之间物种组成的的相异性或物种沿环境梯度的更替速率也被称为生境间的多样性（between-habitat">
+    <meta name="description" content="写在前面多样性指数是指物种多样性测定，主要有三个空间尺度：α多样性，β多样性，γ多样性。每个空间尺度的环境不同测定的数据也不相同。  α多样性，主要关注局域均匀生境下的物种数目，因此也被称为生境内的多样性（within-habitat diversity）。   β多样性，指沿环境梯度不同生境群落之间物种组成的的相异性或物种沿环境梯度的更替速率也被称为生境间的多样性（between-habitat">
 <meta name="keywords" content="Alpha多样性,Chao 1指数,Simpson指数,Shannon指数,R语言">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[转载]物种Alpha多样性指数简介及R语言实现">
 <meta property="og:url" content="http://PhDMeiwp.github.io/转载-物种Alpha多样性指数简介/index.html">
 <meta property="og:site_name" content="Weiping Mei | 梅卫平">
-<meta property="og:description" content="写在前面多样性指数是指物种多样性测定，主要有三个空间尺度：α多样性，β多样性，γ多样性。每个空间尺度的环境不同测定的数据也不相同。  α多样性，主要关注局域均匀生境下的物种数目，因此也被称为生境内的多样性（within-habitat diversity）。  β多样性，指沿环境梯度不同生境群落之间物种组成的的相异性或物种沿环境梯度的更替速率也被称为生境间的多样性（between-habitat">
+<meta property="og:description" content="写在前面多样性指数是指物种多样性测定，主要有三个空间尺度：α多样性，β多样性，γ多样性。每个空间尺度的环境不同测定的数据也不相同。  α多样性，主要关注局域均匀生境下的物种数目，因此也被称为生境内的多样性（within-habitat diversity）。   β多样性，指沿环境梯度不同生境群落之间物种组成的的相异性或物种沿环境梯度的更替速率也被称为生境间的多样性（between-habitat">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://phdmeiwp.github.io/转载-物种Alpha多样性指数简介/Richness.png">
-<meta property="og:updated_time" content="2019-09-12T07:00:54.400Z">
+<meta property="og:updated_time" content="2019-09-12T07:27:37.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转载]物种Alpha多样性指数简介及R语言实现">
-<meta name="twitter:description" content="写在前面多样性指数是指物种多样性测定，主要有三个空间尺度：α多样性，β多样性，γ多样性。每个空间尺度的环境不同测定的数据也不相同。  α多样性，主要关注局域均匀生境下的物种数目，因此也被称为生境内的多样性（within-habitat diversity）。  β多样性，指沿环境梯度不同生境群落之间物种组成的的相异性或物种沿环境梯度的更替速率也被称为生境间的多样性（between-habitat">
+<meta name="twitter:description" content="写在前面多样性指数是指物种多样性测定，主要有三个空间尺度：α多样性，β多样性，γ多样性。每个空间尺度的环境不同测定的数据也不相同。  α多样性，主要关注局域均匀生境下的物种数目，因此也被称为生境内的多样性（within-habitat diversity）。   β多样性，指沿环境梯度不同生境群落之间物种组成的的相异性或物种沿环境梯度的更替速率也被称为生境间的多样性（between-habitat">
 <meta name="twitter:image" content="http://phdmeiwp.github.io/转载-物种Alpha多样性指数简介/Richness.png">
     
 
@@ -227,14 +227,16 @@
         <div class="article-entry" itemprop="articleBody">
             <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>多样性指数是指物种多样性测定，主要有三个空间尺度：α多样性，β多样性，γ多样性。每个空间尺度的环境不同测定的数据也不相同。</p>
 <ul>
-<li><p>α多样性，主要关注局域均匀生境下的物种数目，因此也被称为生境内的多样性（within-habitat diversity）。</p>
-</li>
-<li><p>β多样性，指沿环境梯度不同生境群落之间物种组成的的相异性或物种沿环境梯度的更替速率也被称为生境间的多样性（between-habitat diversity），控制β多样性的主要生态因子有土壤、地貌及干扰等。<br>不同群落或某环境梯度上不同点之间的共有种越少，β多样性越大。精确地测定β多样性具有重要的意义。这是因为：①它可以指示生境被物种隔离的程度；②β多样性的测定值可以用来比较不同地段的生境多样性；③β多样性与α多样性一起构成了总体多样性或一定地段的生物异质性。</p>
-</li>
-<li><p>γ多样性，描述区域或大陆尺度的多样性，是指区域或大陆尺度的物种数量，也被称为区域多样性（regional diversity）。控制γ多样性的生态过程主要为水热动态，气候和物种形成及演化的历史。</p>
-</li>
+<li>α多样性，主要关注局域均匀生境下的物种数目，因此也被称为生境内的多样性（within-habitat diversity）。</li>
 </ul>
-<p>本文来自刘尧科学网博客。<br>链接地址1：<a href="http://blog.sciencenet.cn/blog-3406804-1179809.html" target="_blank" rel="noopener">http://blog.sciencenet.cn/blog-3406804-1179809.html</a> </p>
+<ul>
+<li>β多样性，指沿环境梯度不同生境群落之间物种组成的的相异性或物种沿环境梯度的更替速率也被称为生境间的多样性（between-habitat diversity），控制β多样性的主要生态因子有土壤、地貌及干扰等。<br>不同群落或某环境梯度上不同点之间的共有种越少，β多样性越大。精确地测定β多样性具有重要的意义。<br>这是因为：①它可以指示生境被物种隔离的程度；<br>②β多样性的测定值可以用来比较不同地段的生境多样性；<br>③β多样性与α多样性一起构成了总体多样性或一定地段的生物异质性。</li>
+</ul>
+<ul>
+<li>γ多样性，描述区域或大陆尺度的多样性，是指区域或大陆尺度的物种数量，也被称为区域多样性（regional diversity）。控制γ多样性的生态过程主要为水热动态，气候和物种形成及演化的历史。</li>
+</ul>
+<hr>
+<p>本文来自刘尧科学网博客。<br>链接地址：<a href="http://blog.sciencenet.cn/blog-3406804-1179809.html" target="_blank" rel="noopener">http://blog.sciencenet.cn/blog-3406804-1179809.html</a> </p>
 <p>本文简介群落多样性分析中的几种常用Alpha多样性指数概念。</p>
 <h1 id="一、最常用Alpha多样性指数"><a href="#一、最常用Alpha多样性指数" class="headerlink" title="一、最常用Alpha多样性指数"></a>一、最常用Alpha多样性指数</h1><h2 id="1-物种丰富度（Richness）"><a href="#1-物种丰富度（Richness）" class="headerlink" title="1. 物种丰富度（Richness）"></a>1. 物种丰富度（Richness）</h2><p>物种丰富度指数（Species richness）为群落中丰度大于0的物种数之和，值越大表明群落中物种种类越丰富。下式中，<strong>S，物种丰富度指数；n，个体数（丰度）大于0的物种类型总数</strong>。</p>
 <img src="/转载-物种Alpha多样性指数简介/Richness.png" title="Richness.png"> 
@@ -491,6 +493,16 @@
         
 <nav id="article-nav">
     
+        <a href="/BugBase软件及FAPROTAX软件推荐/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            BugBase软件及FAPROTAX软件推荐
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
     
         <a href="/转载-使用“生物学名”的4项要点/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
@@ -512,6 +524,26 @@
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/BugBase软件及FAPROTAX软件推荐/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/BugBase软件及FAPROTAX软件推荐/FAPROTAX.jpg)" alt="BugBase软件及FAPROTAX软件推荐" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/技术/科研小工具/">科研小工具</a></p>
+                            <p class="item-title"><a href="/BugBase软件及FAPROTAX软件推荐/" class="title">BugBase软件及FAPROTAX软件推荐</a></p>
+                            <p class="item-date"><time datetime="2019-09-12T07:28:31.000Z" itemprop="datePublished">2019-09-12</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -593,26 +625,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/一键制作三线表，让你的论文一遍过/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/一键制作三线表，让你的论文一遍过/一键三线表.png)" alt="一键制作三线表，让你的论文一遍过" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/技术/科研小工具/">科研小工具</a></p>
-                            <p class="item-title"><a href="/一键制作三线表，让你的论文一遍过/" class="title">一键制作三线表，让你的论文一遍过</a></p>
-                            <p class="item-date"><time datetime="2019-06-21T03:04:43.000Z" itemprop="datePublished">2019-06-21</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -622,7 +634,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/国际/">国际</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/">学外</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/学外/他山之石/">他山之石</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/学外/">学外</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/推荐书单/">推荐书单</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">57</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/R-语言/">R 语言</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/数据处理/">数据处理</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/汽车/">汽车</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/电脑技术/">电脑技术</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/科研小工具/">科研小工具</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/生活/名言警句/">名言警句</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/家庭医生/">家庭医生</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/文化/">文化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/趣味百科/">趣味百科</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/">科研</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/科研/个人微关注/">个人微关注</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/同位素/">同位素</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基础概念/">基础概念</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基金/">基金</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/学术规范/">学术规范</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研时间表/">科研时间表</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研行规/">科研行规</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/论文/">论文</a><span class="category-list-count">7</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/国际/">国际</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/">学外</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/学外/他山之石/">他山之石</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/学外/">学外</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/推荐书单/">推荐书单</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/R-语言/">R 语言</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/数据处理/">数据处理</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/汽车/">汽车</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/电脑技术/">电脑技术</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/科研小工具/">科研小工具</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/生活/名言警句/">名言警句</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/家庭医生/">家庭医生</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/文化/">文化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/趣味百科/">趣味百科</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/">科研</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/科研/个人微关注/">个人微关注</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/同位素/">同位素</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基础概念/">基础概念</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基金/">基金</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/学术规范/">学术规范</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研时间表/">科研时间表</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研行规/">科研行规</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/论文/">论文</a><span class="category-list-count">7</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -641,7 +653,7 @@
 		
 		<center><span title="博客总字数统计">
 
-         <span class="post-count">&nbsp;中文版博客总字数统计：<b>192.3k</b></span>	
+         <span class="post-count">&nbsp;中文版博客总字数统计：<b>192.9k</b></span>	
 		
 		</span></center></ul>
 
