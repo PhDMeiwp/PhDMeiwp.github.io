@@ -10,10 +10,10 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="R包,R包升级,basicTrendline">
+        <meta name="keywords" content="basicTrendline,R包,R包升级">
     
     <meta name="description" content="R包维护和升级方法（以basicTrendline包为例）2020-11-24 R: Version 4.0.3RStudio: Version 1.3.1093   第一步：Clone原始R包 从GitHub克隆当前版本R包（version2.0.3）  进入并确定GitHub链接网址 https://github.com/PhDMeiwp/basicTrendline  登录Github个人账">
-<meta name="keywords" content="R包,R包升级,basicTrendline">
+<meta name="keywords" content="basicTrendline,R包,R包升级">
 <meta property="og:type" content="article">
 <meta property="og:title" content="R包维护和升级方法-图文版">
 <meta property="og:url" content="http://PhDMeiwp.github.io/R包维护和升级方法-图文版/index.html">
@@ -21,7 +21,7 @@
 <meta property="og:description" content="R包维护和升级方法（以basicTrendline包为例）2020-11-24 R: Version 4.0.3RStudio: Version 1.3.1093   第一步：Clone原始R包 从GitHub克隆当前版本R包（version2.0.3）  进入并确定GitHub链接网址 https://github.com/PhDMeiwp/basicTrendline  登录Github个人账">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://phdmeiwp.github.io/R包维护和升级方法-图文版/basicTrendline.png">
-<meta property="og:updated_time" content="2020-11-25T01:47:02.399Z">
+<meta property="og:updated_time" content="2020-11-25T02:17:05.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R包维护和升级方法-图文版">
 <meta name="twitter:description" content="R包维护和升级方法（以basicTrendline包为例）2020-11-24 R: Version 4.0.3RStudio: Version 1.3.1093   第一步：Clone原始R包 从GitHub克隆当前版本R包（version2.0.3）  进入并确定GitHub链接网址 https://github.com/PhDMeiwp/basicTrendline  登录Github个人账">
@@ -218,7 +218,8 @@
 </ul>
 <img src="/R包维护和升级方法-图文版/gitbash.png"> 
 <ul>
-<li>输入如下代码，克隆R包，完成后如下图<br>  git clone <a href="https://github.com/PhDMeiwp/basicTrendline.git" target="_blank" rel="noopener">https://github.com/PhDMeiwp/basicTrendline.git</a></li>
+<li>输入如下代码，克隆R包，完成后如下图<pre><code>git clone https://github.com/PhDMeiwp/basicTrendline.git
+</code></pre></li>
 </ul>
 <img src="/R包维护和升级方法-图文版/gitclone.png"> 
 <ul>
@@ -253,7 +254,11 @@
 </ul>
 <img src="/R包维护和升级方法-图文版/SSexp2P.png"> 
 <h2 id="第四步：生成新R包并Check"><a href="#第四步：生成新R包并Check" class="headerlink" title="第四步：生成新R包并Check"></a>第四步：生成新R包并Check</h2><ul>
-<li>载入“devtools”函数包进行后续操作，代码依次如下：<br>  library(devtools)   #没有这个R包的话请先自行install<h1 id="load-all-加载所有-R文件"><a href="#load-all-加载所有-R文件" class="headerlink" title="load_all()    #加载所有.R文件"></a>load_all()    #加载所有.R文件</h1>  document()    #依据<strong>.R文件中的注释自动生成对应的</strong>.Rd文件（在man文件夹）<br>  build()    #生成basicTrendline_2.0.5.tar.gz文件到电脑本地</li>
+<li>载入“devtools”函数包进行后续操作，代码依次如下：<pre><code>library(devtools)   #没有这个R包的话请先自行install
+# load_all()    #加载所有.R文件
+document()    #依据**.R文件中的注释自动生成对应的**.Rd文件（在man文件夹）
+build()    #生成basicTrendline_2.0.5.tar.gz文件到电脑本地
+</code></pre></li>
 </ul>
 <img src="/R包维护和升级方法-图文版/build.png">  
 <ul>
@@ -275,21 +280,31 @@
 </li>
 <li><p>（再次确认已登录个人Github账号），在“basicTrendline”文件夹中鼠标右键“Git Bash Here”，输入以下代码: </p>
 </li>
-<li><p>途中会弹出对话框要求输入Github的用户名和密码，之后即可完成上传R包到Github。<br>  git init<br>  git remote add origin <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:PhDMeiwp/basicTrendline.git<br>  git add .<br>  git commit –m “version 2.0.5”<br>  git push origin master –f</p>
-</li>
+<li><p>途中会弹出对话框要求输入Github的用户名和密码，之后即可完成上传R包到Github。</p>
+<pre><code>git init
+git remote add origin git@github.com:PhDMeiwp/basicTrendline.git
+git add .
+git commit –m “version 2.0.5”
+git push origin master –f
+</code></pre></li>
 <li><p>上传完成后，在Github网站再确认一下是否上传成功，如下图。</p>
 </li>
 </ul>
 <img src="/R包维护和升级方法-图文版/github.png"> 
 <p>以上。</p>
 <hr>
-<h2 id="附注"><a href="#附注" class="headerlink" title="附注"></a>附注</h2><p>“basicTrendline”函数包是用来添加拟合曲线（含置信区间）的R包，目前version2.0.5版本内置拟合曲线包含7种（line2P, line3P, log2P, exp2P, exp3P, power2P, power3P）。<br>“basicTrendline”函数包使用方法请直接移步至  <a href="https://github.com/PhDMeiwp/basicTrendline" target="_blank" rel="noopener">https://github.com/PhDMeiwp/basicTrendline</a> 即可查看完整Examples。</p>
-<p>如果您愿意的话，欢迎在您的学术论文中引用“basicTrendline”包，引用格式如下：<br>Mei W, Yu G, Lai J, Rao Q, Umezawa Y (2018) basicTrendline: Add Trendline and Confidence Interval of Basic Regression Models to Plot. R package version 2.0.5. <a href="http://CRAN.R-project.org/package=basicTrendline" target="_blank" rel="noopener">http://CRAN.R-project.org/package=basicTrendline</a></p>
+<h2 id="附注"><a href="#附注" class="headerlink" title="附注"></a>附注</h2><ul>
+<li>“basicTrendline”函数包是用来添加拟合曲线（含置信区间）的R包，目前version2.0.5版本内置拟合曲线包含7种（line2P, line3P, log2P, exp2P, exp3P, power2P, power3P）。</li>
+<li><p>“basicTrendline”函数包使用方法请直接移步至  <a href="https://github.com/PhDMeiwp/basicTrendline" target="_blank" rel="noopener">https://github.com/PhDMeiwp/basicTrendline</a> 即可查看完整Examples。</p>
+</li>
+<li><p>如果您愿意的话，欢迎在您的学术论文中引用“basicTrendline”包，引用格式如下：<br>Mei W, Yu G, Lai J, Rao Q, Umezawa Y (2018) basicTrendline: Add Trendline and Confidence Interval of Basic Regression Models to Plot. R package version 2.0.5. <a href="http://CRAN.R-project.org/package=basicTrendline" target="_blank" rel="noopener">http://CRAN.R-project.org/package=basicTrendline</a></p>
+</li>
+</ul>
 <img src="/R包维护和升级方法-图文版/citation.png"> 
-<p>祝君：论文多多，基金多多；工作顺利，生活美满。</p>
+<p><strong>祝君：论文多多，基金多多；工作顺利，生活美满。</strong></p>
 <hr>
 <p><span id="busuanzi_container_page_pv"><br>&lt;已有 <span id="busuanzi_value_page_pv"></span> 次阅读&gt;</span></p>
-<h2 id><a href="#" class="headerlink" title></a></h2><p>由于本文作者水平有限，文中如有错误之处，欢迎大家批评指正！<br><br>① 本文仅代表作者个人观点，不代表任何其它立场，欢迎交流合作！<br><br>② 转载与分享请注明：本文源于 <a href="http://meiweiping.cn" target="_blank" rel="noopener">http://meiweiping.cn</a></p>
+<h2 id><a href="#" class="headerlink" title></a></h2><p style="color:darkred"> 由于本文作者水平有限，文中如有错误之处，欢迎大家批评指正！本文仅代表作者个人观点，不代表任何其它立场，欢迎交流合作！转载与分享请注明：本文源于 <a href="http://meiweiping.cn" target="_blank" rel="noopener">http://meiweiping.cn</a> </p>
 
 			
 		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
