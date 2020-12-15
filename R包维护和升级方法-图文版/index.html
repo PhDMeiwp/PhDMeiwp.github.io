@@ -21,7 +21,7 @@
 <meta property="og:description" content="R包维护和升级方法（以basicTrendline包为例）2020-11-24 R: Version 4.0.3RStudio: Version 1.3.1093   第一步：Clone原始R包 从GitHub克隆当前版本R包（version2.0.3）  进入并确定GitHub链接网址 https://github.com/PhDMeiwp/basicTrendline  登录Github个人账">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://phdmeiwp.github.io/R包维护和升级方法-图文版/basicTrendline.png">
-<meta property="og:updated_time" content="2020-11-25T02:31:31.806Z">
+<meta property="og:updated_time" content="2020-12-15T09:46:00.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R包维护和升级方法-图文版">
 <meta name="twitter:description" content="R包维护和升级方法（以basicTrendline包为例）2020-11-24 R: Version 4.0.3RStudio: Version 1.3.1093   第一步：Clone原始R包 从GitHub克隆当前版本R包（version2.0.3）  进入并确定GitHub链接网址 https://github.com/PhDMeiwp/basicTrendline  登录Github个人账">
@@ -226,9 +226,11 @@
 <li>然后在“Update2020”文件夹里会自动生成一个“basicTrendline”文件夹，打开该文件夹，查看里面内容，如下图：</li>
 </ul>
 <img src="/R包维护和升级方法-图文版/update2020.png">  
+<hr>
 <h2 id="第二步：删除不必要文件"><a href="#第二步：删除不必要文件" class="headerlink" title="第二步：删除不必要文件"></a>第二步：删除不必要文件</h2><ul>
 <li>删除上图“basicTrendline”文件夹中“docs”文件夹和“README.md”文件，因为向CRAN官网提交R包不需要这两个文件，只有GitHub里用到了二者。</li>
 </ul>
+<hr>
 <h2 id="第三步：修改-新增R包中的相应文件"><a href="#第三步：修改-新增R包中的相应文件" class="headerlink" title="第三步：修改/新增R包中的相应文件"></a>第三步：修改/新增R包中的相应文件</h2><ul>
 <li>用RStudio软件打开“basicTrendline.Rproj”，修改“R”文件夹、“DESCRIPTION”、及“NEWS”中的内容。</li>
 </ul>
@@ -253,6 +255,7 @@
 </li>
 </ul>
 <img src="/R包维护和升级方法-图文版/SSexp2P.png"> 
+<hr>
 <h2 id="第四步：生成新R包并Check"><a href="#第四步：生成新R包并Check" class="headerlink" title="第四步：生成新R包并Check"></a>第四步：生成新R包并Check</h2><ul>
 <li>载入“devtools”函数包进行后续操作，代码依次如下：<pre><code>library(devtools)   #没有这个R包的话请先自行install
 # load_all()    #加载所有.R文件
@@ -269,11 +272,13 @@ build()    #生成basicTrendline_2.0.5.tar.gz文件到电脑本地
 <li>点击“RStudio”之“Build”之“Check”，检查R包是否有报错，确保检查结果“0 errors | 0 warnings | 0 notes” 方可顺利上传并通过CRAN官网的检查。</li>
 </ul>
 <img src="/R包维护和升级方法-图文版/check.jpg"> 
+<hr>
 <h2 id="第五步：submit更新后的-2-0-5-tar-gz文件到CRAN官网"><a href="#第五步：submit更新后的-2-0-5-tar-gz文件到CRAN官网" class="headerlink" title="第五步：submit更新后的_2.0.5.tar.gz文件到CRAN官网"></a>第五步：submit更新后的_2.0.5.tar.gz文件到CRAN官网</h2><ul>
 <li>登录<a href="https://cran.r-project.org/submit.html" target="_blank" rel="noopener">https://cran.r-project.org/submit.html</a> 网站，按要求一步一步提交.tar.gz文件。</li>
 <li>注意，最后一步必须进行emial里的链接网址确认后，才算提交完成。</li>
 </ul>
 <img src="/R包维护和升级方法-图文版/submit.png"> 
+<hr>
 <h2 id="第六步：上传更新后的R包到GitHub"><a href="#第六步：上传更新后的R包到GitHub" class="headerlink" title="第六步：上传更新后的R包到GitHub"></a>第六步：上传更新后的R包到GitHub</h2><ul>
 <li>在“Update2020”之“basicTrendline”文件夹中重新添加“docs”文件夹和README.md文件。</li>
 <li><p>修改/新增“docs”文件夹里的“images”和“README.md”文件里的介绍内容。</p>
@@ -291,6 +296,7 @@ git push origin master –f
 </li>
 </ul>
 <img src="/R包维护和升级方法-图文版/github.png"> 
+<hr>
 <p>以上。</p>
 <hr>
 <h2 id="附注"><a href="#附注" class="headerlink" title="附注"></a>附注</h2><ul>
@@ -633,7 +639,7 @@ git push origin master –f
 		
 		<center><span title="博客总字数统计">
 
-         <span class="post-count">&nbsp;中文版博客总字数统计：<b>206.8k</b></span>	
+         <span class="post-count">&nbsp;中文版博客总字数统计：<b>207.2k</b></span>	
 		
 		</span></center></ul>
 
