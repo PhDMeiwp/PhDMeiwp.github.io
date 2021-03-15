@@ -21,7 +21,7 @@
 <meta property="og:description" content="(本文于 2016-5-8 09:53  首发于 “科学网”)    Briefly, covariance analysis (ANCOVA) is expressed in the R language as y ~ x +/* y0, where the variable is y, the covariate is y0, the independent variable is x. T">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://image.sciencenet.cn/album/201605/08/093647kxpv96lwvm5xh6kz.jpg">
-<meta property="og:updated_time" content="2018-08-25T02:15:26.341Z">
+<meta property="og:updated_time" content="2021-03-15T09:49:03.043Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Run ANCOVA correctly in R software">
 <meta name="twitter:description" content="(本文于 2016-5-8 09:53  首发于 “科学网”)    Briefly, covariance analysis (ANCOVA) is expressed in the R language as y ~ x +/* y0, where the variable is y, the covariate is y0, the independent variable is x. T">
@@ -225,7 +225,7 @@
 
 <p>Briefly, covariance analysis (ANCOVA) is expressed in the R language as y ~ x +/* y0, where the variable is y, the covariate is y0, the independent variable is x. Then, go ahead code test.</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data.of.Wada2013.practice &lt;- read.csv(<span class="string">"~data of Wada2013 practice.csv"</span>)</span><br><span class="line"></span><br><span class="line">View(data.of.Wada2013.practice)</span><br><span class="line"></span><br><span class="line">eco&lt;-data.of.Wada2013.practice </span><br><span class="line"></span><br><span class="line">eco</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">data.of.Wada2013.practice &lt;- read.csv(<span class="string">"~data of Wada2013 practice.csv"</span>)</span><br><span class="line"></span><br><span class="line">View(data.of.Wada2013.practice)</span><br><span class="line"></span><br><span class="line">eco &lt;- data.of.Wada2013.practice </span><br><span class="line"></span><br><span class="line">eco</span><br></pre></td></tr></table></figure>
 <p>   site  d13C  d15N</p>
 <ol>
 <li><p>1 -28.40  4.05</p>
@@ -279,25 +279,10 @@
 <li><p>3 -21.95  7.10</p>
 </li>
 </ol>
-<pre><code>&gt; attach(eco)
-
-&gt; sitef&lt;-factor(eco$site)
-
-&gt; &lt;font color=red&gt;#Step1: ANCOVA with InterAction&lt;/font&gt;
-
-&gt; mod.IA&lt;-aov(d15N~d13C*sitef,data=eco,  contrasts=list(sitef=contr.sum))
-</code></pre>   <font color="darkgreen">N.B., aov() function, “contr.sum” for factor “sitef”(not  numerical “site”)</font>
-
-<pre><code>&gt; summary(mod.IA) &lt;font color=darkgreen&gt;???              # this summary is &lt;font color=red&gt;wroooong&lt;/font&gt;, it&apos;s for type I , not type III, don&apos;t do this!&lt;/font&gt;
-
-&gt; library(car)
-
-&gt; Anova(mod.IA,type=3)           &lt;font color=darkgreen&gt;# this is riiiiight. Anova() function, not anova  &lt;/font&gt;
-
-&gt;Anova Table (Type III tests)
-</code></pre><p>Response: d15N</p>
-<pre><code>Sum Sq       Df           F value      Pr(&gt;F) 
-</code></pre><p>(Intercept)  70.098        1            13.0456   0.001858 **</p>
+<h2 id="Step1-ANCOVA-with-InterAction"><a href="#Step1-ANCOVA-with-InterAction" class="headerlink" title="Step1: ANCOVA with InterAction."></a>Step1: ANCOVA with InterAction.</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">attach(eco)</span><br><span class="line"></span><br><span class="line">   sitef &lt;- factor(eco<span class="variable">$site</span>)</span><br><span class="line"></span><br><span class="line">   mod.IA&lt;-aov(d15N~d13C*sitef,data=eco,  contrasts=list(sitef=contr.sum))</span><br><span class="line"></span><br><span class="line">   <span class="comment"># N.B., aov() function, "contr.sum" for factor "sitef"(not  numerical "site")</span></span><br><span class="line"></span><br><span class="line">   summary(mod.IA)      <span class="comment"># this summary is wroooong, it's for type I , not type III, don't do this!</span></span><br><span class="line"></span><br><span class="line">   library(car)</span><br><span class="line"></span><br><span class="line">   Anova(mod.IA,<span class="built_in">type</span>=3)       <span class="comment"># this is riiiiight. Anova() function, not anova.</span></span><br><span class="line"></span><br><span class="line">   <span class="comment"># Anova Table (Type III tests)</span></span><br></pre></td></tr></table></figure>
+<p>Response: d15N</p>
+<p>Sum Sq       Df           F value      Pr(&gt;F) </p>
+<p>(Intercept)  70.098        1            13.0456   0.001858 **</p>
 <font color="red">d13C</font>           43.563       1             8.1073    <font color="red">0.010302 *</font>
 
 <p>sitef            3.341         2           0.3109      0.736451  </p>
@@ -307,32 +292,39 @@
 <p>Signif. codes:  0 <strong>* ,0.001 </strong> ,0.01 * ,0.05 . ,0.1 ,  1</p>
 <font color="blue"> <strong>covariate d13C</strong> is <font color="red"><strong>significantly</strong></font> differ with d15N ( p = 0.001858),<br><br> and <strong>interation of  d13C:sitef</strong> is <font color="red"><strong>not</strong> significantly</font> differ ( p = 0.849262 ),</font>
 
-<p>——-&gt;   <font color="red">then we can proceed ANCOVA next.</font></p>
 <hr>
- <font color="red"> Step2: then ANCOVA　NonInterAction, for equal slope, type III</font>
+<blockquote>
+  <font color="red">Then, we can proceed ANCOVA next.</font>
+</blockquote>
+<hr>
+<h2 id="Step2-then-ANCOVA-NonInterAction-for-equal-slope-type-III"><a href="#Step2-then-ANCOVA-NonInterAction-for-equal-slope-type-III" class="headerlink" title="Step2: then ANCOVA　NonInterAction, for equal slope, type III."></a>Step2: then ANCOVA　NonInterAction, for equal slope, type III.</h2><pre><code class="bash">
+mod.NIA&lt;-aov(d15N~d13C+sitef,data=eco,contrasts = list(sitef=contr.sum))
 
-<pre><code>&gt; mod.NIA&lt;-aov(d15N~d13C+sitef,data=eco,contrasts = list(sitef=contr.sum))
+Anova(mod.NIA, <span class="built_in">type</span>=3)
 
-&gt; Anova(mod.NIA, type=3)
-</code></pre><p>Anova Table (Type III tests)</p>
+</code></pre>
+<p>Anova Table (Type III tests)</p>
 <p>Response: d15N</p>
-<pre><code>Sum Sq     Df      F value      Pr(&gt;F)  
-</code></pre><p>(Intercept)   117.10       1        23.677     8.232e-05 ***</p>
+<p>Sum Sq     Df      F value      Pr(&gt;F)  </p>
+<p>(Intercept)   117.10       1        23.677     8.232e-05 ***</p>
 <p>d13C              74.32       1         15.027     0.0008727 ***</p>
 <font color="red">sitef</font>               258.75     2         26.158     <font color="red">1.989e-06 ***</font>
 
 <p>Residuals      103.86     21                      </p>
 <p>Signif. codes:  0 <strong>*, 0.001 </strong>, 0.01 *, 0.05 ., 0.1 ,  1</p>
 <p>p value of 8.232e-05 *** means intercept is significantly not equal to 0.</p>
-<pre><code>&gt; summary.lm(mod.NIA)
-</code></pre><p>Call:</p>
+<pre><code class="bash">
+summary.lm(mod.NIA)
+
+</code></pre>
+<p>Call:</p>
 <p>aov(formula = d15N ~ d13C + sitef, data = eco, contrasts = list(sitef = contr.sum))</p>
 <p>Residuals:</p>
 <p>   Min        1Q          Median       3Q          Max</p>
 <p>-3.6695    -1.5658      0.1179     1.1474    3.5577 </p>
 <p>Coefficients:</p>
-<pre><code>Estimate        Std. Error     t value       Pr(&gt;|t|)
-</code></pre><p>(Intercept)   49.51511         0.1760       4.866       8.23e-05 ***</p>
+<p>Estimate        Std. Error     t value       Pr(&gt;|t|)</p>
+<p>(Intercept)   49.51511         0.1760       4.866       8.23e-05 ***</p>
 <p>d13C            1.6545              0.4268        3.876      0.000873 ***</p>
 <p>sitef1           4.3049             1.2335        3.490       0.002183 **</p>
 <p>sitef2            1.0468             1.0774        0.972       0.342273</p>
@@ -340,23 +332,23 @@
 <p>Residual standard error: 2.224 on 21 degrees of freedom</p>
 <p>Multiple R-squared:  0.7556,    Adjusted R-squared:  0.7207</p>
 <p>F-statistic: 21.65 on 3 and 21 DF,  p-value: 1.252e-06</p>
-<font color="darkgreen">Based on above, we could get the equation with equal slope and common intercept of 3 sites which suitable with Wada_2013 as: <font color="red">d15N=1.6545[±0.4268]*d13C+49.51511[±0.1760 ]+[ecosystem specific sites constant] ( p = 0.000873).</font></font>
+<font color="darkred">Based on above, we could get the equation with equal slope and common intercept of 3 sites which suitable with Wada_2013 as: <font color="red">d15N = 1.6545[±0.4268]*d13C + 49.51511[±0.1760 ] + [ecosystem specific sites constant] ( p = 0.000873).</font></font>
 
 
 
-<font color="red"> Step3: then  ANCOVA NonInterAction with treatment contrasts, or type I.</font>
+<h2 id="Step3-then-ANCOVA-NonInterAction-with-treatment-contrasts-or-type-I"><a href="#Step3-then-ANCOVA-NonInterAction-with-treatment-contrasts-or-type-I" class="headerlink" title="Step3: then  ANCOVA NonInterAction with treatment contrasts, or type I."></a>Step3: then  ANCOVA NonInterAction with treatment contrasts, or type I.</h2><pre><code class="bash">mod.NIA.tc &lt;- aov(d15N~d13C+sitef, data=eco, contrasts = list(sitef = contr.treatment))
 
-<pre><code>&gt; mod.NIA.tc&lt;-aov(d15N~d13C+sitef,data=eco,contrasts = list(sitef=contr.treatment))
+summary.lm(mod.&lt;font color=red&gt;NIA&lt;/font&gt;.tc)          <span class="comment">#this step is riiiight,for graphics with type I is what we need.</span>
 
-&gt; summary.lm(mod.&lt;font color=red&gt;NIA&lt;/font&gt;.tc)          &lt;font color=darkgreen&gt;#this step is riiiight,for graphics with type I is what we need.&lt;/font&gt;
-</code></pre><p>Call:</p>
+</code></pre>
+<p>Call:</p>
 <p>aov(formula = d15N ~ d13C + sitef, data = eco, contrasts = list(sitef = contr.treatment))</p>
 <p>Residuals:</p>
 <p>  Min          1Q          Median      3Q           Max</p>
 <p>-3.6695     -1.5658     0.1179      1.1474    3.5577 </p>
 <p>Coefficients:</p>
-<pre><code>Estimate     Std. Error      t value       Pr(&gt;|t|)    
-</code></pre><p>(Intercept)         53.8200         11.2645       4.778      0.000101 ***</p>
+<p>Estimate     Std. Error      t value       Pr(&gt;|t|)    </p>
+<p>(Intercept)         53.8200         11.2645       4.778      0.000101 ***</p>
 <p>d13C                  1.6545           0.4268         3.876      0.000873 ***</p>
 <p>sitef2                  -3.2581          2.1947        -1.485     0.152529    </p>
 <p>sitef3                 -9.6567           1.7256        -5.596     1.49e-05 ***</p>
@@ -364,77 +356,87 @@
 <p>Residual standard error: 2.224 on 21 degrees of freedom</p>
 <p>Multiple R-squared:  0.7556,    Adjusted R-squared:  0.7207</p>
 <p>F-statistic: 21.65 on 3 and 21 DF,  p-value: 1.252e-06</p>
-<font color="darkgreen">Based on above, we could get the equation for  3 sites respectively with equal slope and specific intercepts which suitable with Wada_2013 as:<br><br>site1: d15N=1.6545<em>d13C+53.8200 ;<br><br>site2: d15N=1.6545</em>d13C+53.8200-3.2581 ;<br><br>site1: d15N=1.6545*d13C+53.8200-9.6567 . </font>
+<font color="darkred">Based on above, we could get the equation for  3 sites respectively with equal slope and specific intercepts which suitable with Wada_2013 as:<br><br>site1: d15N = 1.6545*d13C + 53.8200 ;<br><br>site2: d15N = 1.6545*d13C + 53.8200 - 3.2581 ;<br><br>site1: d15N = 1.6545*d13C + 53.8200 - 9.6567 . </font>
 
 
-<font color="red">Step4: Graphics</font>
+<h2 id="Step4-Graphics"><a href="#Step4-Graphics" class="headerlink" title="Step4: Graphics."></a>Step4: Graphics.</h2><pre><code class="bash">
+dat1&lt;-subset(eco,sitef == <span class="string">"1"</span>)                  
 
-<pre><code>&gt; dat1&lt;-subset(eco,sitef == &quot;1&quot;)                  
+dat2&lt;-subset(eco,sitef == <span class="string">"2"</span>)
 
-&gt; dat2&lt;-subset(eco,sitef == &quot;2&quot;)
+dat3&lt;-subset(eco,sitef==<span class="string">"3"</span>)
 
-&gt; dat3&lt;-subset(eco,sitef==&quot;3&quot;)
+reg1&lt;-lm(d15N~d13C,data=dat1)
 
-&gt; reg1&lt;-lm(d15N~d13C,data=dat1)
+reg2&lt;-lm(d15N~d13C,data=dat2)
 
-&gt; reg2&lt;-lm(d15N~d13C,data=dat2)
+reg3&lt;-lm(d15N~d13C,data=dat3)
 
-&gt; reg3&lt;-lm(d15N~d13C,data=dat3)
+plot(d15N~d13C,<span class="built_in">type</span>=<span class="string">"n"</span>)         <span class="comment"># type="n" means plot with axes,without any plots.</span>
 
-&gt; plot(d15N~d13C,type=&quot;n&quot;)         &lt;font color=darkgreen&gt;# type=&quot;n&quot; means plot with axes,without any plots.&lt;/font&gt;
+points(dat1<span class="variable">$d13C</span>,dat1<span class="variable">$d15N</span>,pch=1)
 
-&gt; points(dat1$d13C,dat1$d15N,pch=1)
+points(dat2<span class="variable">$d13C</span>,dat2<span class="variable">$d15N</span>,pch=2)
 
-&gt; points(dat2$d13C,dat2$d15N,pch=2)
+points(dat3<span class="variable">$d13C</span>,dat3<span class="variable">$d15N</span>,pch=3)
 
-&gt; points(dat3$d13C,dat3$d15N,pch=3)
+abline(reg1,lty=1)
 
-&gt; abline(reg1,lty=1)
+abline(reg2,lty=2)
 
-&gt; abline(reg2,lty=2)
+abline(reg3,lty=3)
 
-&gt; abline(reg3,lty=3)
+legend(<span class="string">"topleft"</span>,c(<span class="string">"L.Baikal"</span>,<span class="string">"L.Biwa"</span>,<span class="string">"Mongolian grassland"</span>),lty=c(1,2,3),pch=c(1,2,3))
 
-&gt; legend(&quot;topleft&quot;,c(&quot;L.Baikal&quot;,&quot;L.Biwa&quot;,&quot;Mongolian grassland&quot;),lty=c(1,2,3),pch=c(1,2,3))
-</code></pre><font color="darkgreen">Above procedures output a <font color="red">graph</font> with unequal slopes which we also need.</font>
+</code></pre>
+<font color="darkred">Above procedures output a <font color="red">graph</font> with unequal slopes which we also need.</font>
 
 <p><img src="http://image.sciencenet.cn/album/201605/08/093647kxpv96lwvm5xh6kz.jpg" width="90%" align="center/"></p>
-<pre><code>&gt; summod.NIA.tc&lt;-summary.lm(mod.NIA.tc)        **#type I**
+<pre><code class="bash">
+summod.NIA.tc &lt;- summary.lm(mod.NIA.tc)        <span class="comment"># type I</span>
 
-&gt; coeffs.NIA.tc&lt;-coef(summod.NIA.tc)
+coeffs.NIA.tc&lt;-coef(summod.NIA.tc)
 
-&gt; coeffs.NIA.tc
+coeffs.NIA.tc
 
-                  Estimate           Std. Error         t value            Pr(&gt;|t|)
-</code></pre><p>(Intercept)      53.820034         11.2645326    4.777831       1.014464e-04</p>
+</code></pre>
+<p>Estimate           Std. Error         t value            Pr(&gt;|t|)</p>
+<p>(Intercept)      53.820034         11.2645326    4.777831       1.014464e-04</p>
 <p>d13C              1.654461           0.4268016      3.876416        8.726695e-04</p>
 <p>sitef2             -3.258098          2.1947260     -1.484512       1.525294e-01</p>
 <p>sitef3             -9.656707          1.7255811      -5.596206      1.488283e-05</p>
-<pre><code>&gt; I1&lt;-coeffs.NIA.tc[1,1]
+<pre><code class="bash">
+I1 &lt;- coeffs.NIA.tc[1,1]
 
-&gt; I2&lt;-coeffs.NIA.tc[3,1]+I1
+I2 &lt;- coeffs.NIA.tc[3,1]+I1
 
-&gt; I3&lt;-coeffs.NIA.tc[4,1]+I1
+I3 &lt;- coeffs.NIA.tc[4,1]+I1
 
-&gt; solpeAll&lt;-coeffs.NIA.tc[2,1]
+solpeAll &lt;- coeffs.NIA.tc[2,1]
 
-&gt; plot(d15N~d13C,type=&quot;n&quot;)
+plot(d15N~d13C,<span class="built_in">type</span>=<span class="string">"n"</span>)
 
-&gt; points(dat1$d13C,dat1$d15N,pch=1)
+points(dat1<span class="variable">$d13C</span>,dat1<span class="variable">$d15N</span>,pch=1)
 
-&gt; points(dat2$d13C,dat2$d15N,pch=2)
+points(dat2<span class="variable">$d13C</span>,dat2<span class="variable">$d15N</span>,pch=2)
 
-&gt; points(dat3$d13C,dat3$d15N,pch=3)
+points(dat3<span class="variable">$d13C</span>,dat3<span class="variable">$d15N</span>,pch=3)
 
-&gt; abline(I1,slopeAll,lty=1)
+abline(I1,slopeAll,lty=1)
 
-&gt; abline(I2,slopeAll,lty=2)
+abline(I2,slopeAll,lty=2)
 
-&gt; abline(I3,slopeAll,lty=3)
-</code></pre><font color="darkgreen">Aboveall,we could clearly understand <strong>why</strong> we can <strong>not</strong> use summary.lm(mod.<strong>NIA</strong>) for graphics.</font>
+abline(I3,slopeAll,lty=3)
 
-<pre><code>&gt; legend(&quot;topleft&quot;,c(&quot;L.Baikal&quot;,&quot;L.Biwa&quot;,&quot;Mongolian grassland&quot;),lty=c(1,2,3),pch=c(1,2,3))
-</code></pre><p><img src="http://image.sciencenet.cn/album/201605/08/0948374dyyxbtyy5jxb5t5.jpg" width="90%" align="center/"></p>
+</code></pre>
+<font color="darkred">Aboveall,we could clearly understand <strong>why</strong> we can <strong>not</strong> use summary.lm(mod.<strong>NIA</strong>) for graphics.</font>
+
+
+<pre><code class="bash">
+legend(<span class="string">"topleft"</span>,c(<span class="string">"L.Baikal"</span>,<span class="string">"L.Biwa"</span>,<span class="string">"Mongolian grassland"</span>),lty=c(1,2,3),pch=c(1,2,3))
+
+</code></pre>
+<p><img src="http://image.sciencenet.cn/album/201605/08/0948374dyyxbtyy5jxb5t5.jpg" width="90%" align="center/"></p>
 <p>OMG, so long so tired. Anyway, we have correctly achieved what we need, that’s enough ^_^</p>
 <hr>
 <p><span id="busuanzi_container_page_pv"><br>&lt;已有 <span id="busuanzi_value_page_pv"></span> 次阅读&gt;<br></span></p>
@@ -446,7 +448,7 @@
 			
 		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 		
-		<span class="post-count">^_^ 本文字数统计：1.3k  字</span>
+		<span class="post-count">^_^ 本文字数统计：1.2k  字</span>
 		
         </div>
         <footer class="article-footer">
@@ -780,7 +782,7 @@
 		
 		<center><span title="博客总字数统计">
 
-         <span class="post-count">&nbsp;中文版博客总字数统计：<b>218.8k</b></span>	
+         <span class="post-count">&nbsp;中文版博客总字数统计：<b>218.7k</b></span>	
 		
 		</span></center></ul>
 
