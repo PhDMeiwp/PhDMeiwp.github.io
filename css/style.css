@@ -343,7 +343,7 @@ code {
   clear: both;
 }
 #header {
-  background-image: url("images/banner110.jpg");
+  background-image: url("images/banner1101.jpg");
   padding-bottom: 60px;
   position: relative;
 }
@@ -1553,9 +1553,9 @@ a.article-title:hover {
   color: #ddd;
 }
 #footer {
-  background-image: url("images/banner110.jpg");
+  background-image: url("images/banner-seafish.jpg");
   margin-top: 60px;
-  color: #aaa;
+  color: #fff;
   line-height: 1.6em;
 }
 #footer a {
@@ -1592,11 +1592,11 @@ a.article-title:hover {
   line-height: 22px;
 }
 #footer .logo {
-  width: 132px;
+  width: 198px;
   height: 48px;
-  -webkit-background-size: 132px 48px;
-  -moz-background-size: 132px 48px;
-  background-size: 132px 48px;
+  -webkit-background-size: 198px 48px;
+  -moz-background-size: 198px 48px;
+  background-size: 198px 48px;
 }
 i.icon {
   display: inline-block;
