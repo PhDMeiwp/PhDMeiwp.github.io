@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>回归曲线添加95%置信区间？basicTrendline包来搞定 | 梅卫平の阅览室</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="R; basicTrendline">
+    
+    <meta name="description" content="安装 basicTrendline包（在R或Rstudio中运行）从CRAN安装: install.packages(&amp;quot;basicTrendline&amp;quot;) 从github安装: install.packages(&amp;quot;devtools&amp;quot;) devtools::install_github(&amp;quot;PhDMeiwp/basicTrendline@master">
+<meta name="keywords" content="R; basicTrendline">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回归曲线添加95%置信区间？basicTrendline包来搞定">
+<meta property="og:url" content="http://PhDMeiwp.github.io/回归曲线添加95-置信区间？basicTrendline包来搞定/index.html">
+<meta property="og:site_name" content="梅卫平の阅览室">
+<meta property="og:description" content="安装 basicTrendline包（在R或Rstudio中运行）从CRAN安装: install.packages(&amp;quot;basicTrendline&amp;quot;) 从github安装: install.packages(&amp;quot;devtools&amp;quot;) devtools::install_github(&amp;quot;PhDMeiwp/basicTrendline@master">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://phdmeiwp.github.io/回归曲线添加95-置信区间？basicTrendline包来搞定/basicTrendline.png">
+<meta property="og:updated_time" content="2021-10-11T06:19:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="回归曲线添加95%置信区间？basicTrendline包来搞定">
+<meta name="twitter:description" content="安装 basicTrendline包（在R或Rstudio中运行）从CRAN安装: install.packages(&amp;quot;basicTrendline&amp;quot;) 从github安装: install.packages(&amp;quot;devtools&amp;quot;) devtools::install_github(&amp;quot;PhDMeiwp/basicTrendline@master">
+<meta name="twitter:image" content="http://phdmeiwp.github.io/回归曲线添加95-置信区间？basicTrendline包来搞定/basicTrendline.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="梅卫平の阅览室" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/css/images/mei.ico">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+</html>
+<body>
+
+	<!-- 不添加中/英文图片链接
+<a href="http://PhDMeiwp.github.io/en/" title="English version"><img src='https://i.loli.net/2017/12/21/5a3b53407fe9d.png' width=50px align=right></a>
+<a href="http://PhDMeiwp.github.io" title="中文版"><img src='https://i.loli.net/2017/12/21/5a3b534059fbb.png' width=50px  align=right></a>
+   -->
+   
+
+<style>a{TEXT-DECORATION:none}</style> 
+<div class="widget-wrap">
+
+<p style="text-align:center;">
+
+
+		<!-- 不蒜统计    -->
+
+         <span style="display: inline;" id="busuanzi_container_site_uv"><font color="green"> <b>^_^简约而不简单！欢迎来到梅卫平の阅览室！您是第 <span id="busuanzi_value_site_uv" font="微软雅黑" style="color:red"></span> 位访客^_^</b></font></span><br><br>
+
+		<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+
+<b><font color="green" size="3px">&#127793;&nbsp;VIP&#x7EFF;&#x8272;&#x901A;&#x9053;</font></b>
+
+<br><br>
+		
+		<b>（一）常用检索：</b>
+		<a href=" https://jcr.clarivate.com" title="JCR官网路径"><font color="red"> 1. JCR-IF查询路径一，</font></a>
+		<a href="http://www.greensci.net/" title="greensci.net路径"><font color="black"> 路径二，</font></a>
+		<a href="http://www.letpub.com.cn/index.php?page=journalapp&view=search" title="letpub.com.cn路径"><font color="black"> 路径三</font></a>
+
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://journalmetrics.scopus.com" title="此为Soupus数据库推出的新的计算方法的影响因子-CiteScore查询系统"><font color="black"> 2. CiteScore-IF查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mjl.clarivate.com/cgi-bin/jrnlst/jloptions.cgi?PC=D" title="点击查询某英文期刊是否被SCI （Science Citation Index Expanded）收录"><font color="red">3. SCI期刊检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.fenqubiao.com/"><font color="red">4. 中科院分区查询路径一，</font></a>
+		<a href="http://www.letpub.com.cn/index.php?page=journalapp"><font color="black">路径二</font></a>
+
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mjl.clarivate.com/cgi-bin/jrnlst/jloptions.cgi?PC=SS" title="点击查询文科类某英文期刊是否被SSCI（Social Sciences Citation Index）收录"><font color="black">5. SSCI检索</font></a>
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mjl.clarivate.com/cgi-bin/jrnlst/jloptions.cgi?PC=EX" title="这是WOS的新玩意儿，是期刊晋级SCI/SSCI的备选库，被ESCI（Emerging Sources Citation Index）收录的期刊在不久的将来一般会正式入库SCI/SSCI"><font color="black">6. ESCI检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.elsevier.com/solutions/engineering-village/content/compendex" title="点击查询某期刊是否被EI收录"><font color="black">7. EI检索</font></a> 
+		<a href=" http://www.ei-istp.com/Info_14.html" title="备用，点击查询某期刊是否被EI收录"><font color="black">（备用）</font></a> 
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href=" http://www.ei-istp.com/About_5.html" title="备用，点击查询某会议是否被ISTP/CPCI收录"><font color="black">8. ISTP检索</font></a> 
+
+		<br><b>（二）ESI检索&Nature Index查询：</b>
+		<a href="https://esi.clarivate.com" title="ESI相比于SCI-IF更加流行，了解之"><font color="red"> 1. ESI查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.natureindex.com/" title="新玩法"><font color="black"> 2. Nature Index查询</font></a>		
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.natureindex.com/faq#journals" title="截至2020年，只有82本期刊入选"><font color="red"> 3. Nature Index Journal列表</font></a>
+	
+		<br><b>（三）基金查询入口：</b>
+		<a href="https://isisn.nsfc.gov.cn"><font color="red"> 1. 国自然官方查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.medsci.cn/sci/nsfc.do"><font color="black">2. 国自然梅斯查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://fund.sciencenet.cn/?id=781"><font color="black">3. 国自然科学网查询</font></a>
+		
+	    <br><b>（四）备用网址：</b>		
+		<a href="http://www.medsci.cn/sci/index.do?action=search"><font color="black"> 1. 梅斯SCI期刊智能查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://lib.tsinghua.edu.cn/tutorial/courseware/zhicheng.pdf"><font color="black">2. 论文被SCI收录情况查询方法</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://sciencechina.cn/cscd_source.jsp"><font color="black">3. CSCD期刊检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.cnki.net/"><font color="black">4. 中国知网检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://pubchem.ncbi.nlm.nih.gov/"><font color="black">5. PubChem</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.chemspider.com/Search.aspx"><font color="black">6. ChemSpider</font></a>		
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.home-for-researchers.com"><font color="black">7. 科研者之家</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://i-research.edu.eu.org/"><font color="black">8. 爱科研</font></a>	
+
+</p>	
+  </div>
+
+
+
+	<!-- 不添加gif动画
+<a><img src='https://i.loli.net/2020/05/22/ZpMgL5AdtFxSNHe.gif' width = 100% ></a>
+   -->
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">梅卫平の阅览室</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/国际/">国际</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学习/">学习</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学习/党组织/">党组织</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/">学外</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/他山之石/">他山之石</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/历史/">历史</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/学外/">学外</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/推荐书单/">推荐书单</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/财务/">财务</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/">技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/R-语言/">R 语言</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/数据处理/">数据处理</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/汽车/">汽车</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/电脑技术/">电脑技术</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/科研小工具/">科研小工具</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/">生活</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/名言警句/">名言警句</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/娱乐影音/">娱乐影音</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/家庭医生/">家庭医生</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/家庭教育/">家庭教育</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/房/">房</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/文化/">文化</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/旅游/">旅游</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/生活真相/">生活真相</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/诗词歌赋/">诗词歌赋</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/读书/">读书</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/趣味百科/">趣味百科</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/">科研</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/专利/">专利</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/个人微关注/">个人微关注</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/同位素/">同位素</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/基础概念/">基础概念</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/基金/">基金</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/学术规范/">学术规范</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研时间表/">科研时间表</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研行规/">科研行规</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/论文/">论文</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/关于/index.html">关于本站</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/bibliography/index.html">学术简历</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://PhDMeiwp.github.io"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/技术/R-语言/">R 语言</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-回归曲线添加95-置信区间？basicTrendline包来搞定" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        回归曲线添加95%置信区间？basicTrendline包来搞定
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/回归曲线添加95-置信区间？basicTrendline包来搞定/" class="article-date">
+            <time datetime="2018-07-28T04:53:11.000Z" itemprop="datePublished">2018-07-28</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/R-basicTrendline/">R; basicTrendline</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <hr>
+<img src="/回归曲线添加95-置信区间？basicTrendline包来搞定/basicTrendline.png" title="basicTrendline.png">
+<h2 id="安装-basicTrendline包（在R或Rstudio中运行）"><a href="#安装-basicTrendline包（在R或Rstudio中运行）" class="headerlink" title="安装 basicTrendline包（在R或Rstudio中运行）"></a>安装 basicTrendline包（在R或Rstudio中运行）</h2><p>从CRAN安装:</p>
+<pre><code>install.packages(&quot;basicTrendline&quot;)
+</code></pre><p>从github安装:</p>
+<pre><code>install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;PhDMeiwp/basicTrendline@master&quot;, force = TRUE)
+</code></pre><a id="more"></a>
+<h2 id="version-2-0-3-有哪些更新？"><a href="#version-2-0-3-有哪些更新？" class="headerlink" title="version 2.0.3 有哪些更新？"></a>version 2.0.3 有哪些更新？</h2><ul>
+<li>add several arguments to <code>trendline()</code> function, including show.equation, show.Rpvalue, Rname, Pname, xname, yname, yhat, CI.fill, CI.level, CI.alpha, CI.color, CI.lty, CI.lwd, ePos.x, ePos.y, las.</li>
+<li>enable to draw confidence interval for regression models (arguments CI.fill, CI.level, etc.)</li>
+<li>add ‘show.equation’ and show.Rpvale’ arguments to enable to choose which parameter to show</li>
+<li>add ‘Rname’ and ‘Pname’ arguments to specify the character of R-square and P-vlaue (i.e. R^2 or r^2; P or p)</li>
+<li>add ‘xname’ and ‘ynameto’ arguments to specify the character of ‘x’ and ‘y’ in the equation</li>
+<li>add ‘yhat’ argument to enable to add a hat symbol on the top of ‘y’ in the equation</li>
+<li>add ‘ePos.x’ and ‘ePos.y’ arguments to specify the x and y co-ordinates of equation’s position</li>
+<li>deleted the ‘ePos’ argument </li>
+<li>add “Residual Sum of Squares” to the output of ‘trendline_summary()’ function</li>
+</ul>
+<h2 id="实例（8个cases）"><a href="#实例（8个cases）" class="headerlink" title="实例（8个cases）"></a>实例（8个cases）</h2><pre><code>library(basicTrendline)
+x &lt;- c(1, 3, 6,  9,  13,   17)
+y &lt;- c(5, 8, 11, 13, 13.2, 13.5)
+</code></pre><h3 id="case-1-默认case-（自动添加95-置信区间lines-and-fill-color）"><a href="#case-1-默认case-（自动添加95-置信区间lines-and-fill-color）" class="headerlink" title="[case 1] 默认case （自动添加95%置信区间lines and fill color）"></a>[case 1] 默认case （自动添加95%置信区间lines and fill color）</h3><pre><code>trendline(x, y, model=&quot;line2P&quot;, ePos.x = &quot;topleft&quot;, summary=TRUE, eDigit=5)
+</code></pre><img src="/回归曲线添加95-置信区间？basicTrendline包来搞定/case1.png" title="case1.png">
+<h3 id="case-2-只添加95-置信区间的lines，不fill-color-set-CI-fill-FALSE"><a href="#case-2-只添加95-置信区间的lines，不fill-color-set-CI-fill-FALSE" class="headerlink" title="[case 2]  只添加95%置信区间的lines，不fill color (set CI.fill = FALSE)"></a>[case 2]  只添加95%置信区间的lines，不fill color (set CI.fill = FALSE)</h3><pre><code>trendline(x, y, model=&quot;line3P&quot;, CI.fill = FALSE, CI.color = &quot;black&quot;, CI.lty = 2, linecolor = &quot;blue&quot;)
+</code></pre><img src="/回归曲线添加95-置信区间？basicTrendline包来搞定/case2.png" title="case2.png">
+<h3 id="case-3-只绘制回归曲线，不添加95-置信区间-set-CI-color-NA"><a href="#case-3-只绘制回归曲线，不添加95-置信区间-set-CI-color-NA" class="headerlink" title="[case 3]  只绘制回归曲线，不添加95%置信区间 (set CI.color = NA)"></a>[case 3]  只绘制回归曲线，不添加95%置信区间 (set CI.color = NA)</h3><pre><code>trendline(x, y, model=&quot;log2P&quot;, ePos.x= &quot;top&quot;, linecolor = &quot;red&quot;, CI.color = NA)
+</code></pre><img src="/回归曲线添加95-置信区间？basicTrendline包来搞定/case3.png" title="case3.png">
+<h3 id="case-4-显示方程，不显示R值和P值-set-show-Rpvalue-FALSE"><a href="#case-4-显示方程，不显示R值和P值-set-show-Rpvalue-FALSE" class="headerlink" title="[case 4]  显示方程，不显示R值和P值 (set show.Rpvalue = FALSE)"></a>[case 4]  显示方程，不显示R值和P值 (set show.Rpvalue = FALSE)</h3><pre><code>trendline(x, y, model=&quot;exp2P&quot;, show.equation = TRUE, show.Rpvalue = FALSE)
+</code></pre><img src="/回归曲线添加95-置信区间？basicTrendline包来搞定/case4.png" title="case4.png">
+<h3 id="case-5-自定义方程中的参数的名称"><a href="#case-5-自定义方程中的参数的名称" class="headerlink" title="[case 5]  自定义方程中的参数的名称"></a>[case 5]  自定义方程中的参数的名称</h3><p><strong> see Arguments c(‘xname’, ‘yname’, ‘yhat’, ‘Rname’, ‘Pname’) </strong><br>        trendline(x, y, model=”exp3P”, xname=”T”, yname=paste(delta^15,”N”),<br>                yhat=FALSE, Rname=1, Pname=0, ePos.x = “bottom”)</p>
+<img src="/回归曲线添加95-置信区间？basicTrendline包来搞定/case5.png" title="case5.png">
+<h3 id="case-6-改变方程的-小数位，字体颜色，字号大小"><a href="#case-6-改变方程的-小数位，字体颜色，字号大小" class="headerlink" title="[case 6]  改变方程的 小数位，字体颜色，字号大小"></a>[case 6]  改变方程的 小数位，字体颜色，字号大小</h3><pre><code>trendline(x, y, model=&quot;power2P&quot;, eDigit = 3, eSize = 1.4, text.col = &quot;blue&quot;)
+</code></pre><img src="/回归曲线添加95-置信区间？basicTrendline包来搞定/case6.png" title="case6.png">
+<h3 id="case-7-不显示方程，只显示回归曲线-set-ePos-x-NA"><a href="#case-7-不显示方程，只显示回归曲线-set-ePos-x-NA" class="headerlink" title="[case 7]  不显示方程，只显示回归曲线 (set ePos.x = NA)"></a>[case 7]  不显示方程，只显示回归曲线 (set ePos.x = NA)</h3><pre><code>trendline(x, y, model=&quot;power3P&quot;, ePos.x = NA)
+</code></pre><img src="/回归曲线添加95-置信区间？basicTrendline包来搞定/case7.png" title="case7.png">
+<h3 id="case-8-使用-par-graphics-设置绘图区大小（可到ggplot2的美观效果）"><a href="#case-8-使用-par-graphics-设置绘图区大小（可到ggplot2的美观效果）" class="headerlink" title="[case 8]  使用 par {graphics} 设置绘图区大小（可到ggplot2的美观效果）"></a>[case 8]  使用 par {graphics} 设置绘图区大小（可到ggplot2的美观效果）</h3><h3 id="缩小x轴文字的大小，x-lable和x轴之间的距离"><a href="#缩小x轴文字的大小，x-lable和x轴之间的距离" class="headerlink" title="缩小x轴文字的大小，x-lable和x轴之间的距离"></a>缩小x轴文字的大小，x-lable和x轴之间的距离</h3><pre><code>### NOT RUN
+par(mgp=c(1.5,0.4,0), mar=c(3,3,1,1), tck=-0.01, cex.axis=0.9)
+
+trendline(x, y)
+
+# dev.off()
+
+### END (NOT RUN)
+</code></pre><img src="/回归曲线添加95-置信区间？basicTrendline包来搞定/case8.png" title="case8.png">
+<hr>
+<h2 id="描述文件"><a href="#描述文件" class="headerlink" title="描述文件"></a>描述文件</h2><p>Plot, draw regression line and confidence interval, and show regression equation, R-square and P-value, as simple as possible, </p>
+<p>by using different models built in the ‘trendline()’ function. The function includes the following models in the latest version: </p>
+<p>“line2P” (formula as: y=a*x+b), </p>
+<p>“line3P” (y=a*x<sup>2</sup>+b*x+c), </p>
+<p>“log2P” (y=a*ln(x)+b), </p>
+<p>“exp2P” (y=a*e<sup>b*x</sup>), </p>
+<p>“exp3P” (y=a*e<sup>b*x</sup>+c), </p>
+<p>“power2P” (y=a*x<sup>b</sup>), </p>
+<p>“power3P” (y=a*x<sup>b</sup>+c). </p>
+<p>Besides, the summarized results of each fitted model are also output by default.</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><pre><code>trendline(x, y, model = &quot;line2P&quot;, Pvalue.corrected = TRUE,
+       linecolor = &quot;blue&quot;, lty = 1, lwd = 1, 
+       show.equation = TRUE, show.Rpvalue = TRUE, 
+       Rname = 1, Pname = 0, xname = &quot;x&quot;, yname = &quot;y&quot;,
+       yhat = FALSE, 
+       summary = TRUE, 
+       ePos.x = NULL, ePos.y = NULL, text.col = &quot;black&quot;, eDigit = 5, eSize = 1, 
+       CI.fill = TRUE, CI.level = 0.95, CI.color = &quot;grey&quot;,    CI.alpha = 1, CI.lty = 1, CI.lwd = 1, 
+       las = 1, xlab = NULL, ylab = NULL, ...)
+</code></pre><h2 id="“参数”介绍"><a href="#“参数”介绍" class="headerlink" title="“参数”介绍"></a>“参数”介绍</h2><p><br><strong>x, y</strong><br><br>the x and y arguments provide the x and y coordinates for the plot. Any reasonable way of defining the coordinates is acceptable.</p>
+<p><br><strong>model</strong><br><br>select which model to fit. Default is “line2P”. The “model” should be one of c(“line2P”, “line3P”, “log2P”, “exp3P”, “power3P”), their formulas are as follows:<br><br>“line2P”: y=a*x+b<br><br>“line3P”: y=a*x<sup>2</sup>+b*x+c<br><br>“log2P”: y=a*ln(x)+b<br><br>“exp2P”: y=a*e<sup>b*x</sup><br><br>“exp3P”: y=a*e<sup>b*x</sup>+c<br><br>“power2P”: y=a*x<sup>b</sup><br><br>“power3P”: y=a*x<sup>b</sup>+c</p>
+<p><br><strong>Pvalue.corrected</strong><br><br>if P-value corrected or not, the vlaue is one of c(“TRUE”, “FALSE”).</p>
+<p><br><strong>linecolor</strong><br><br>color of regression line.</p>
+<p><br><strong>lty</strong><br><br>line type. lty can be specified using either text c(“blank”,”solid”,”dashed”,”dotted”,”dotdash”,”longdash”,”twodash”) or number c(0, 1, 2, 3, 4, 5, 6). Note that lty = “solid” is identical to lty=1.</p>
+<p><br><strong>lwd</strong>    <br><br>line width. Default is 1.</p>
+<p><br><strong>show.equation</strong>    <br><br>whether to show the regression equation, the value is one of c(“TRUE”, “FALSE”).</p>
+<p><br><strong>show.Rpvalue</strong>    <br><br>whether to show the R-square and P-value, the value is one of c(“TRUE”, “FALSE”).</p>
+<p><br><strong>Rname</strong>    <br><br>to specify the character of R-square, the value is one of c(0, 1), corresponding to c(r^2, R^2).</p>
+<p><br><strong>Pname</strong>    <br><br>to specify the character of P-value, the value is one of c(0, 1), corresponding to c(p, P).</p>
+<p><br><strong>xname</strong>    <br><br>to specify the character of “x” in equation, see Examples [case 5].</p>
+<p><br><strong>yname</strong>    <br><br>to specify the character of “y” in equation, see Examples [case 5].</p>
+<p><br><strong>yhat</strong>    <br><br>whether to add a hat symbol (^) on the top of “y” in equation. Default is FALSE.</p>
+<p><br><strong>summary</strong>    <br><br>summarizing the model fits. Default is TRUE.</p>
+<p><br><strong>ePos.x, ePos.y</strong><br><br>equation position. Default as ePos.x = “topleft”. If no need to show equation, set ePos.x = NA. It’s same as those in legend.</p>
+<p><br><strong>text.col</strong><br><br>the color used for the legend text.</p>
+<p><br><strong>eDigit</strong>    <br><br>the numbers of digits for equation parameters. Default is 5.</p>
+<p><br><strong>eSize</strong>    <br><br>font size in percentage of equation. Default is 1.</p>
+<p><br><strong>CI.fill</strong><br><br>fill the confidance interval? (TRUE by default, see ‘CI.level’ to control)</p>
+<p><br><strong>CI.level</strong><br><br>level of confidence interval to use (0.95 by default)</p>
+<p><br><strong>CI.color</strong><br><br>line or fill color of confidence interval.</p>
+<p><br><strong>CI.alpha</strong><br><br>alpha value of fill color of confidence interval.</p>
+<p><br><strong>CI.lty</strong><br><br>line type of confidence interval.</p>
+<p><br><strong>CI.lwd</strong><br><br>line width of confidence interval.</p>
+<p><br><strong>las</strong><br><br>style of axis labels. (0=parallel, 1=all horizontal, 2=all perpendicular to axis, 3=all vertical)</p>
+<p><br><strong>xlab, ylab</strong><br><br>labels of x- and y-axis.</p>
+<p><strong>…</strong><br><br>additional parameters to plot,such as type, main, sub, xlab, ylab, col.</p>
+<h2 id="细节描述"><a href="#细节描述" class="headerlink" title="细节描述"></a>细节描述</h2><p>The linear models (line2P, line3P, log2P) in this package are estimated by <strong>lm</strong> function, while the <strong>nonlinear models (exp2P, exp3P, power2P, power3P)</strong> are estimated by <strong>nls</strong> function (i.e., <strong>least-squares method</strong>).<br><br>The argument ‘Pvalue.corrected’ is workful for non-linear regression only.<br><br>If “Pvalue.corrected = TRUE”, the P-vlaue is calculated by using “Residual Sum of Squares” and “Corrected Total Sum of Squares (i.e. sum((y-mean(y))^2))”.<br><br>If “Pvalue.corrected = TRUE”, the P-vlaue is calculated by using “Residual Sum of Squares” and “Uncorrected Total Sum of Squares (i.e. sum(y^2))”.</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>Confidence intervals for nonlinear regression (i.e., objects of class nls) are based on the linear approximation described in Bates &amp; Watts (2007).</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>Bates, D. M., and Watts, D. G. (2007) <em>Nonlinear Regression Analysis and its Applications</em>. Wiley.</p>
+<p>Greenwell B. M., and Schubert-Kabban, C. M. (2014) <em>investr: An R Package for Inverse Estimation</em>. The R Journal, 6(1), 90-100.</p>
+<h2 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h2><p>R<sup>2</sup>, indicates the R-Squared value of each regression model.</p>
+<p>p, indicates the p-value of each regression model.</p>
+<p>AIC or BIC, indicate the Akaike’s Information Criterion or Bayesian Information Criterion for fitted model. Click AIC for details. The smaller the AIC or BIC, the better the model.</p>
+<p>RSS, indicates the “Residual Sum of Squares” of regression model.</p>
+<hr>
+<p>To see examples on how to use “basicTrendline” in R software, you can run the following R code if you have the “basicTrendline” package installed:</p>
+<pre><code>library(basicTrendline)
+?trendline()
+</code></pre><h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>We would like to express my special thanks to <strong>Uwe Ligges, Swetlana Herbrandt, and CRAN team</strong> for their very valuable comments to the ‘basicTrendline’ package.<br>Our thanks also go to those who contributed R codes by:</p>
+<ul>
+<li>adding conficende interval for both lm and nls objects: <a href="https://github.com/bgreenwell/investr" target="_blank" rel="noopener">https://github.com/bgreenwell/investr</a></li>
+<li>adding-regression-line-equation-and-r2-on-graph-1: <a href="http://blog.sciencenet.cn/blog-267448-1021594.html" target="_blank" rel="noopener">http://blog.sciencenet.cn/blog-267448-1021594.html</a></li>
+<li>adding-regression-line-equation-and-r2-on-graph-2: <a href="https://stackoverflow.com/questions/7549694/adding-regression-line-equation-and-r2-on-graph" target="_blank" rel="noopener">https://stackoverflow.com/questions/7549694/adding-regression-line-equation-and-r2-on-graph</a></li>
+<li>What is non-linear regression?: <a href="https://datascienceplus.com/first-steps-with-non-linear-regression-in-r/" target="_blank" rel="noopener">https://datascienceplus.com/first-steps-with-non-linear-regression-in-r/</a></li>
+<li>adding regression line for nonlinear regression: <a href="http://blog.sciencenet.cn/blog-651374-1014133.html" target="_blank" rel="noopener">http://blog.sciencenet.cn/blog-651374-1014133.html</a></li>
+<li>R codes for ‘print.summary.nls of exp3P and power3P’ cite from <a href="https://github.com/SurajGupta/r-source/blob/master/src/library/stats/R/nls.R" target="_blank" rel="noopener">https://github.com/SurajGupta/r-source/blob/master/src/library/stats/R/nls.R</a></li>
+</ul>
+<h2 id="Bug修复"><a href="#Bug修复" class="headerlink" title="Bug修复"></a>Bug修复</h2><ul>
+<li><p>If you have any question or comment to this package, tell me at <a href="http://meiweiping.cn/en/basicTrendline-an-R-package-for-adding-trendline-of-basic-regression-models-to-plot/" target="_blank" rel="noopener">here</a>.</p>
+</li>
+<li><p>Bugs and feature requests can be filed to <a href="https://github.com/PhDMeiwp/basicTrendline/issues" target="_blank" rel="noopener">https://github.com/PhDMeiwp/basicTrendline/issues</a>. BTW, <a href="https://github.com/PhDMeiwp/basicTrendline/pulls" target="_blank" rel="noopener">Pull requests</a> are also welcome.</p>
+</li>
+</ul>
+<h2 id="PDF文件下载"><a href="#PDF文件下载" class="headerlink" title="PDF文件下载"></a>PDF文件下载</h2><p>The <strong>PDF file</strong> of this R package is available at <a href="https://cran.r-project.org/web/packages/basicTrendline/index.html" target="_blank" rel="noopener">https://cran.r-project.org/web/packages/basicTrendline/index.html</a> </p>
+<hr>
+<p><span id="busuanzi_container_page_pv"><br>&lt;已有 <span id="busuanzi_value_page_pv"></span> 次阅读&gt;<br></span></p>
+<hr>
+<p>由于本文作者水平有限，文中如有错误之处，欢迎大家批评指正！</p>
+<p>① 本文仅代表作者个人观点，不代表任何其它立场，欢迎交流合作！</p>
+<p>② 转载与分享请注明：本文源于 <a href="http://meiweiping.cn" target="_blank" rel="noopener">http://meiweiping.cn</a></p>
+
+			
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+		
+		<span class="post-count">^_^ 本文字数统计：1.7k  字</span>
+		
+        </div>
+        <footer class="article-footer">
+
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+	<a class="a2a_button_whatsapp"></a>
+	<a class="a2a_button_evernote"></a>		
+	<a class="a2a_button_line"></a>
+	
+	<a class="a2a_button_douban"></a>		
+	<a class="a2a_button_wechat"></a>
+	<a class="a2a_button_sina_weibo"></a>
+	<a class="a2a_button_qzone"></a>
+	<a class="a2a_button_renren"></a>
+
+	<a class="a2a_button_email"></a>
+	<a class="a2a_button_copy_link"></a>
+	<a class="a2a_button_print"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="researchgate" href="https://www.researchgate.net/profile/Weiping_Mei" target="_blank" rel="noopener">
+                        <i class="icon fa fa-researchgate"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/PhDMeiwp" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google" href="https://scholar.google.com/citations?user=Tmp_SpUAAAAJ&hl=en" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/weiping_mei" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/meiweipingg" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/日本-家族滞在-签证申请/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            日本[家族滞在]签证申请
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/星球文章摘录001/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">星球文章摘录001</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">博主推荐</h3>
+        <div class="widget">
+  <ul>
+	<br><a href="https://phdmeiwp.github.io/%E8%BE%9C%E9%B8%BF%E9%93%AD%E3%80%8A%E4%B8%AD%E5%9B%BD%E4%BA%BA%E7%9A%84%E7%B2%BE%E7%A5%9E%E3%80%8B/">特别推荐：辜鸿铭《中国人的精神》</a>	
+	<br><br><a href="https://phdmeiwp.github.io/%E7%A7%91%E7%A0%94%E5%B7%A5%E4%BD%9C%E8%80%85%E3%81%AE%E5%8D%81%E5%85%AB%E8%88%AC%E6%AD%A6%E8%89%BA/">1. 科研工作者の十八般武艺</a>  
+	<br><br><a href="https://phdmeiwp.github.io/%E5%88%86%E7%B1%BB%E5%8F%8A%E6%A3%80%E7%B4%A2%EF%BC%9ASCI%EF%BC%8CSSCI%EF%BC%8CEI%EF%BC%9BCSCD%EF%BC%8CCSSCI%EF%BC%8C%E5%8C%97%E5%A4%A7%E6%A0%B8%E5%BF%83/">2. 分类及检索：SCI，SSCI，EI；CSCD，CSSCI，北大核心</a>
+	<br><br><a href="http://phdmeiwp.github.io/ESI%E5%AD%A6%E7%A7%91,ESI%E9%AB%98%E8%A2%AB%E5%BC%95%E8%AE%BA%E6%96%87%E7%AD%89%E6%8C%87%E6%A0%87%E8%AF%A6%E8%A7%A3/">3. ESI学科,ESI高被引论文等指标详解</a> 	
+	<br><br><a href="https://phdmeiwp.github.io/%E8%87%AA%E7%84%B6%E6%8C%87%E6%95%B0%E6%9C%9F%E5%88%8A-Nature-Index-journals/">4. 自然指数期刊 Nature Index journals</a>  
+	<br><br><a href="http://phdmeiwp.github.io/%E5%9F%BA%E9%87%91%E5%88%86%E7%B1%BB%EF%BC%9A%E5%8D%9A%E5%A3%AB%E5%90%8E%E5%9F%BA%E9%87%91%EF%BC%8C%E5%9B%BD%E8%87%AA%E7%84%B6%E5%9F%BA%E9%87%91/">5. 基金分类：博士后基金，国自然基金</a>
+	
+	<br><br><a href="https://phdmeiwp.github.io/%E6%AD%A3%E7%A1%AE%E9%80%89%E6%8B%A9%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95%E2%80%94%E2%80%94%E5%A4%9A%E7%BB%84%E6%95%B0%E6%8D%AE%E6%AF%94%E8%BE%83/">6. 正确选择数据统计分析方法——多组数据比较</a>  
+	<br><br><a href="https://phdmeiwp.github.io/Excel%E4%B8%8EOrigin-R%E7%AD%89%E8%BD%AF%E4%BB%B6%E5%AF%B9%E5%90%8C%E4%B8%80%E6%95%B0%E6%8D%AE%EF%BC%8C%E8%BF%9B%E8%A1%8Cy-a-x-b%E6%8B%9F%E5%90%88%E6%97%B6%E7%BB%93%E6%9E%9C%E4%B8%8D%E4%B8%80%E6%A0%B7/">7. Excel与Origin,R等软件对同一数据，进行y=a*x^b拟合时结果不一样</a>  
+	<br><br><a href="https://phdmeiwp.github.io/%E7%8B%AC%E7%AB%8B%E6%A0%B7%E6%9C%AC%E3%80%81%E9%85%8D%E5%AF%B9%E6%A0%B7%E6%9C%AC%E5%8F%8A%E5%8D%95%E6%A0%B7%E6%9C%AC-t-%E6%A3%80%E9%AA%8C-%E6%A0%B7%E6%9C%AC%E6%95%B0-%E8%87%B3%E5%B0%91%E6%AF%8F%E7%BB%84%E5%A4%9A%E5%B0%91%E4%B8%BA%E5%AE%9C/">8. 独立样本、配对样本及单样本 t 检验 样本数 至少每组多少为宜?</a>  
+	<br><br><a href="https://phdmeiwp.github.io/%E7%89%A9%E7%A7%8D%E7%BB%84%E6%88%90%E5%88%86%E6%9E%90PCA-PCoA-NMDS-%E7%89%A9%E7%A7%8D%E5%92%8C%E7%8E%AF%E5%A2%83%E5%9B%A0%E5%AD%90%E5%88%86%E6%9E%90RDA-db-RDA/">9. 物种组成分析PCA,PCoA,NMDS,物种和环境因子分析RDA,db-RDA</a>  
+	<br><br><a href="https://phdmeiwp.github.io/R%E8%AF%AD%E8%A8%80%E5%88%9D%E5%AD%A6%E8%80%85%E5%BF%85%E5%A4%87%E8%B5%84%E6%96%99%EF%BC%88%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD%EF%BC%89/">10. R语言专栏</a>  
+
+  </ul>
+</div>
+</div>
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/怎么抓娃娃？家庭教育共性问题求解/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/怎么抓娃娃？家庭教育共性问题求解/抓娃娃1.png)" alt="怎么抓娃娃？家庭教育共性问题求解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/家庭教育/">家庭教育</a></p>
+                            <p class="item-title"><a href="/怎么抓娃娃？家庭教育共性问题求解/" class="title">怎么抓娃娃？家庭教育共性问题求解</a></p>
+                            <p class="item-date"><time datetime="2024-07-14T14:16:53.000Z" itemprop="datePublished">2024-07-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/你的房贷每月到底还了多少本金和利息/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/你的房贷每月到底还了多少本金和利息/房贷.png)" alt="你的房贷每月到底还了多少本金和利息" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/房/">房</a></p>
+                            <p class="item-title"><a href="/你的房贷每月到底还了多少本金和利息/" class="title">你的房贷每月到底还了多少本金和利息</a></p>
+                            <p class="item-date"><time datetime="2024-06-09T10:26:08.000Z" itemprop="datePublished">2024-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/推荐100首好听の音乐/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/推荐100首好听の音乐/音乐.jpg)" alt="推荐100首好听の音乐" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/娱乐影音/">娱乐影音</a></p>
+                            <p class="item-title"><a href="/推荐100首好听の音乐/" class="title">推荐100首好听の音乐</a></p>
+                            <p class="item-date"><time datetime="2024-03-18T11:05:24.000Z" itemprop="datePublished">2024-03-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/新房装修05：总结篇/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/新房装修05：总结篇/新房.png)" alt="新房装修05：总结篇" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/房/">房</a></p>
+                            <p class="item-title"><a href="/新房装修05：总结篇/" class="title">新房装修05：总结篇</a></p>
+                            <p class="item-date"><time datetime="2024-03-16T12:06:34.000Z" itemprop="datePublished">2024-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/新房装修04：软装（容易忽略的开支）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/新房装修04：软装（容易忽略的开支）/窗帘.jpg)" alt="新房装修04：软装（容易忽略的开支）" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/房/">房</a></p>
+                            <p class="item-title"><a href="/新房装修04：软装（容易忽略的开支）/" class="title">新房装修04：软装（容易忽略的开支）</a></p>
+                            <p class="item-date"><time datetime="2024-03-15T12:03:04.000Z" itemprop="datePublished">2024-03-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/国际/">国际</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/学习/党组织/">党组织</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/">学外</a><span class="category-list-count">18</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/学外/他山之石/">他山之石</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/历史/">历史</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/学外/">学外</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/推荐书单/">推荐书单</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/财务/">财务</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">64</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/R-语言/">R 语言</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/数据处理/">数据处理</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/汽车/">汽车</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/电脑技术/">电脑技术</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/科研小工具/">科研小工具</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">43</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/生活/名言警句/">名言警句</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/娱乐影音/">娱乐影音</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/家庭医生/">家庭医生</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/家庭教育/">家庭教育</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/房/">房</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/文化/">文化</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/旅游/">旅游</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/生活真相/">生活真相</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/诗词歌赋/">诗词歌赋</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/读书/">读书</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/趣味百科/">趣味百科</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/">科研</a><span class="category-list-count">34</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/科研/专利/">专利</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/个人微关注/">个人微关注</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/同位素/">同位素</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基础概念/">基础概念</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基金/">基金</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/学术规范/">学术规范</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研时间表/">科研时间表</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研行规/">科研行规</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/论文/">论文</a><span class="category-list-count">11</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">本站统计</h3>
+        <div class="widget">
+
+		<ul>
+		
+		<li><center><a href="http://info.flagcounter.com/UcO3"><img src="http://s01.flagcounter.com/count2/UcO3/bg_F2F2F2/txt_000000/border_F2F2F2/columns_2/maxflags_100/viewers_0/labels_1/pageviews_1/flags_1/percent_0/" width="90%" height="90%" align="center/" border="0"></a></center></li>
+		
+		<li><center><a href="https://www.revolvermaps.com/?target=enlarge&amp;i=5wvp5ufpxwv" title="流量统计" target="_blank"><img src="//rf.revolvermaps.com/h/m/a/0/ff0000/128/0/5wvp5ufpxwv.png" width="90%" height="90%" align="center/" alt="Map" style="border:0;"></a></center></li>
+		
+		<center><span title="博客总字数统计">
+
+         <span class="post-count">&nbsp;中文版博客总字数统计：<b>245.3k</b></span>	
+		
+		</span></center></ul>
+
+		</div>
+</div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">左邻右舍</h3>
+        <div class="widget">
+  <ul>
+	<a href="https://github.com/AndrewLJackson">Andrew_L._Jackson&nbsp;&nbsp;</a>  
+	<a href="https://github.com/andrewcparnell">Andrew_C._Parnell&nbsp;&nbsp;</a>  
+	<a href="http://yuumezawa.com/Lab/index.htm">Yu_Umezawa&nbsp;&nbsp;</a> 
+
+	<a href="https://guangchuangyu.github.io/cn/">Y叔&nbsp;&nbsp;</a>
+	<a href="http://apansharing.blogspot.com/">阿磐老师&nbsp;&nbsp;</a>
+	<a href="http://blog.sciencenet.cn/home.php?mod=space&uid=71964">马臻老师&nbsp;&nbsp;</a>
+	<a href="http://www.biotrainee.com/">生信技能树主页&nbsp;&nbsp;</a>
+	<a href="https://space.bilibili.com/338686099/#/">生信技能树视频&nbsp;&nbsp;</a> 
+	<a href="https://yihui.name/cn/">谢益辉大神&nbsp;&nbsp;</a>
+	
+	<a href="http://www.soil-interface.cn/">土壤所李芳柏老师&nbsp;&nbsp;</a>
+	<a href="http://www.garden-of-excellence.cn/aboutus/">地化所-优秀花园&nbsp;&nbsp;</a>
+	<a href="http://www.sklec.ecnu.edu.cn/">河口海岸学国家重点实验室（华东师范-施华宏课题组）&nbsp;&nbsp;</a>
+	
+	<a href="http://zhishifenzi.com/">知识分子官网&nbsp;&nbsp;</a>
+	
+  </ul>
+</div>
+</div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://www.researchgate.net/profile/Weiping_Mei">ResearchGate</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://www.rdocumentation.org/search?q=weiping%20mei">r-project</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://bbs.sciencenet.cn/home.php?mod=space&uid=651374&view=meiweipingg">科学网</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">诗词欣赏</h3>
+        <div class="widget">
+  <ul>
+<br>
+<b>Poem: Your Own Time Zone</b><br>
+<br>New York is three hours ahead of California,
+<br>But that doesn’t make California slow.
+<br><br>Someone graduated at the age of 22,
+<br>But waited five years before securing a good job.
+<br>Some became a CEO at 25,
+<br>And died at 50.
+<br>While another became a CEO at 50,
+<br>And lived to 90 years.
+<br><br>Someone is still single,
+<br>While someone else got married.
+<br>Obama retired at 55,
+<br>& Trump started at 70.
+<br><br><b>Everyone in this world works based on their time zone.</b>
+<br><br>People around you might seem to be ahead of you,
+<br>& some might seem to be behind you.
+<br><b>But everyone is running their own race, in their own time.
+<br><br>Do not envy them & do not mock them.
+<br>They are in their time zone, and you are in yours.
+<br><br>Life is about waiting for the right moment to act.</b>
+<br>So, relax.
+<br>You’re not late.
+<br>You’re not early.
+<br>You are very much on time~	
+
+	
+  </ul>
+</div>
+</div>
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+
+
+				<p>站长：梅卫平 MEI, Weiping</p>
+				<p>E-mail：forresearcher@163.com </p>
+				<p>QQ: 5643 14073 ; Twitter: @weiping_mei</p>
+                <p>&copy; 2017 - 2024 梅卫平 保留所有版权</p>
+                
+<!-- 
+				<p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+-->				
+
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'weipingmei';
+    
+    
+    var disqus_url = 'http://PhDMeiwp.github.io/回归曲线添加95-置信区间？basicTrendline包来搞定/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

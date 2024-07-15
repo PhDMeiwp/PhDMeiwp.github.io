@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>用R软件件作雷达图（或蜘蛛网图） | 梅卫平の阅览室</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="R 语言,雷达图,蜘蛛网图">
+    
+    <meta name="description" content="(本文于 2016-7-1 13:15 首发于 “科学网”)    以5个变量（即雷达图的5个坐标轴，如某种鱼的5种饵料贡献率 part1 to part5）数据为例，">
+<meta name="keywords" content="R 语言,雷达图,蜘蛛网图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用R软件件作雷达图（或蜘蛛网图）">
+<meta property="og:url" content="http://PhDMeiwp.github.io/用R软件件作雷达图（或蜘蛛网图）/index.html">
+<meta property="og:site_name" content="梅卫平の阅览室">
+<meta property="og:description" content="(本文于 2016-7-1 13:15 首发于 “科学网”)    以5个变量（即雷达图的5个坐标轴，如某种鱼的5种饵料贡献率 part1 to part5）数据为例，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://i1.piimg.com/567571/e019176fc9992606.jpg">
+<meta property="og:updated_time" content="2021-10-11T06:19:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用R软件件作雷达图（或蜘蛛网图）">
+<meta name="twitter:description" content="(本文于 2016-7-1 13:15 首发于 “科学网”)    以5个变量（即雷达图的5个坐标轴，如某种鱼的5种饵料贡献率 part1 to part5）数据为例，">
+<meta name="twitter:image" content="http://i1.piimg.com/567571/e019176fc9992606.jpg">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="梅卫平の阅览室" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/css/images/mei.ico">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+</html>
+<body>
+
+	<!-- 不添加中/英文图片链接
+<a href="http://PhDMeiwp.github.io/en/" title="English version"><img src='https://i.loli.net/2017/12/21/5a3b53407fe9d.png' width=50px align=right></a>
+<a href="http://PhDMeiwp.github.io" title="中文版"><img src='https://i.loli.net/2017/12/21/5a3b534059fbb.png' width=50px  align=right></a>
+   -->
+   
+
+<style>a{TEXT-DECORATION:none}</style> 
+<div class="widget-wrap">
+
+<p style="text-align:center;">
+
+
+		<!-- 不蒜统计    -->
+
+         <span style="display: inline;" id="busuanzi_container_site_uv"><font color="green"> <b>^_^简约而不简单！欢迎来到梅卫平の阅览室！您是第 <span id="busuanzi_value_site_uv" font="微软雅黑" style="color:red"></span> 位访客^_^</b></font></span><br><br>
+
+		<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+
+<b><font color="green" size="3px">&#127793;&nbsp;VIP&#x7EFF;&#x8272;&#x901A;&#x9053;</font></b>
+
+<br><br>
+		
+		<b>（一）常用检索：</b>
+		<a href=" https://jcr.clarivate.com" title="JCR官网路径"><font color="red"> 1. JCR-IF查询路径一，</font></a>
+		<a href="http://www.greensci.net/" title="greensci.net路径"><font color="black"> 路径二，</font></a>
+		<a href="http://www.letpub.com.cn/index.php?page=journalapp&view=search" title="letpub.com.cn路径"><font color="black"> 路径三</font></a>
+
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://journalmetrics.scopus.com" title="此为Soupus数据库推出的新的计算方法的影响因子-CiteScore查询系统"><font color="black"> 2. CiteScore-IF查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mjl.clarivate.com/cgi-bin/jrnlst/jloptions.cgi?PC=D" title="点击查询某英文期刊是否被SCI （Science Citation Index Expanded）收录"><font color="red">3. SCI期刊检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.fenqubiao.com/"><font color="red">4. 中科院分区查询路径一，</font></a>
+		<a href="http://www.letpub.com.cn/index.php?page=journalapp"><font color="black">路径二</font></a>
+
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mjl.clarivate.com/cgi-bin/jrnlst/jloptions.cgi?PC=SS" title="点击查询文科类某英文期刊是否被SSCI（Social Sciences Citation Index）收录"><font color="black">5. SSCI检索</font></a>
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mjl.clarivate.com/cgi-bin/jrnlst/jloptions.cgi?PC=EX" title="这是WOS的新玩意儿，是期刊晋级SCI/SSCI的备选库，被ESCI（Emerging Sources Citation Index）收录的期刊在不久的将来一般会正式入库SCI/SSCI"><font color="black">6. ESCI检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.elsevier.com/solutions/engineering-village/content/compendex" title="点击查询某期刊是否被EI收录"><font color="black">7. EI检索</font></a> 
+		<a href=" http://www.ei-istp.com/Info_14.html" title="备用，点击查询某期刊是否被EI收录"><font color="black">（备用）</font></a> 
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href=" http://www.ei-istp.com/About_5.html" title="备用，点击查询某会议是否被ISTP/CPCI收录"><font color="black">8. ISTP检索</font></a> 
+
+		<br><b>（二）ESI检索&Nature Index查询：</b>
+		<a href="https://esi.clarivate.com" title="ESI相比于SCI-IF更加流行，了解之"><font color="red"> 1. ESI查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.natureindex.com/" title="新玩法"><font color="black"> 2. Nature Index查询</font></a>		
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.natureindex.com/faq#journals" title="截至2020年，只有82本期刊入选"><font color="red"> 3. Nature Index Journal列表</font></a>
+	
+		<br><b>（三）基金查询入口：</b>
+		<a href="https://isisn.nsfc.gov.cn"><font color="red"> 1. 国自然官方查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.medsci.cn/sci/nsfc.do"><font color="black">2. 国自然梅斯查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://fund.sciencenet.cn/?id=781"><font color="black">3. 国自然科学网查询</font></a>
+		
+	    <br><b>（四）备用网址：</b>		
+		<a href="http://www.medsci.cn/sci/index.do?action=search"><font color="black"> 1. 梅斯SCI期刊智能查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://lib.tsinghua.edu.cn/tutorial/courseware/zhicheng.pdf"><font color="black">2. 论文被SCI收录情况查询方法</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://sciencechina.cn/cscd_source.jsp"><font color="black">3. CSCD期刊检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.cnki.net/"><font color="black">4. 中国知网检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://pubchem.ncbi.nlm.nih.gov/"><font color="black">5. PubChem</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.chemspider.com/Search.aspx"><font color="black">6. ChemSpider</font></a>		
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.home-for-researchers.com"><font color="black">7. 科研者之家</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://i-research.edu.eu.org/"><font color="black">8. 爱科研</font></a>	
+
+</p>	
+  </div>
+
+
+
+	<!-- 不添加gif动画
+<a><img src='https://i.loli.net/2020/05/22/ZpMgL5AdtFxSNHe.gif' width = 100% ></a>
+   -->
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">梅卫平の阅览室</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/国际/">国际</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学习/">学习</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学习/党组织/">党组织</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/">学外</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/他山之石/">他山之石</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/历史/">历史</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/学外/">学外</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/推荐书单/">推荐书单</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/财务/">财务</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/">技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/R-语言/">R 语言</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/数据处理/">数据处理</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/汽车/">汽车</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/电脑技术/">电脑技术</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/科研小工具/">科研小工具</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/">生活</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/名言警句/">名言警句</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/娱乐影音/">娱乐影音</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/家庭医生/">家庭医生</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/家庭教育/">家庭教育</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/房/">房</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/文化/">文化</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/旅游/">旅游</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/生活真相/">生活真相</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/诗词歌赋/">诗词歌赋</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/读书/">读书</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/趣味百科/">趣味百科</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/">科研</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/专利/">专利</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/个人微关注/">个人微关注</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/同位素/">同位素</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/基础概念/">基础概念</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/基金/">基金</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/学术规范/">学术规范</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研时间表/">科研时间表</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研行规/">科研行规</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/论文/">论文</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/关于/index.html">关于本站</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/bibliography/index.html">学术简历</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://PhDMeiwp.github.io"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/技术/">技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/技术/R-语言/">R 语言</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-用R软件件作雷达图（或蜘蛛网图）" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        用R软件件作雷达图（或蜘蛛网图）
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/用R软件件作雷达图（或蜘蛛网图）/" class="article-date">
+            <time datetime="2017-03-15T12:20:01.000Z" itemprop="datePublished">2017-03-15</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/R-语言/">R 语言</a>, <a class="tag-link" href="/tags/蜘蛛网图/">蜘蛛网图</a>, <a class="tag-link" href="/tags/雷达图/">雷达图</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <hr>
+<center>(本文于 2016-7-1 13:15 首发于 <a href="http://blog.sciencenet.cn/blog-651374-987966.html" target="_blank" rel="noopener">“科学网”</a>)</center>
+
+
+
+<p>以5个变量（即雷达图的5个坐标轴，如某种鱼的5种饵料贡献率 part1 to part5）数据为例，</p>
+<a id="more"></a>
+<p><strong>第一步：设置各个变量的取值范围</strong>（即最小值和最大值，相当于二维图的x轴和y轴的取值范围），代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">maxmin &lt;- data.frame(</span><br><span class="line"></span><br><span class="line">    part1=c(50, 0),</span><br><span class="line"></span><br><span class="line">    part2=c(50, 0),</span><br><span class="line"></span><br><span class="line">    part3=c(50, 0),</span><br><span class="line"></span><br><span class="line">    part4=c(50, 0),</span><br><span class="line"></span><br><span class="line">    part5=c(50, 0))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取值范围为 先最大值 后最小值，即上述c（100,0）</span></span><br></pre></td></tr></table></figure>
+<p><strong>第二步：设置准备绘图的指标类型的数据</strong>，如 A 种鱼的5种饵料贡献率</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">dat.A&lt;- data.frame(</span><br><span class="line"></span><br><span class="line">    part1=50,</span><br><span class="line"></span><br><span class="line">    part2=20,</span><br><span class="line"></span><br><span class="line">    part3=15,</span><br><span class="line"></span><br><span class="line">    part4=10,</span><br><span class="line"></span><br><span class="line">    part5=5)</span><br></pre></td></tr></table></figure>
+<p><strong>第三步：把数据集 maxmin 和 dat.A 组合成为新的数据集</strong>，命名为dat.A2</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dat.A2&lt;-rbind(maxmin,dat.A)</span><br></pre></td></tr></table></figure>
+<p><strong>第四步: 绘图</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如何没有安装套件的话，请先安装fmsb套件，</span></span><br><span class="line"><span class="comment"># 代码为 install.packages('fmsb')</span></span><br><span class="line"></span><br><span class="line">library(fmsb)</span><br><span class="line"></span><br><span class="line">radarchart(dat.A2, axistype=0, seg=5,centerzero = TRUE)</span><br><span class="line"></span><br><span class="line"><span class="comment"># seg的取值表示将各轴分成几段，centerzero表示蜘蛛网图中心点为最小值点，axistype为0表示不绘制各坐标轴标签</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://i1.piimg.com/567571/e019176fc9992606.jpg" width="80%" align="center"></p>
+<blockquote>
+<p>然后，在 Plots栏→Export→Metafile→Copy Plot→粘贴到PowerPoint中进行编辑后，另存为 .tiff或.jpg文件就OK了，写论文用起来也方便</p>
+</blockquote>
+<hr>
+<p>补充，如果要在<strong>一个蜘蛛网图中绘制多个指标类型</strong>，如 A种鱼 和 B种鱼 的5种饵料贡献率，代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dat.AB &lt;- data.frame(</span><br><span class="line"></span><br><span class="line">      part1=c(50,20),</span><br><span class="line"></span><br><span class="line">    part2=c(20,40),</span><br><span class="line"></span><br><span class="line">    part3=c(15,20),</span><br><span class="line"></span><br><span class="line">    part4=c(10,12),</span><br><span class="line"></span><br><span class="line">    part5=c(5,8))</span><br><span class="line"></span><br><span class="line">dat.AB2&lt;-rbind(maxmin,dat.AB)</span><br><span class="line"></span><br><span class="line">radarchart(dat.AB2, axistype=0, seg=5,centerzero = TRUE)</span><br></pre></td></tr></table></figure>
+<p><img src="http://i1.piimg.com/567571/d684e8e517ff163b.jpg" width="80%" align="center"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#以上，参考链接 http://www.inside-r.org/packages/cran/fmsb/docs/radarchart</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>链接原文材料如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br></pre></td><td class="code"><pre><span class="line">radarchart &#123;fmsb&#125;</span><br><span class="line"></span><br><span class="line">Drawing radar chart (a.k.a. spider plot)</span><br><span class="line">Package: fmsb</span><br><span class="line">Version: 0.5.2</span><br><span class="line">Description</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Drawing the radar chart with several lines from a data frame, <span class="built_in">which</span> must be composed of more than 3 variables as axes and the rows indicate cases as series.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Usage</span><br><span class="line"></span><br><span class="line">radarchart(df, axistype, seg, pty, pcol, plty, plwd, pdensity, pangle, pfcol,  cglty, cglwd, cglcol, axislabcol, title, maxmin, na.itp, centerzero,  vlabels, vlcex, caxislabels, calcex, paxislabels, palcex, ...)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Arguments</span><br><span class="line"></span><br><span class="line">df</span><br><span class="line"></span><br><span class="line">The data frame to be used to draw radarchart. If maxmin is TRUE, this must include maximum values as row 1 and minimum values as row 2 <span class="keyword">for</span> each variables, and actual data should be given as row 3 and lower rows. The number of columns (variables) must be more than 2.</span><br><span class="line"></span><br><span class="line">axistype</span><br><span class="line"></span><br><span class="line">The <span class="built_in">type</span> of axes, specified by any of 0:5. 0 means no axis label. 1 means center axis label only. 2 means around-the-chart label only. 3 means both center and around-the-chart (peripheral) labels. 4 is *.** format of 1, 5 is *.** format of 3. Default is 0.</span><br><span class="line"></span><br><span class="line">seg</span><br><span class="line"></span><br><span class="line">The number of segments <span class="keyword">for</span> each axis (default 4).</span><br><span class="line"></span><br><span class="line">pty</span><br><span class="line"></span><br><span class="line">A vector to specify point symbol: Default 16 (closed circle), <span class="keyword">if</span> you don<span class="string">'t plot data points, it should be 32. This is repeatedly used for data series.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">pcol</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">A vector of color codes for plot data: Default 1:8, which are repeatedly used.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">plty</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">A vector of line types for plot data: Default 1:6, which are repeatedly used.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">plwd</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">A vector of line widths for plot data: Default 1, which is repeatedly used.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">pdensity</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">A vector of filling density of polygons: Default NULL, which is repeatedly used.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">pangle</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">A vector of the angles of lines used as filling polygons: Default 45, which is repeatedly used.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">pfcol</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">A vector of color codes for filling polygons: Default NA, which is repeatedly usd.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">cglty</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Line type for radar grids: Default 3, which means dotted line.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">cglwd</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Line width for radar grids: Default 1, which means thinnest line.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">cglcol</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Line color for radar grids: Default "navy"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">axislabcol</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Color of axis label and numbers: Default "blue"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">title</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if any, title should be typed.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">maxmin</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Logical. If true, data frame includes possible maximum values as row 1 and possible minimum values as row 2. If false, the maximum and minimum values for each axis will be calculated as actual maximum and minimum of the data. Default TRUE.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">na.itp</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Logical. If true, items with NA values are interpolated from nearest neighbor items and connect them. If false, items with NA are treated as the origin (but not pointed, only connected with lines). Default FALSE.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">centerzero</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Logical. If true, this function draws charts with scaling originated from (0,0). If false, charts originated from (1/segments). Default FALSE.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">vlabels</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Character vector for the names for variables. If NULL, the names of the variables as colnames(df) are used. Default NULL.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">vlcex</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Font size magnification for vlabels. If NULL, the font size is fixed at text()'</span>s default. Default NULL.</span><br><span class="line"></span><br><span class="line">caxislabels</span><br><span class="line"></span><br><span class="line">Character vector <span class="keyword">for</span> center axis labels, overwriting values specified <span class="keyword">in</span> axistype option. If NULL, the values specified by axistype option are used. Default is NULL.</span><br><span class="line"></span><br><span class="line">calcex</span><br><span class="line"></span><br><span class="line">Font size magnification <span class="keyword">for</span> caxislabels. If NULL, the font size is fixed at text()<span class="string">'s default. Default NULL.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">paxislabels</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Character vector for around-the-chart (peripheral) labels, overwriting values specified in axistype option. If NULL, the values specified by axistype option are used. Default is NULL.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">palcex</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Font size magnification for paxislabels. If NULL, the font size is fixed at text()'</span>s default. Default NULL</span><br><span class="line"></span><br><span class="line">....</span><br><span class="line"></span><br><span class="line">Miscellaneous arguments to be given <span class="keyword">for</span> plot.default().</span><br><span class="line"></span><br><span class="line">Values</span><br><span class="line">No value is returned.</span><br><span class="line"></span><br><span class="line">Examples</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Data must be given as the data frame, where the first cases show maximum.maxmin &lt;-data.frame(</span></span><br><span class="line"></span><br><span class="line">total=c(5,1),</span><br><span class="line"></span><br><span class="line">phys=c(15,3),</span><br><span class="line"></span><br><span class="line">psycho=c(3,0),</span><br><span class="line"></span><br><span class="line">social=c(5,1),</span><br><span class="line"></span><br><span class="line">env=c(5,1))</span><br><span class="line"></span><br><span class="line"><span class="comment"># data for radarchart function version 1 series, minimum value must be omitted from above.</span></span><br><span class="line"></span><br><span class="line">RNGkind(<span class="string">"Mersenne-Twister"</span>)</span><br><span class="line"></span><br><span class="line">set.seed(123)</span><br><span class="line"></span><br><span class="line">dat &lt;-data.frame(</span><br><span class="line"></span><br><span class="line">total=runif(3,1,5),</span><br><span class="line"></span><br><span class="line">phys=rnorm(3,10,2),</span><br><span class="line"></span><br><span class="line">psycho=c(0.5,NA,3),</span><br><span class="line"></span><br><span class="line">social=runif(3,1,5),</span><br><span class="line"></span><br><span class="line">env=c(5,2.5,4))</span><br><span class="line"></span><br><span class="line">dat &lt;-rbind(maxmin,dat)</span><br><span class="line"></span><br><span class="line">op &lt;-par(mar=c(1,2,2,1),mfrow=c(2,2))</span><br><span class="line"></span><br><span class="line">radarchart(dat, axistype=1, seg=5, plty=1, vlabels=c(<span class="string">"Total\nQOL"</span>,<span class="string">"Physical\naspects"</span>,<span class="string">"Phychological\naspects"</span>,<span class="string">"Social\naspects"</span>,<span class="string">"Environmental\naspects"</span>),title=<span class="string">"(axis=1, 5 segments, with specified vlabels)"</span>, vlcex=0.5)</span><br><span class="line"></span><br><span class="line">radarchart(dat, axistype=2, pcol=topo.colors(3), plty=1, pdensity=c(5,10,30),  pangle=c(10,45,120), pfcol=topo.colors(3),title=<span class="string">"(topo.colors, fill, axis=2)"</span>)</span><br><span class="line"></span><br><span class="line">radarchart(dat, axistype=3, pty=32, plty=1, axislabcol=<span class="string">"grey"</span>, na.itp=FALSE,title=<span class="string">"(no points, axis=3, na.itp=FALSE)"</span>)</span><br><span class="line"></span><br><span class="line">radarchart(dat, axistype=1, plwd=1:5, pcol=1, centerzero=TRUE,  seg=4, caxislabels=c(<span class="string">"worst"</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">"best"</span>),title=<span class="string">"(use lty and lwd but b/w, axis=1,\n centerzero=TRUE, with centerlabels)"</span>)</span><br><span class="line"></span><br><span class="line">par(op)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Author(s)</span><br><span class="line">Minato Nakazawa minato-nakazawa@umin.net http://minato.sip21c.org/</span><br><span class="line"></span><br><span class="line">Documentation reproduced from package fmsb, version 0.5.2. License: GPL (&gt;= 2)</span><br></pre></td></tr></table></figure>
+<hr>
+<p><span id="busuanzi_container_page_pv"><br>&lt;已有 <span id="busuanzi_value_page_pv"></span> 次阅读&gt;<br></span></p>
+<hr>
+<p>由于本文作者水平有限，文中如有错误之处，欢迎大家批评指正！</p>
+<p>① 本文仅代表作者个人观点，不代表任何其它立场，欢迎交流合作！</p>
+<p>② 转载与分享请注明：本文源于 <a href="http://meiweiping.cn" target="_blank" rel="noopener">http://meiweiping.cn</a></p>
+
+			
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+		
+		<span class="post-count">^_^ 本文字数统计：1.3k  字</span>
+		
+        </div>
+        <footer class="article-footer">
+
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+	<a class="a2a_button_whatsapp"></a>
+	<a class="a2a_button_evernote"></a>		
+	<a class="a2a_button_line"></a>
+	
+	<a class="a2a_button_douban"></a>		
+	<a class="a2a_button_wechat"></a>
+	<a class="a2a_button_sina_weibo"></a>
+	<a class="a2a_button_qzone"></a>
+	<a class="a2a_button_renren"></a>
+
+	<a class="a2a_button_email"></a>
+	<a class="a2a_button_copy_link"></a>
+	<a class="a2a_button_print"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="researchgate" href="https://www.researchgate.net/profile/Weiping_Mei" target="_blank" rel="noopener">
+                        <i class="icon fa fa-researchgate"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/PhDMeiwp" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google" href="https://scholar.google.com/citations?user=Tmp_SpUAAAAJ&hl=en" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/weiping_mei" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/meiweipingg" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/在R中正确运行“系统（层次）聚类分析”/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            在R中正确运行“系统（层次）聚类分析”
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/生物统计之梅想法①/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">生物统计之梅想法①</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">博主推荐</h3>
+        <div class="widget">
+  <ul>
+	<br><a href="https://phdmeiwp.github.io/%E8%BE%9C%E9%B8%BF%E9%93%AD%E3%80%8A%E4%B8%AD%E5%9B%BD%E4%BA%BA%E7%9A%84%E7%B2%BE%E7%A5%9E%E3%80%8B/">特别推荐：辜鸿铭《中国人的精神》</a>	
+	<br><br><a href="https://phdmeiwp.github.io/%E7%A7%91%E7%A0%94%E5%B7%A5%E4%BD%9C%E8%80%85%E3%81%AE%E5%8D%81%E5%85%AB%E8%88%AC%E6%AD%A6%E8%89%BA/">1. 科研工作者の十八般武艺</a>  
+	<br><br><a href="https://phdmeiwp.github.io/%E5%88%86%E7%B1%BB%E5%8F%8A%E6%A3%80%E7%B4%A2%EF%BC%9ASCI%EF%BC%8CSSCI%EF%BC%8CEI%EF%BC%9BCSCD%EF%BC%8CCSSCI%EF%BC%8C%E5%8C%97%E5%A4%A7%E6%A0%B8%E5%BF%83/">2. 分类及检索：SCI，SSCI，EI；CSCD，CSSCI，北大核心</a>
+	<br><br><a href="http://phdmeiwp.github.io/ESI%E5%AD%A6%E7%A7%91,ESI%E9%AB%98%E8%A2%AB%E5%BC%95%E8%AE%BA%E6%96%87%E7%AD%89%E6%8C%87%E6%A0%87%E8%AF%A6%E8%A7%A3/">3. ESI学科,ESI高被引论文等指标详解</a> 	
+	<br><br><a href="https://phdmeiwp.github.io/%E8%87%AA%E7%84%B6%E6%8C%87%E6%95%B0%E6%9C%9F%E5%88%8A-Nature-Index-journals/">4. 自然指数期刊 Nature Index journals</a>  
+	<br><br><a href="http://phdmeiwp.github.io/%E5%9F%BA%E9%87%91%E5%88%86%E7%B1%BB%EF%BC%9A%E5%8D%9A%E5%A3%AB%E5%90%8E%E5%9F%BA%E9%87%91%EF%BC%8C%E5%9B%BD%E8%87%AA%E7%84%B6%E5%9F%BA%E9%87%91/">5. 基金分类：博士后基金，国自然基金</a>
+	
+	<br><br><a href="https://phdmeiwp.github.io/%E6%AD%A3%E7%A1%AE%E9%80%89%E6%8B%A9%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95%E2%80%94%E2%80%94%E5%A4%9A%E7%BB%84%E6%95%B0%E6%8D%AE%E6%AF%94%E8%BE%83/">6. 正确选择数据统计分析方法——多组数据比较</a>  
+	<br><br><a href="https://phdmeiwp.github.io/Excel%E4%B8%8EOrigin-R%E7%AD%89%E8%BD%AF%E4%BB%B6%E5%AF%B9%E5%90%8C%E4%B8%80%E6%95%B0%E6%8D%AE%EF%BC%8C%E8%BF%9B%E8%A1%8Cy-a-x-b%E6%8B%9F%E5%90%88%E6%97%B6%E7%BB%93%E6%9E%9C%E4%B8%8D%E4%B8%80%E6%A0%B7/">7. Excel与Origin,R等软件对同一数据，进行y=a*x^b拟合时结果不一样</a>  
+	<br><br><a href="https://phdmeiwp.github.io/%E7%8B%AC%E7%AB%8B%E6%A0%B7%E6%9C%AC%E3%80%81%E9%85%8D%E5%AF%B9%E6%A0%B7%E6%9C%AC%E5%8F%8A%E5%8D%95%E6%A0%B7%E6%9C%AC-t-%E6%A3%80%E9%AA%8C-%E6%A0%B7%E6%9C%AC%E6%95%B0-%E8%87%B3%E5%B0%91%E6%AF%8F%E7%BB%84%E5%A4%9A%E5%B0%91%E4%B8%BA%E5%AE%9C/">8. 独立样本、配对样本及单样本 t 检验 样本数 至少每组多少为宜?</a>  
+	<br><br><a href="https://phdmeiwp.github.io/%E7%89%A9%E7%A7%8D%E7%BB%84%E6%88%90%E5%88%86%E6%9E%90PCA-PCoA-NMDS-%E7%89%A9%E7%A7%8D%E5%92%8C%E7%8E%AF%E5%A2%83%E5%9B%A0%E5%AD%90%E5%88%86%E6%9E%90RDA-db-RDA/">9. 物种组成分析PCA,PCoA,NMDS,物种和环境因子分析RDA,db-RDA</a>  
+	<br><br><a href="https://phdmeiwp.github.io/R%E8%AF%AD%E8%A8%80%E5%88%9D%E5%AD%A6%E8%80%85%E5%BF%85%E5%A4%87%E8%B5%84%E6%96%99%EF%BC%88%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD%EF%BC%89/">10. R语言专栏</a>  
+
+  </ul>
+</div>
+</div>
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/怎么抓娃娃？家庭教育共性问题求解/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/怎么抓娃娃？家庭教育共性问题求解/抓娃娃1.png)" alt="怎么抓娃娃？家庭教育共性问题求解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/家庭教育/">家庭教育</a></p>
+                            <p class="item-title"><a href="/怎么抓娃娃？家庭教育共性问题求解/" class="title">怎么抓娃娃？家庭教育共性问题求解</a></p>
+                            <p class="item-date"><time datetime="2024-07-14T14:16:53.000Z" itemprop="datePublished">2024-07-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/你的房贷每月到底还了多少本金和利息/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/你的房贷每月到底还了多少本金和利息/房贷.png)" alt="你的房贷每月到底还了多少本金和利息" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/房/">房</a></p>
+                            <p class="item-title"><a href="/你的房贷每月到底还了多少本金和利息/" class="title">你的房贷每月到底还了多少本金和利息</a></p>
+                            <p class="item-date"><time datetime="2024-06-09T10:26:08.000Z" itemprop="datePublished">2024-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/推荐100首好听の音乐/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/推荐100首好听の音乐/音乐.jpg)" alt="推荐100首好听の音乐" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/娱乐影音/">娱乐影音</a></p>
+                            <p class="item-title"><a href="/推荐100首好听の音乐/" class="title">推荐100首好听の音乐</a></p>
+                            <p class="item-date"><time datetime="2024-03-18T11:05:24.000Z" itemprop="datePublished">2024-03-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/新房装修05：总结篇/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/新房装修05：总结篇/新房.png)" alt="新房装修05：总结篇" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/房/">房</a></p>
+                            <p class="item-title"><a href="/新房装修05：总结篇/" class="title">新房装修05：总结篇</a></p>
+                            <p class="item-date"><time datetime="2024-03-16T12:06:34.000Z" itemprop="datePublished">2024-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/新房装修04：软装（容易忽略的开支）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/新房装修04：软装（容易忽略的开支）/窗帘.jpg)" alt="新房装修04：软装（容易忽略的开支）" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/房/">房</a></p>
+                            <p class="item-title"><a href="/新房装修04：软装（容易忽略的开支）/" class="title">新房装修04：软装（容易忽略的开支）</a></p>
+                            <p class="item-date"><time datetime="2024-03-15T12:03:04.000Z" itemprop="datePublished">2024-03-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/国际/">国际</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/学习/党组织/">党组织</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/">学外</a><span class="category-list-count">18</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/学外/他山之石/">他山之石</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/历史/">历史</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/学外/">学外</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/推荐书单/">推荐书单</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/财务/">财务</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">64</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/R-语言/">R 语言</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/数据处理/">数据处理</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/汽车/">汽车</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/电脑技术/">电脑技术</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/科研小工具/">科研小工具</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">43</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/生活/名言警句/">名言警句</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/娱乐影音/">娱乐影音</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/家庭医生/">家庭医生</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/家庭教育/">家庭教育</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/房/">房</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/文化/">文化</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/旅游/">旅游</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/生活真相/">生活真相</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/诗词歌赋/">诗词歌赋</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/读书/">读书</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/趣味百科/">趣味百科</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/">科研</a><span class="category-list-count">34</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/科研/专利/">专利</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/个人微关注/">个人微关注</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/同位素/">同位素</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基础概念/">基础概念</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基金/">基金</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/学术规范/">学术规范</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研时间表/">科研时间表</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研行规/">科研行规</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/论文/">论文</a><span class="category-list-count">11</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">本站统计</h3>
+        <div class="widget">
+
+		<ul>
+		
+		<li><center><a href="http://info.flagcounter.com/UcO3"><img src="http://s01.flagcounter.com/count2/UcO3/bg_F2F2F2/txt_000000/border_F2F2F2/columns_2/maxflags_100/viewers_0/labels_1/pageviews_1/flags_1/percent_0/" width="90%" height="90%" align="center/" border="0"></a></center></li>
+		
+		<li><center><a href="https://www.revolvermaps.com/?target=enlarge&amp;i=5wvp5ufpxwv" title="流量统计" target="_blank"><img src="//rf.revolvermaps.com/h/m/a/0/ff0000/128/0/5wvp5ufpxwv.png" width="90%" height="90%" align="center/" alt="Map" style="border:0;"></a></center></li>
+		
+		<center><span title="博客总字数统计">
+
+         <span class="post-count">&nbsp;中文版博客总字数统计：<b>245.3k</b></span>	
+		
+		</span></center></ul>
+
+		</div>
+</div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">左邻右舍</h3>
+        <div class="widget">
+  <ul>
+	<a href="https://github.com/AndrewLJackson">Andrew_L._Jackson&nbsp;&nbsp;</a>  
+	<a href="https://github.com/andrewcparnell">Andrew_C._Parnell&nbsp;&nbsp;</a>  
+	<a href="http://yuumezawa.com/Lab/index.htm">Yu_Umezawa&nbsp;&nbsp;</a> 
+
+	<a href="https://guangchuangyu.github.io/cn/">Y叔&nbsp;&nbsp;</a>
+	<a href="http://apansharing.blogspot.com/">阿磐老师&nbsp;&nbsp;</a>
+	<a href="http://blog.sciencenet.cn/home.php?mod=space&uid=71964">马臻老师&nbsp;&nbsp;</a>
+	<a href="http://www.biotrainee.com/">生信技能树主页&nbsp;&nbsp;</a>
+	<a href="https://space.bilibili.com/338686099/#/">生信技能树视频&nbsp;&nbsp;</a> 
+	<a href="https://yihui.name/cn/">谢益辉大神&nbsp;&nbsp;</a>
+	
+	<a href="http://www.soil-interface.cn/">土壤所李芳柏老师&nbsp;&nbsp;</a>
+	<a href="http://www.garden-of-excellence.cn/aboutus/">地化所-优秀花园&nbsp;&nbsp;</a>
+	<a href="http://www.sklec.ecnu.edu.cn/">河口海岸学国家重点实验室（华东师范-施华宏课题组）&nbsp;&nbsp;</a>
+	
+	<a href="http://zhishifenzi.com/">知识分子官网&nbsp;&nbsp;</a>
+	
+  </ul>
+</div>
+</div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://www.researchgate.net/profile/Weiping_Mei">ResearchGate</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://www.rdocumentation.org/search?q=weiping%20mei">r-project</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://bbs.sciencenet.cn/home.php?mod=space&uid=651374&view=meiweipingg">科学网</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">诗词欣赏</h3>
+        <div class="widget">
+  <ul>
+<br>
+<b>Poem: Your Own Time Zone</b><br>
+<br>New York is three hours ahead of California,
+<br>But that doesn’t make California slow.
+<br><br>Someone graduated at the age of 22,
+<br>But waited five years before securing a good job.
+<br>Some became a CEO at 25,
+<br>And died at 50.
+<br>While another became a CEO at 50,
+<br>And lived to 90 years.
+<br><br>Someone is still single,
+<br>While someone else got married.
+<br>Obama retired at 55,
+<br>& Trump started at 70.
+<br><br><b>Everyone in this world works based on their time zone.</b>
+<br><br>People around you might seem to be ahead of you,
+<br>& some might seem to be behind you.
+<br><b>But everyone is running their own race, in their own time.
+<br><br>Do not envy them & do not mock them.
+<br>They are in their time zone, and you are in yours.
+<br><br>Life is about waiting for the right moment to act.</b>
+<br>So, relax.
+<br>You’re not late.
+<br>You’re not early.
+<br>You are very much on time~	
+
+	
+  </ul>
+</div>
+</div>
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+
+
+				<p>站长：梅卫平 MEI, Weiping</p>
+				<p>E-mail：forresearcher@163.com </p>
+				<p>QQ: 5643 14073 ; Twitter: @weiping_mei</p>
+                <p>&copy; 2017 - 2024 梅卫平 保留所有版权</p>
+                
+<!-- 
+				<p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+-->				
+
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'weipingmei';
+    
+    
+    var disqus_url = 'http://PhDMeiwp.github.io/用R软件件作雷达图（或蜘蛛网图）/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

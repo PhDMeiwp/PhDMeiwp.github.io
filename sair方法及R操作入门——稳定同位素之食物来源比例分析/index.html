@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>sair方法及R操作入门——稳定同位素之食物来源比例分析 | 梅卫平の阅览室</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="R,同位素,sair,饵料贡献比">
+    
+    <meta name="description" content="(本文于2016-10-5 20:29 首发于 “科学网”)    在稳定同位素领域，20世纪70 80 年代开始，利用碳氮稳定同位素来研究食物网结构成为有力的技术手段，以弥补传统的胃含物方法中较难分析的空胃率较高的生物的缺陷。  在食物网研究中，主要包括食物来源和营养级的分析。其中，食物来源分析中严格来讲，1种同位素只能对应2种食物来源的分析，n种同位素相对应n+1种食物来源的分析。">
+<meta name="keywords" content="R,同位素,sair,饵料贡献比">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sair方法及R操作入门——稳定同位素之食物来源比例分析">
+<meta property="og:url" content="http://PhDMeiwp.github.io/sair方法及R操作入门——稳定同位素之食物来源比例分析/index.html">
+<meta property="og:site_name" content="梅卫平の阅览室">
+<meta property="og:description" content="(本文于2016-10-5 20:29 首发于 “科学网”)    在稳定同位素领域，20世纪70 80 年代开始，利用碳氮稳定同位素来研究食物网结构成为有力的技术手段，以弥补传统的胃含物方法中较难分析的空胃率较高的生物的缺陷。  在食物网研究中，主要包括食物来源和营养级的分析。其中，食物来源分析中严格来讲，1种同位素只能对应2种食物来源的分析，n种同位素相对应n+1种食物来源的分析。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://phdmeiwp.github.io/sair方法及R操作入门——稳定同位素之食物来源比例分析/1.jpg">
+<meta property="og:updated_time" content="2021-10-11T06:19:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sair方法及R操作入门——稳定同位素之食物来源比例分析">
+<meta name="twitter:description" content="(本文于2016-10-5 20:29 首发于 “科学网”)    在稳定同位素领域，20世纪70 80 年代开始，利用碳氮稳定同位素来研究食物网结构成为有力的技术手段，以弥补传统的胃含物方法中较难分析的空胃率较高的生物的缺陷。  在食物网研究中，主要包括食物来源和营养级的分析。其中，食物来源分析中严格来讲，1种同位素只能对应2种食物来源的分析，n种同位素相对应n+1种食物来源的分析。">
+<meta name="twitter:image" content="http://phdmeiwp.github.io/sair方法及R操作入门——稳定同位素之食物来源比例分析/1.jpg">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="梅卫平の阅览室" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/css/images/mei.ico">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+</html>
+<body>
+
+	<!-- 不添加中/英文图片链接
+<a href="http://PhDMeiwp.github.io/en/" title="English version"><img src='https://i.loli.net/2017/12/21/5a3b53407fe9d.png' width=50px align=right></a>
+<a href="http://PhDMeiwp.github.io" title="中文版"><img src='https://i.loli.net/2017/12/21/5a3b534059fbb.png' width=50px  align=right></a>
+   -->
+   
+
+<style>a{TEXT-DECORATION:none}</style> 
+<div class="widget-wrap">
+
+<p style="text-align:center;">
+
+
+		<!-- 不蒜统计    -->
+
+         <span style="display: inline;" id="busuanzi_container_site_uv"><font color="green"> <b>^_^简约而不简单！欢迎来到梅卫平の阅览室！您是第 <span id="busuanzi_value_site_uv" font="微软雅黑" style="color:red"></span> 位访客^_^</b></font></span><br><br>
+
+		<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+
+<b><font color="green" size="3px">&#127793;&nbsp;VIP&#x7EFF;&#x8272;&#x901A;&#x9053;</font></b>
+
+<br><br>
+		
+		<b>（一）常用检索：</b>
+		<a href=" https://jcr.clarivate.com" title="JCR官网路径"><font color="red"> 1. JCR-IF查询路径一，</font></a>
+		<a href="http://www.greensci.net/" title="greensci.net路径"><font color="black"> 路径二，</font></a>
+		<a href="http://www.letpub.com.cn/index.php?page=journalapp&view=search" title="letpub.com.cn路径"><font color="black"> 路径三</font></a>
+
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://journalmetrics.scopus.com" title="此为Soupus数据库推出的新的计算方法的影响因子-CiteScore查询系统"><font color="black"> 2. CiteScore-IF查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mjl.clarivate.com/cgi-bin/jrnlst/jloptions.cgi?PC=D" title="点击查询某英文期刊是否被SCI （Science Citation Index Expanded）收录"><font color="red">3. SCI期刊检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.fenqubiao.com/"><font color="red">4. 中科院分区查询路径一，</font></a>
+		<a href="http://www.letpub.com.cn/index.php?page=journalapp"><font color="black">路径二</font></a>
+
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mjl.clarivate.com/cgi-bin/jrnlst/jloptions.cgi?PC=SS" title="点击查询文科类某英文期刊是否被SSCI（Social Sciences Citation Index）收录"><font color="black">5. SSCI检索</font></a>
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mjl.clarivate.com/cgi-bin/jrnlst/jloptions.cgi?PC=EX" title="这是WOS的新玩意儿，是期刊晋级SCI/SSCI的备选库，被ESCI（Emerging Sources Citation Index）收录的期刊在不久的将来一般会正式入库SCI/SSCI"><font color="black">6. ESCI检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.elsevier.com/solutions/engineering-village/content/compendex" title="点击查询某期刊是否被EI收录"><font color="black">7. EI检索</font></a> 
+		<a href=" http://www.ei-istp.com/Info_14.html" title="备用，点击查询某期刊是否被EI收录"><font color="black">（备用）</font></a> 
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href=" http://www.ei-istp.com/About_5.html" title="备用，点击查询某会议是否被ISTP/CPCI收录"><font color="black">8. ISTP检索</font></a> 
+
+		<br><b>（二）ESI检索&Nature Index查询：</b>
+		<a href="https://esi.clarivate.com" title="ESI相比于SCI-IF更加流行，了解之"><font color="red"> 1. ESI查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.natureindex.com/" title="新玩法"><font color="black"> 2. Nature Index查询</font></a>		
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.natureindex.com/faq#journals" title="截至2020年，只有82本期刊入选"><font color="red"> 3. Nature Index Journal列表</font></a>
+	
+		<br><b>（三）基金查询入口：</b>
+		<a href="https://isisn.nsfc.gov.cn"><font color="red"> 1. 国自然官方查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.medsci.cn/sci/nsfc.do"><font color="black">2. 国自然梅斯查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://fund.sciencenet.cn/?id=781"><font color="black">3. 国自然科学网查询</font></a>
+		
+	    <br><b>（四）备用网址：</b>		
+		<a href="http://www.medsci.cn/sci/index.do?action=search"><font color="black"> 1. 梅斯SCI期刊智能查询</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://lib.tsinghua.edu.cn/tutorial/courseware/zhicheng.pdf"><font color="black">2. 论文被SCI收录情况查询方法</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://sciencechina.cn/cscd_source.jsp"><font color="black">3. CSCD期刊检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.cnki.net/"><font color="black">4. 中国知网检索</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://pubchem.ncbi.nlm.nih.gov/"><font color="black">5. PubChem</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.chemspider.com/Search.aspx"><font color="black">6. ChemSpider</font></a>		
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.home-for-researchers.com"><font color="black">7. 科研者之家</font></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://i-research.edu.eu.org/"><font color="black">8. 爱科研</font></a>	
+
+</p>	
+  </div>
+
+
+
+	<!-- 不添加gif动画
+<a><img src='https://i.loli.net/2020/05/22/ZpMgL5AdtFxSNHe.gif' width = 100% ></a>
+   -->
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">梅卫平の阅览室</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/国际/">国际</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学习/">学习</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学习/党组织/">党组织</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/">学外</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/他山之石/">他山之石</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/历史/">历史</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/学外/">学外</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/推荐书单/">推荐书单</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/学外/财务/">财务</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/">技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/R-语言/">R 语言</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/数据处理/">数据处理</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/汽车/">汽车</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/电脑技术/">电脑技术</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/技术/科研小工具/">科研小工具</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/">生活</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/名言警句/">名言警句</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/娱乐影音/">娱乐影音</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/家庭医生/">家庭医生</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/家庭教育/">家庭教育</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/房/">房</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/文化/">文化</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/旅游/">旅游</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/生活真相/">生活真相</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/诗词歌赋/">诗词歌赋</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/读书/">读书</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/趣味百科/">趣味百科</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/">科研</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/专利/">专利</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/个人微关注/">个人微关注</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/同位素/">同位素</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/基础概念/">基础概念</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/基金/">基金</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/学术规范/">学术规范</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研时间表/">科研时间表</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研行规/">科研行规</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/科研/论文/">论文</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/关于/index.html">关于本站</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item">
+                                    <a class="main-nav-list-link" href="/bibliography/index.html">学术简历</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://PhDMeiwp.github.io"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/科研/">科研</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/科研/同位素/">同位素</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-sair方法及R操作入门——稳定同位素之食物来源比例分析" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        sair方法及R操作入门——稳定同位素之食物来源比例分析
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/sair方法及R操作入门——稳定同位素之食物来源比例分析/" class="article-date">
+            <time datetime="2017-03-14T12:16:34.000Z" itemprop="datePublished">2017-03-14</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/R/">R</a>, <a class="tag-link" href="/tags/sair/">sair</a>, <a class="tag-link" href="/tags/同位素/">同位素</a>, <a class="tag-link" href="/tags/饵料贡献比/">饵料贡献比</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <hr>
+<center>(本文于2016-10-5 20:29 首发于 <a href="http://blog.sciencenet.cn/blog-651374-1006886.html" target="_blank" rel="noopener">“科学网”</a>)</center>
+
+
+
+<p>在稳定同位素领域，20世纪70 80 年代开始，利用碳氮稳定同位素来研究食物网结构成为有力的技术手段，以弥补传统的胃含物方法中较难分析的空胃率较高的生物的缺陷。</p>
+<p><br></p>
+<p>在食物网研究中，主要包括食物来源和营养级的分析。其中，食物来源分析中严格来讲，1种同位素只能对应2种食物来源的分析，n种同位素相对应n+1种食物来源的分析。</p>
+<a id="more"></a>
+<p><br><br><strong>问题是，</strong>例如有5种食物来源，只用碳、氮2种同位素进行食物来源分析就很困难，20世纪后半叶，普遍采用的方法是<strong>Isosource软件</strong>进行计算。但是这种方法：①只使用<strong>饵料生物同位素</strong>的平均值，<strong>未考虑标准差的影响</strong>；②只使用固定<strong>浓缩系数（TEF）值</strong>（e.g., 碳氮同位素分别使用1‰ 和3.4‰），也<strong>未考虑其标准差</strong>的影响等（Parnell AC, Inger R, Bearhop S, et al.,2010）。</p>
+<p><br></p>
+<img src="/sair方法及R操作入门——稳定同位素之食物来源比例分析/1.jpg" title="img1">
+<p><br><br>本文简要介绍<strong>基于贝叶斯算法的最新方法: siar（stable isotope analysis in R）在R软件上的操作过程</strong>。</p>
+<h1 id="step1：推荐按照下图内容格式（包括标题栏）编辑数据，然后导入"><a href="#step1：推荐按照下图内容格式（包括标题栏）编辑数据，然后导入" class="headerlink" title="step1：推荐按照下图内容格式（包括标题栏）编辑数据，然后导入"></a>step1：推荐按照下图内容格式（包括标题栏）编辑数据，然后导入</h1><img src="/sair方法及R操作入门——稳定同位素之食物来源比例分析/2.jpg" title="img2">
+<p></p>
+<p><br></p>
+<center><strong>补充R语言基础知识：</strong><br><br><br>上述图片中的 蓝色字体内容均为R代码，并非csv文件里面的内容。<font color="red">上述图片包括3个独立的.csv文件，分别为sources.csv，corrections.csv和consumers.csv文件</font>。而<strong>不是</strong>都输入在一个.csv文件里。<br><br>①上述图片最左一列（1~3,1~19）为excel或csv软件的侧栏编号，请勿写入excel或csv文件的第一列。即，<font color="red">本例中：csv文件的第一列标题为Source或Group</font>。<br><br><br><br>②R语言软件自身缺点所致，在<strong>csv文件数据等所有内容</strong>最好<font color="red">不要用宋体等中文字体，建议同意采用新罗马字体，否则容易识别出错或乱码</font>。<br><br><br><br>③ 写好的csv文件在保存时，请<font color="red">务必选择 CSV（MS-DOS）或苹果电脑选择 CSV（Macintosh）后缀保存</font>，而<strong>不要选择其他的CSV后缀保存</strong>。</center>
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">library(siar)</span><br><span class="line">graphics.off()</span><br><span class="line">sources&lt;-read.csv(<span class="string">"~/sources.csv"</span>,header=TRUE)</span><br><span class="line">consumers&lt;-read.csv(<span class="string">"~/consumers.csv"</span>,header=TRUE)</span><br><span class="line">corrections&lt;-read.csv(<span class="string">"~/corrections.csv"</span>,header=TRUE)</span><br><span class="line">concs&lt;-0</span><br></pre></td></tr></table></figure>
+<h1 id="step2-作图如下"><a href="#step2-作图如下" class="headerlink" title="step2: 作图如下"></a>step2: 作图如下</h1><img src="/sair方法及R操作入门——稳定同位素之食物来源比例分析/3.jpg" title="img3">
+<p></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model1&lt;-siarmcmcdirichletv4(consumers,sources,corrections,concs)</span><br><span class="line">siarplotdata(model1,iso=c(2,1),leg = 1)     </span><br><span class="line"><span class="comment"># error bar is twice SD!!!leg=1 是指图标和分布图在同一个图层上，leg=2则表示在两个图层，leg=0 表示不画图标。</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>R中直接输出图之后，将图片copy to clipboard asMetafile 到 ppt中，然后选择该图片并点击ppt工具栏中的“取消组合”，可以对图例等内容进行自由编辑。</p>
+</blockquote>
+<table><tr><td bgcolor="yellow"><font color="red"><strong>补充内容之 如何计算各饵料贡献率的标准偏差（Sd值）等参数？</strong></font></td></tr></table>
+
+<font color="red"> 上述模型“model1”建立之后，其实所有贡献率结果已经出来了，我们需要先看一下结果里面到底暗藏了什么玄机，在R软件中输入代码如下</font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head(model1<span class="variable">$output</span>)</span><br></pre></td></tr></table></figure>
+<font color="red">得到结果如下图(此处图略)</font>
+
+
+
+<font color="red">此时，我们就已经知道model1$output各列代表什么内容了，<strong>接下来代码十分重要，务必仔细观察理解并应用</strong>！！！</font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">summary(model1<span class="variable">$output</span>[,1])  </span><br><span class="line">sd(model1<span class="variable">$output</span>[,1])  </span><br><span class="line"><span class="comment">#上述两步即可得到我们想要的 src1对应consumer1的贡献率的各个参数（mean，sd等）数据了，同样地，</span></span><br><span class="line"></span><br><span class="line">summary(model1<span class="variable">$output</span>[,2])  </span><br><span class="line">sd(model1<span class="variable">$output</span>[,2])   <span class="comment">#  src 2 对应 consumer 1</span></span><br><span class="line"></span><br><span class="line">summary(model1<span class="variable">$output</span>[,3])  </span><br><span class="line">sd(model1<span class="variable">$output</span>[,3])  <span class="comment"># src 3 对应 consumer 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#----</span></span><br><span class="line"></span><br><span class="line">summary(model1<span class="variable">$output</span>[,6])  </span><br><span class="line">sd(model1<span class="variable">$output</span>[,6])  </span><br><span class="line"><span class="comment">#以上为 src1 对应 consumer2 的贡献率的各个参数（mean，sd等）数据</span></span><br><span class="line"><span class="comment">#注意① 请参照 head（model1$ooutput中的表头内容，相应地更改上述代码中括号内[,#]的数字）</span></span><br><span class="line"><span class="comment">#注意② 和①相同，src 种类不同，上述中括号内的数字会发生变化，请注意！</span></span><br><span class="line"></span><br><span class="line">summary(model1<span class="variable">$output</span>[,7])  </span><br><span class="line">sd(model1<span class="variable">$output</span>[,7])  <span class="comment"># src 2 对应 consumer 2</span></span><br><span class="line"></span><br><span class="line">summary(model1<span class="variable">$output</span>[,8])  </span><br><span class="line">sd(model1<span class="variable">$output</span>[,8])  <span class="comment"># src 3 对应 consumer 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#---</span></span><br><span class="line">summary(model1<span class="variable">$output</span>[,11])  </span><br><span class="line">sd(model1<span class="variable">$output</span>[,11])  <span class="comment"># src 1 对应 consumer 3</span></span><br><span class="line"></span><br><span class="line">summary(model1<span class="variable">$output</span>[,12])  </span><br><span class="line">sd(model1<span class="variable">$output</span>[,12])  <span class="comment"># src 2 对应 consumer 3</span></span><br><span class="line"></span><br><span class="line">summary(model1<span class="variable">$output</span>[,13])  </span><br><span class="line">sd(model1<span class="variable">$output</span>[,13])  <span class="comment"># src 3 对应 consumer 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># etc...</span></span><br></pre></td></tr></table></figure>
+<font color="red"> model1$output 数据集中的 “SD1G1，SD2G1” 等其他参数 表达的意思是什么，请大家自主解决这个问题，我就不一一答复了！</font>
+
+
+
+<hr>
+<h1 id="step3：作饵料来源所占捕食者食物中的比例的分布图"><a href="#step3：作饵料来源所占捕食者食物中的比例的分布图" class="headerlink" title="step3：作饵料来源所占捕食者食物中的比例的分布图"></a>step3：作饵料来源所占捕食者食物中的比例的分布图</h1><img src="/sair方法及R操作入门——稳定同位素之食物来源比例分析/4.jpg" title="img4">
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">siarhistograms(model1)     </span><br><span class="line"><span class="comment"># 然后在R中输入 1:4, Selection:2，即为上图，其中4表示group4,2表示将所有饵料生物占比在同一张图中表示；同理，&lt;br&gt;</span></span><br><span class="line">siarhistograms(model1)     </span><br><span class="line"><span class="comment"># 然后在R中输入 1:1, Selection:2，即为group1的食物来源占比分布图；以此类推。</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="step4：分布图形式2，以捕食者的group为变量"><a href="#step4：分布图形式2，以捕食者的group为变量" class="headerlink" title="step4：分布图形式2，以捕食者的group为变量"></a>step4：分布图形式2，以捕食者的group为变量</h1><img src="/sair方法及R操作入门——稳定同位素之食物来源比例分析/5.jpg" title="img5">
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">siarproportionbygroupplot(model1,grp=4)     </span><br><span class="line"><span class="comment"># 代码中的grp=4表示group4；以此类推。</span></span><br></pre></td></tr></table></figure>
+<font color="darkgreen">上述代码运行后，会让你填一些数字后按回车，第一步说明 <font color="red">1:1</font> for Group1,第二步说明<font color="red">Selection:2</font> for all source proportion together on one graph.</font>
+
+
+
+
+<table><tr><td bgcolor="darkred"><font color="white"><center> 新增内容 2017/03/26 updated<br><br> 自定义箱线图之利用SIAR计算不同饵料来源对消费者的贡献比例 </center></font></td></tr></table>
+
+<p>上述 Step4 我们已经绘制了所有饵料对消费者（以group4为例）的贡献率箱线图，SIAR的默认设置中</p>
+<p>siarproportionbygroupplot()函数只绘制<font color="red">贡献率的50%，75%和95%这三个范围， </font></p>
+<p>想要自定义不同的的范围，只需要将上述Step4中的代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">siarproportionbygroupplot(model1,grp=4)     </span><br><span class="line"><span class="comment"># 代码中的grp=4表示group4；以此类推。</span></span><br></pre></td></tr></table></figure>
+<font color="red"><strong>更改为如下代码：</strong></font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">siarproportionbygroupplot(model1,grp=4,probs = c(95,75,50,25,5))     </span><br><span class="line"><span class="comment"># 代码中的grp=4表示group4；以此类推。</span></span><br></pre></td></tr></table></figure>
+<font color="red"><strong>即可。</strong></font>
+
+
+<font color="red">附上SIAR工具包原作者AndrewL Jackson对siarproportionbygroupplot()函数的源代码请仔细参考</font> <a href="https://github.com/AndrewLJackson/siar/blob/master/R/siarproportionbygroupplot.R" target="_blank" rel="noopener">https://github.com/AndrewLJackson/siar/blob/master/R/siarproportionbygroupplot.R</a><br><br><br><br>—<br><br># step5：分布图形式3，以饵料生物src的种类为变量 #<br><br><br><img src="/sair方法及R操作入门——稳定同位素之食物来源比例分析/6.jpg" title="img6"><br><br>代码为：<br><br><br>&gt; siarproportionbysourceplot(model,grp=2)<br><br>然后在R中按回车键几个显示上图。代码中的grp=2表示饵料生物src2，以此类推。<br><br><br><br>—<br><br><br>#step6：导出数据化的结果，见下图左半部分#<br><br><img src="/sair方法及R操作入门——稳定同位素之食物来源比例分析/7.jpg" title="img7"><br><br><br>代码如下：<br><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">siarhdrs(model1)    </span><br><span class="line"><span class="comment">#src1G1表示第1种饵料生物对group1的捕食者食物来源的贡献比例结果，包括占比的平均值和95%置信区间等。以此类推。</span></span><br></pre></td></tr></table></figure><br><br>   <strong>以上。</strong><br><br>—<br><br>—<br><br># siar Q &amp; A #<br><br>#Q[1]#<br>梅老师，您好：<br>看了你关于SIAR求饵料贡献率的代码，有几个问题想问一下，能不能麻烦您帮我解决一下呢？<br><br>1.您所给的数据能具体解释一下是怎么来的吗？是几种饵料呢？（我是初学者，对数据的编辑整理还不是很明白，麻烦您知道一下呢）<strong>如果饵料只测了一次而没有标准差该怎么办呢？那个corrections代表什么意思呢？</strong><br><br>2.如果我们要测贡献率，那那个直方图该怎么解释呢？<br>万分感谢~<br><br>A: 您好<br><br>1. 饵料最好5种，本文例子中为3种：src 1，src2，src3<br><br>2. 饵料对应捕食者数目，某一种捕食者比如一种鲫鱼，它也应该有很多个平行样本才有意义，实际情况中这个平行可以是多个采样点<br><br>3. corrections表示src对应consumer的同位素的浓缩系数<br><br>4. 饵料贡献率直接使用#step6中的数据即可。#step2下面的图中，src的数据是已经加上浓缩系数校正后的值，consumer为原始值。<br><br><br>#Q[2]#<br><br>梅老师，您好：<br>感谢您百忙之中抽空解答我的问题，您说corrections表示src对应consumer的同位素的浓缩系数，我看到您所给的值是一样的，15N是3.54,13C是1.63，能否请问一下您<strong>这个浓缩系数值是怎么取值的吗？对应的浓缩系数里面的Sd标准差又是如何得到的呢？</strong><br><br>A：<br><br>1. 本文只是举例而已，并非实际数值。<br><br>2. 不同捕食者对应相同饵料实际情况下浓缩系数肯定不完全相同。<br><br>3. 同种捕食者同种饵料，在环境条件不同的情况下浓缩系数也不完全相同，抑或同种捕食者在不同生长时期的实验室饲养情况下浓缩系数也会有差异，就会有sd值了。<br><br>4. 以上为已有各个实验参数的理想条件下的sair分析，但是，比如未知特定捕食者对应的饵料的浓缩系数的情况下，用其它已知的相近的捕食者的浓缩系数代替，或者用其它综述论文的浓缩系数平均值代替也一定程度上认为是无可厚非的。<br><br><br>#Q[3]#<br><br>梅老师，您好，又要麻烦您啦，我想问一下那个<font color="red">消费者在统计数据时是否需要加上分馏值呢？还是直接用所测数据呢？</font>
+
+<p>A：<br><br>捕食者和饵料的同位素值都是直接使用原始值，不需要加上分馏值，因为分馏值是直接在corrections参数中设置。</p>
+<p>#Q[4]#<br><br>另外，想<font color="red">请问一下cons&lt;-o表示什么含义呢？</font></p>
+<p>A:<br><br>concs表示饵料碳氮元素含量（不是同位素值哦！） ，可以使用饵料碳氮元素含量（或百分比）得到加权校正的 SIAR 模型。</p>
+<p>当某个饵料的某元素（如氮元素）含量（百分比）显著…..低于或高于其他饵料时，e.g., 两饵料N含量为 12%，而第3个饵料N含量为 1%，推荐使用浓度加权；</p>
+<p>当各饵料的碳氮元素含量没有显著变化时则不需要使用浓度加权，即conc&lt;- 0.</p>
+<p>一般情况conc默认设置为0。具体情况具体分析。</p>
+<p>更多内容请参考 Donald L. Phillips · Paul L. Koch. Incorporating concentration dependence in stable isotope mixing models. Oecologia (2002) 130:114–125.</p>
+<p>#Q[5]#zhao0415:</p>
+<p>尊敬的梅老师：<br>       您好！按照您的说明准备了数据，格式如<br>      |sources    |    Mean15N    |   sd15N     |   Mean13C     |   sd13C<br><br>1     |   src1    |   6.488984    |   1.4594632 |   -11.17023   |     1.2149562<br><br>2     |   src2    |   4.43216     |   2.2680709 |   -30.87984   |    0.6413182<br><br>3     |   src3    |   11.192613   |   1.1124385 |   -11.1709    |     1.9593306<br></p>
+<p><strong>采用命令：sources&lt;-read.csv(“C:/siar/re2.csv”,header=TRUE)却报错：</strong></p>
+<p>Error in make.names(col.names, unique = TRUE) : 多字节字符串1有错<br>此外: Warning message:<br>In read.table(file = file, header = header, sep = sep, quote = quote,  :<br>  incomplete final line found by readTableHeader on ‘C:/siar/re2.csv’<br><strong>请问是什么原因呢？</strong>谢谢您！</p>
+<p>A：<br>您好，Sd等字母大小写改成和例子完全一样之后再试试看吧</p>
+<p>A:  数据等csv所有内容输入格式请用新罗马字体，不要用中文宋体等；另外，文件保存格式为.CSV[MS-DOS]或.CSV[Macintosh],不要保存成其他csv后缀格式。</p>
+<p>#Q[6]# 您好。想咨询您在做稳定同位素食性分析时，在R中运行siar包时候，</p>
+<p><font color="red">如果consumer数据分组只有一组时，siarplotdata出来的图横坐标的值并不是N15的同位素值，而是group。</font><br>只要分组大于一，图像就会再次正常。想问老师有没有遇到这样的情况，这是不是安装包的bug？怎么解决这样的问题。</p>
+<p>A：您好。当consumers数据的Group只有一组时（即只有一种消费者），在运行sair之前，<font color="green">直接将 consumers.csv文件里的”Group”这一列删除掉</font>，即可在siarplotdata时导出正常的图了（e.g., x轴为d13CPI，y轴为d15NPI，见下图）！</p>
+<p><img src="https://i.loli.net/2017/10/22/59ec158c77a7b.png" alt="consumer只有一种消费者时siarplotdata.png"></p>
+<hr>
+<p><span id="busuanzi_container_page_pv"><br>&lt;已有 <span id="busuanzi_value_page_pv"></span> 次阅读&gt;<br></span></p>
+<hr>
+<p>由于本文作者水平有限，文中如有错误之处，欢迎大家批评指正！</p>
+<p>① 本文仅代表作者个人观点，不代表任何其它立场，欢迎交流合作！</p>
+<p>② 转载与分享请注明：本文源于 <a href="http://meiweiping.cn" target="_blank" rel="noopener">http://meiweiping.cn</a></p>
+
+			
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+		
+		<span class="post-count">^_^ 本文字数统计：2.9k  字</span>
+		
+        </div>
+        <footer class="article-footer">
+
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+	<a class="a2a_button_whatsapp"></a>
+	<a class="a2a_button_evernote"></a>		
+	<a class="a2a_button_line"></a>
+	
+	<a class="a2a_button_douban"></a>		
+	<a class="a2a_button_wechat"></a>
+	<a class="a2a_button_sina_weibo"></a>
+	<a class="a2a_button_qzone"></a>
+	<a class="a2a_button_renren"></a>
+
+	<a class="a2a_button_email"></a>
+	<a class="a2a_button_copy_link"></a>
+	<a class="a2a_button_print"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="researchgate" href="https://www.researchgate.net/profile/Weiping_Mei" target="_blank" rel="noopener">
+                        <i class="icon fa fa-researchgate"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/PhDMeiwp" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google" href="https://scholar.google.com/citations?user=Tmp_SpUAAAAJ&hl=en" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/weiping_mei" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/meiweipingg" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/SIBER (SIAR-package)-in-R：物种生态位重复度计算/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            SIBER (SIAR package) in R：物种生态位重复度计算
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/Hexo如何建立中英文双语博客/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Hexo如何建立中英文双语博客</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">博主推荐</h3>
+        <div class="widget">
+  <ul>
+	<br><a href="https://phdmeiwp.github.io/%E8%BE%9C%E9%B8%BF%E9%93%AD%E3%80%8A%E4%B8%AD%E5%9B%BD%E4%BA%BA%E7%9A%84%E7%B2%BE%E7%A5%9E%E3%80%8B/">特别推荐：辜鸿铭《中国人的精神》</a>	
+	<br><br><a href="https://phdmeiwp.github.io/%E7%A7%91%E7%A0%94%E5%B7%A5%E4%BD%9C%E8%80%85%E3%81%AE%E5%8D%81%E5%85%AB%E8%88%AC%E6%AD%A6%E8%89%BA/">1. 科研工作者の十八般武艺</a>  
+	<br><br><a href="https://phdmeiwp.github.io/%E5%88%86%E7%B1%BB%E5%8F%8A%E6%A3%80%E7%B4%A2%EF%BC%9ASCI%EF%BC%8CSSCI%EF%BC%8CEI%EF%BC%9BCSCD%EF%BC%8CCSSCI%EF%BC%8C%E5%8C%97%E5%A4%A7%E6%A0%B8%E5%BF%83/">2. 分类及检索：SCI，SSCI，EI；CSCD，CSSCI，北大核心</a>
+	<br><br><a href="http://phdmeiwp.github.io/ESI%E5%AD%A6%E7%A7%91,ESI%E9%AB%98%E8%A2%AB%E5%BC%95%E8%AE%BA%E6%96%87%E7%AD%89%E6%8C%87%E6%A0%87%E8%AF%A6%E8%A7%A3/">3. ESI学科,ESI高被引论文等指标详解</a> 	
+	<br><br><a href="https://phdmeiwp.github.io/%E8%87%AA%E7%84%B6%E6%8C%87%E6%95%B0%E6%9C%9F%E5%88%8A-Nature-Index-journals/">4. 自然指数期刊 Nature Index journals</a>  
+	<br><br><a href="http://phdmeiwp.github.io/%E5%9F%BA%E9%87%91%E5%88%86%E7%B1%BB%EF%BC%9A%E5%8D%9A%E5%A3%AB%E5%90%8E%E5%9F%BA%E9%87%91%EF%BC%8C%E5%9B%BD%E8%87%AA%E7%84%B6%E5%9F%BA%E9%87%91/">5. 基金分类：博士后基金，国自然基金</a>
+	
+	<br><br><a href="https://phdmeiwp.github.io/%E6%AD%A3%E7%A1%AE%E9%80%89%E6%8B%A9%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95%E2%80%94%E2%80%94%E5%A4%9A%E7%BB%84%E6%95%B0%E6%8D%AE%E6%AF%94%E8%BE%83/">6. 正确选择数据统计分析方法——多组数据比较</a>  
+	<br><br><a href="https://phdmeiwp.github.io/Excel%E4%B8%8EOrigin-R%E7%AD%89%E8%BD%AF%E4%BB%B6%E5%AF%B9%E5%90%8C%E4%B8%80%E6%95%B0%E6%8D%AE%EF%BC%8C%E8%BF%9B%E8%A1%8Cy-a-x-b%E6%8B%9F%E5%90%88%E6%97%B6%E7%BB%93%E6%9E%9C%E4%B8%8D%E4%B8%80%E6%A0%B7/">7. Excel与Origin,R等软件对同一数据，进行y=a*x^b拟合时结果不一样</a>  
+	<br><br><a href="https://phdmeiwp.github.io/%E7%8B%AC%E7%AB%8B%E6%A0%B7%E6%9C%AC%E3%80%81%E9%85%8D%E5%AF%B9%E6%A0%B7%E6%9C%AC%E5%8F%8A%E5%8D%95%E6%A0%B7%E6%9C%AC-t-%E6%A3%80%E9%AA%8C-%E6%A0%B7%E6%9C%AC%E6%95%B0-%E8%87%B3%E5%B0%91%E6%AF%8F%E7%BB%84%E5%A4%9A%E5%B0%91%E4%B8%BA%E5%AE%9C/">8. 独立样本、配对样本及单样本 t 检验 样本数 至少每组多少为宜?</a>  
+	<br><br><a href="https://phdmeiwp.github.io/%E7%89%A9%E7%A7%8D%E7%BB%84%E6%88%90%E5%88%86%E6%9E%90PCA-PCoA-NMDS-%E7%89%A9%E7%A7%8D%E5%92%8C%E7%8E%AF%E5%A2%83%E5%9B%A0%E5%AD%90%E5%88%86%E6%9E%90RDA-db-RDA/">9. 物种组成分析PCA,PCoA,NMDS,物种和环境因子分析RDA,db-RDA</a>  
+	<br><br><a href="https://phdmeiwp.github.io/R%E8%AF%AD%E8%A8%80%E5%88%9D%E5%AD%A6%E8%80%85%E5%BF%85%E5%A4%87%E8%B5%84%E6%96%99%EF%BC%88%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD%EF%BC%89/">10. R语言专栏</a>  
+
+  </ul>
+</div>
+</div>
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/怎么抓娃娃？家庭教育共性问题求解/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/怎么抓娃娃？家庭教育共性问题求解/抓娃娃1.png)" alt="怎么抓娃娃？家庭教育共性问题求解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/家庭教育/">家庭教育</a></p>
+                            <p class="item-title"><a href="/怎么抓娃娃？家庭教育共性问题求解/" class="title">怎么抓娃娃？家庭教育共性问题求解</a></p>
+                            <p class="item-date"><time datetime="2024-07-14T14:16:53.000Z" itemprop="datePublished">2024-07-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/你的房贷每月到底还了多少本金和利息/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/你的房贷每月到底还了多少本金和利息/房贷.png)" alt="你的房贷每月到底还了多少本金和利息" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/房/">房</a></p>
+                            <p class="item-title"><a href="/你的房贷每月到底还了多少本金和利息/" class="title">你的房贷每月到底还了多少本金和利息</a></p>
+                            <p class="item-date"><time datetime="2024-06-09T10:26:08.000Z" itemprop="datePublished">2024-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/推荐100首好听の音乐/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/推荐100首好听の音乐/音乐.jpg)" alt="推荐100首好听の音乐" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/娱乐影音/">娱乐影音</a></p>
+                            <p class="item-title"><a href="/推荐100首好听の音乐/" class="title">推荐100首好听の音乐</a></p>
+                            <p class="item-date"><time datetime="2024-03-18T11:05:24.000Z" itemprop="datePublished">2024-03-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/新房装修05：总结篇/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/新房装修05：总结篇/新房.png)" alt="新房装修05：总结篇" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/房/">房</a></p>
+                            <p class="item-title"><a href="/新房装修05：总结篇/" class="title">新房装修05：总结篇</a></p>
+                            <p class="item-date"><time datetime="2024-03-16T12:06:34.000Z" itemprop="datePublished">2024-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/新房装修04：软装（容易忽略的开支）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/新房装修04：软装（容易忽略的开支）/窗帘.jpg)" alt="新房装修04：软装（容易忽略的开支）" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/生活/">生活</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/生活/房/">房</a></p>
+                            <p class="item-title"><a href="/新房装修04：软装（容易忽略的开支）/" class="title">新房装修04：软装（容易忽略的开支）</a></p>
+                            <p class="item-date"><time datetime="2024-03-15T12:03:04.000Z" itemprop="datePublished">2024-03-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/国际/">国际</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/学习/党组织/">党组织</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/">学外</a><span class="category-list-count">18</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/学外/他山之石/">他山之石</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/历史/">历史</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/学外/">学外</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/推荐书单/">推荐书单</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/科研1-1星球/">科研1+1星球</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学外/财务/">财务</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">64</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/Hexo建站/">Hexo建站</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/R-语言/">R 语言</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/数据处理/">数据处理</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/汽车/">汽车</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/电脑技术/">电脑技术</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/科研小工具/">科研小工具</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">43</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/生活/名言警句/">名言警句</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/娱乐影音/">娱乐影音</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/家庭医生/">家庭医生</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/家庭教育/">家庭教育</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/房/">房</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/文化/">文化</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/旅游/">旅游</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/生活真相/">生活真相</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/花鸟虫鱼/">花鸟虫鱼</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/诗词歌赋/">诗词歌赋</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/读书/">读书</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/谣言粉碎机/">谣言粉碎机</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/趣味百科/">趣味百科</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/轻松一刻/">轻松一刻</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/">科研</a><span class="category-list-count">34</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/科研/专利/">专利</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/个人微关注/">个人微关注</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/同位素/">同位素</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基础概念/">基础概念</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/基金/">基金</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/学术规范/">学术规范</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研时间表/">科研时间表</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研行规/">科研行规</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研读音易错字/">科研读音易错字</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/科研陷阱/">科研陷阱</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/科研/论文/">论文</a><span class="category-list-count">11</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">本站统计</h3>
+        <div class="widget">
+
+		<ul>
+		
+		<li><center><a href="http://info.flagcounter.com/UcO3"><img src="http://s01.flagcounter.com/count2/UcO3/bg_F2F2F2/txt_000000/border_F2F2F2/columns_2/maxflags_100/viewers_0/labels_1/pageviews_1/flags_1/percent_0/" width="90%" height="90%" align="center/" border="0"></a></center></li>
+		
+		<li><center><a href="https://www.revolvermaps.com/?target=enlarge&amp;i=5wvp5ufpxwv" title="流量统计" target="_blank"><img src="//rf.revolvermaps.com/h/m/a/0/ff0000/128/0/5wvp5ufpxwv.png" width="90%" height="90%" align="center/" alt="Map" style="border:0;"></a></center></li>
+		
+		<center><span title="博客总字数统计">
+
+         <span class="post-count">&nbsp;中文版博客总字数统计：<b>245.3k</b></span>	
+		
+		</span></center></ul>
+
+		</div>
+</div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">左邻右舍</h3>
+        <div class="widget">
+  <ul>
+	<a href="https://github.com/AndrewLJackson">Andrew_L._Jackson&nbsp;&nbsp;</a>  
+	<a href="https://github.com/andrewcparnell">Andrew_C._Parnell&nbsp;&nbsp;</a>  
+	<a href="http://yuumezawa.com/Lab/index.htm">Yu_Umezawa&nbsp;&nbsp;</a> 
+
+	<a href="https://guangchuangyu.github.io/cn/">Y叔&nbsp;&nbsp;</a>
+	<a href="http://apansharing.blogspot.com/">阿磐老师&nbsp;&nbsp;</a>
+	<a href="http://blog.sciencenet.cn/home.php?mod=space&uid=71964">马臻老师&nbsp;&nbsp;</a>
+	<a href="http://www.biotrainee.com/">生信技能树主页&nbsp;&nbsp;</a>
+	<a href="https://space.bilibili.com/338686099/#/">生信技能树视频&nbsp;&nbsp;</a> 
+	<a href="https://yihui.name/cn/">谢益辉大神&nbsp;&nbsp;</a>
+	
+	<a href="http://www.soil-interface.cn/">土壤所李芳柏老师&nbsp;&nbsp;</a>
+	<a href="http://www.garden-of-excellence.cn/aboutus/">地化所-优秀花园&nbsp;&nbsp;</a>
+	<a href="http://www.sklec.ecnu.edu.cn/">河口海岸学国家重点实验室（华东师范-施华宏课题组）&nbsp;&nbsp;</a>
+	
+	<a href="http://zhishifenzi.com/">知识分子官网&nbsp;&nbsp;</a>
+	
+  </ul>
+</div>
+</div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://www.researchgate.net/profile/Weiping_Mei">ResearchGate</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://www.rdocumentation.org/search?q=weiping%20mei">r-project</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://bbs.sciencenet.cn/home.php?mod=space&uid=651374&view=meiweipingg">科学网</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">诗词欣赏</h3>
+        <div class="widget">
+  <ul>
+<br>
+<b>Poem: Your Own Time Zone</b><br>
+<br>New York is three hours ahead of California,
+<br>But that doesn’t make California slow.
+<br><br>Someone graduated at the age of 22,
+<br>But waited five years before securing a good job.
+<br>Some became a CEO at 25,
+<br>And died at 50.
+<br>While another became a CEO at 50,
+<br>And lived to 90 years.
+<br><br>Someone is still single,
+<br>While someone else got married.
+<br>Obama retired at 55,
+<br>& Trump started at 70.
+<br><br><b>Everyone in this world works based on their time zone.</b>
+<br><br>People around you might seem to be ahead of you,
+<br>& some might seem to be behind you.
+<br><b>But everyone is running their own race, in their own time.
+<br><br>Do not envy them & do not mock them.
+<br>They are in their time zone, and you are in yours.
+<br><br>Life is about waiting for the right moment to act.</b>
+<br>So, relax.
+<br>You’re not late.
+<br>You’re not early.
+<br>You are very much on time~	
+
+	
+  </ul>
+</div>
+</div>
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+
+
+				<p>站长：梅卫平 MEI, Weiping</p>
+				<p>E-mail：forresearcher@163.com </p>
+				<p>QQ: 5643 14073 ; Twitter: @weiping_mei</p>
+                <p>&copy; 2017 - 2024 梅卫平 保留所有版权</p>
+                
+<!-- 
+				<p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+-->				
+
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'weipingmei';
+    
+    
+    var disqus_url = 'http://PhDMeiwp.github.io/sair方法及R操作入门——稳定同位素之食物来源比例分析/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
